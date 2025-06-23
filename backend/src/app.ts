@@ -6,6 +6,8 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger';
 
 import userRoutes from './routes/userRoutes';
+import broadcastRoutes from './routes/broadcastRoutes';
+import favoriteRoutes from './routes/favoriteRoutes';
 
 // 기타
 import testMiddleware from './middlewares/test';
@@ -22,6 +24,8 @@ app.use(express.static(path.join(__dirname, '../public'))); // 정적 파일 제
 // 라우터 등록
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // 스웨거
 app.use('/users', userRoutes); // 유저
+app.use('/broadcasts', broadcastRoutes); // 중계 일정
+app.use('/favorites', favoriteRoutes); // 즐겨찾기
 
 // 정의되지 않은 라우터 -> 404 에러 처리
 app.use((req, res, next) => {
