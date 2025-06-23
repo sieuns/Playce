@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="App">
-      <p>Playce</p>
+    <div className="min-h-screen font-sans bg-gray-50">
+      <Home />
     </div>
   );
 }
