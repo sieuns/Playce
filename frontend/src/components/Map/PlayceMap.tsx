@@ -27,6 +27,7 @@ const PlayceMap: React.FC = () => {
           </>
         ))}
       </Map>
+      {/* 이 위치에서 재탐색 버튼 */}
       {isRefreshBtnOn && <SpotRefreshButton />}
     </div>
   );

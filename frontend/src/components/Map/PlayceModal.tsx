@@ -7,7 +7,9 @@ interface PlayceModalProps {
 
 const PlayceModal = ({ spot }: PlayceModalProps) => {
   return (
-    <CustomOverlayMap position={spot.position}>
+    <CustomOverlayMap
+      position={{ lat: spot.position.lat, lng: spot.position.lng }}
+    >
       <div
         style={{ width: "100px", height: "100px", backgroundColor: "white" }}
       >
