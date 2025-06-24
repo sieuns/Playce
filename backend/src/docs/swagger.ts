@@ -13,6 +13,16 @@ const swaggerDefinition = {
             description: "local server",
         }
     ],
+    // 토큰 인증 
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+            },
+        },
+    },
 };
 
 const options = {
