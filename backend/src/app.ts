@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 
-// 라우터
+// 스웨거
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger';
 
@@ -11,7 +11,6 @@ import storeRoutes from './routes/storeRoutes';
 import searchRoutes from './routes/searchRoutes';
 import broadcastRoutes from './routes/broadcastRoutes';
 import favoriteRoutes from './routes/favoriteRoutes';
-
 
 // 기타
 import testMiddleware from './middlewares/test';

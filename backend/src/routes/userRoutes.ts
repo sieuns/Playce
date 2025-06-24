@@ -147,7 +147,7 @@ router.post('/reset', userController.requestResetPassword); // 3. 비밀번호 �
 /**
  * @swagger
  * /users/reset:
- *  put:
+ *  patch:
  *    summary: 비밀번호 초기화
  *    tags: [User]
  *    requestBody:
@@ -175,7 +175,7 @@ router.post('/reset', userController.requestResetPassword); // 3. 비밀번호 �
  *                  type: string
  *                  example: "비밀번호가 변경되었습니다."
  */
-router.put('/reset', userController.resetPassword); // 4. 비밀번호 초기화
+router.patch('/reset', userController.resetPassword); // 4. 비밀번호 초기화
 
 /**
  * @swagger
@@ -214,7 +214,7 @@ router.get('/me', userController.getMyInfo); // 5. 내 정보 조회
 /**
  * @swagger
  * /users/nickname:
- *  put:
+ *  patch:
  *    summary: 닉네임 변경
  *    tags: [User]
  *    security:
@@ -243,6 +243,6 @@ router.get('/me', userController.getMyInfo); // 5. 내 정보 조회
  *                  type: string
  *                  example: "닉네임이 변경되었습니다."
  */
-router.put('/nickname', userController.updateNickname); // 6. 닉네임 변경
+router.patch('/nickname', userController.updateNickname); // 6. 닉네임 변경
 
 export default router;

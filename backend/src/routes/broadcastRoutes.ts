@@ -73,7 +73,7 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일
 /**
  * @swagger
  * /broadcasts/{broadcasts_id}:
- *   put:
+ *   patch:
  *     summary: 중계 일정 수정
  *     tags: [Broadcasts]
  *     security:
@@ -110,7 +110,7 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일
  *       200:
  *         description: 수정 성공
  */
-router.put('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일정 수정
+router.patch('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일정 수정
 
 /**
  * @swagger

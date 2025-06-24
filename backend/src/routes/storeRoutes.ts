@@ -72,7 +72,7 @@ router.post("/", storeController.registerStore); // 1. 식당 등록
 /**
  * @swagger
  * /stores/{id}:
- *   put:
+ *   patch:
  *     summary: 식당 정보 수정
  *     tags: [Store]
  *     security:
@@ -129,7 +129,7 @@ router.post("/", storeController.registerStore); // 1. 식당 등록
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.put("/:id", storeController.updateStore); // 2. 식당 수정
+router.patch("/:id", storeController.updateStore); // 2. 식당 수정
 
 /**
  * @swagger
