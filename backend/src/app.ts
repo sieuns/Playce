@@ -33,7 +33,7 @@ app.use('/favorites', favoriteRoutes); // 즐겨찾기
 
 // 정의되지 않은 라우터 -> 404 에러 처리
 app.use((req, res, next) => {
-    res.status(404).send('Not Found');
+  res.status(404).send('Not Found');
 });
 
 // TODO: 제대로된 미들웨어 등록할 
@@ -43,6 +43,6 @@ app.use(testMiddleware);
 
 // 서버 시작
 app.listen(port, () => {
-    console.log(`🚀 서버가 http://localhost:${port} 에서 실행 중입니다.`);
-    console.log(`서버가 성공적으로 시작되었습니다.`);
+  console.log(`🚀 서버가 http://localhost:${port} 에서 실행 중입니다.`);
+  console.log(`서버가 성공적으로 시작되었습니다.`);
 });

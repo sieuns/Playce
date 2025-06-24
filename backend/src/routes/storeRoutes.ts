@@ -67,6 +67,7 @@ const router = Router();
  *         description: 유효하지 않은 토큰
  *
  */
+router.post("/", storeController.registerStore); // 1. 식당 등록
 
 /**
  * @swagger
@@ -128,6 +129,7 @@ const router = Router();
  *       404:
  *         description: 식당을 찾을 수 없음
  */
+router.put("/:id", storeController.updateStore); // 2. 식당 수정
 
 /**
  * @swagger
@@ -155,6 +157,7 @@ const router = Router();
 *         description: 식당을 찾을 수 없음
 
  */
+router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
 
 /**
  * @swagger
@@ -220,6 +223,7 @@ const router = Router();
  *       404:
  *         description: 식당을 찾을 수 없음
  */
+router.get("/mypage", storeController.getMyStores); // 5. 내 식당 목록
 
 /**
  * @swagger
@@ -257,12 +261,6 @@ const router = Router();
  *       401:
  *         description: 유효하지 않은 토큰
  */
-
-
-router.post("/", storeController.registerStore); // 1. 식당 등록
-router.put("/:id", storeController.updateStore); // 2. 식당 수정
-router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
-router.get("/mypage", storeController.getMyStores); // 5. 내 식당 목록
 router.get("/:id", storeController.getStoreDetail); // 4. 식당 상세 조회
 
 export default router;

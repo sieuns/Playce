@@ -48,7 +48,7 @@ const router = Router();
  *       201:
  *         description: 중계 일정 등록 성공
  */
-
+router.post('/', broadcastController.createBroadcast); // 1. 일정 등록
 
 /**
  * @swagger
@@ -68,6 +68,7 @@ const router = Router();
  *       200:
  *         description: 삭제 성공
  */
+router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일정 삭제
 
 /**
  * @swagger
@@ -109,7 +110,7 @@ const router = Router();
  *       200:
  *         description: 수정 성공
  */
-
+router.put('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일정 수정
 
 /**
  * @swagger
@@ -127,9 +128,6 @@ const router = Router();
  *       200:
  *         description: 중계 일정 목록 조회 성공
  */
-router.post('/', broadcastController.createBroadcast); // 1. 일정 등록
-router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일정 삭제
-router.put('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일정 수정
 router.get('/store/:store_id', broadcastController.getBroadcastsByStore); // 4. 특정 식당 일정 조회
 
 export default router;

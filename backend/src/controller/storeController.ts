@@ -12,7 +12,7 @@ const storeController = {
     }
   },
   // 2. 식당 수정
-   updateStore: async (req: Request, res: Response, next: NextFunction) => {
+  updateStore: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await storeService.updateStore();
       res.status(200).json({ success: true, message: "식당 수정 성공" });

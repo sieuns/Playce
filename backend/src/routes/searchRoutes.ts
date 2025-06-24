@@ -84,6 +84,7 @@ const router = Router();
  *                             etc:
  *                               type: string
  */
+router.get("/nearby", searchController.getNearbyStores); // 1. 현재 위치 기반 식당 검색 (메인페이지용)
 
 /**
  * @swagger
@@ -171,8 +172,6 @@ const router = Router();
  *                         type: integer
  *                         description: 가장 가까운 중계 일정 ID
  */
-
-router.get("/nearby", searchController.getNearbyStores);
-router.get("/", searchController.searchStores);
+router.get("/", searchController.searchStores); // 2. 통합 검색
 
 export default router;
