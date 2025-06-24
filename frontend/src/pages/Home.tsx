@@ -1,4 +1,4 @@
-import Map from "../layouts/Map/Map";
+import Map from "../layouts/Map/PlayceMap";
 
 const Home: React.FC = () => {
   return (
