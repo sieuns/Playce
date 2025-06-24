@@ -1,28 +1,26 @@
 import 'dotenv/config';
 import express from 'express';
 
-// 스웨거, 라우터
+// 라우터
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/swagger';
 
+// 라우터
 import userRoutes from './routes/userRoutes';
 import broadcastRoutes from './routes/broadcastRoutes';
 import favoriteRoutes from './routes/favoriteRoutes';
 
 // 기타
 import testMiddleware from './middlewares/test';
-import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 카카오 API 테스트
-app.use(express.static(path.join(__dirname, '../public'))); // 정적 파일 제공
-
 // 라우터 등록
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // 스웨거
+
 app.use('/users', userRoutes); // 유저
 app.use('/broadcasts', broadcastRoutes); // 중계 일정
 app.use('/favorites', favoriteRoutes); // 즐겨찾기
