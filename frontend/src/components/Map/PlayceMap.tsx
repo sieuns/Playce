@@ -2,17 +2,22 @@ import { Map } from "react-kakao-maps-sdk";
 import useMapStore from "../../stores/map-store";
 import PlayceMapMarker from "./PlayceMapMarker";
 import PlayceModal from "./PlayceModal";
+import SpotRefreshButton from "./SpotRefreshButton";
 
 const PlayceMap: React.FC = () => {
-  const { spots, openedModal, closeModal } = useMapStore();
+  const { spots, openedModal, isRefreshBtnOn, closeModal, setRefreshBtn } =
+    useMapStore();
 
   return (
-    <div>
+    <div className="relative w-full h-screen">
       <Map
+        className="w-full h-full"
         center={{ lat: 37.56368, lng: 126.97558 }}
-        style={{ width: "100%", height: "100vh" }}
         onClick={() => {
           closeModal();
+        }}
+        onDragEnd={() => {
+          setRefreshBtn(true);
         }}
       >
         {spots.map((spot) => (
@@ -22,6 +27,7 @@ const PlayceMap: React.FC = () => {
           </>
         ))}
       </Map>
+      {isRefreshBtnOn && <SpotRefreshButton />}
     </div>
   );
 };

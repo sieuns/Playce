@@ -4,10 +4,12 @@ import type { spot } from "../types/map";
 interface MapState {
   openedModal: number;
   spots: spot[];
+  isRefreshBtnOn: boolean;
   resetSpots: () => void;
   refreshSpots: (newSpots: spot[]) => void;
   setOpenedModal: (modal: number) => void;
   closeModal: () => void;
+  setRefreshBtn: (button: boolean) => void;
 }
 
 const useMapStore = create<MapState>((set) => ({
@@ -29,6 +31,7 @@ const useMapStore = create<MapState>((set) => ({
       position: { lat: 37.56568, lng: 126.97558 },
     },
   ],
+  isRefreshBtnOn: false,
   resetSpots: () => {
     set({ spots: [] });
   },
@@ -40,6 +43,9 @@ const useMapStore = create<MapState>((set) => ({
   },
   closeModal: () => {
     set({ openedModal: -1 });
+  },
+  setRefreshBtn: (button) => {
+    set({ isRefreshBtnOn: button });
   },
 }));
 
