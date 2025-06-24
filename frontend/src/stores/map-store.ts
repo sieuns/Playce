@@ -1,10 +1,13 @@
 import { create } from "zustand";
-import type { spot } from "../types/map";
+import type { latlng, spot } from "../types/map";
+import { CITY_STATION } from "../constant/map-constant";
 
 interface MapState {
+  position: latlng;
   openedModal: number;
   spots: spot[];
   isRefreshBtnOn: boolean;
+  setPosition: (pos: latlng) => void;
   resetSpots: () => void;
   refreshSpots: (newSpots: spot[]) => void;
   setOpenedModal: (modal: number) => void;
@@ -13,6 +16,7 @@ interface MapState {
 }
 
 const useMapStore = create<MapState>((set) => ({
+  position: CITY_STATION,
   openedModal: -1,
   spots: [
     {
@@ -32,6 +36,9 @@ const useMapStore = create<MapState>((set) => ({
     },
   ],
   isRefreshBtnOn: false,
+  setPosition: (pos) => {
+    set({ position: pos });
+  },
   resetSpots: () => {
     set({ spots: [] });
   },
