@@ -1,5 +1,5 @@
 import { Map } from "react-kakao-maps-sdk";
-import useMapStore from "../../stores/map-store";
+import useMapStore from "../../stores/mapStore";
 import PlayceMapMarker from "./PlayceMapMarker";
 import PlayceModal from "./PlayceModal";
 

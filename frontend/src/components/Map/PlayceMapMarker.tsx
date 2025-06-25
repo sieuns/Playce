@@ -1,6 +1,6 @@
 import { useMap, MapMarker } from "react-kakao-maps-sdk";
 import type { spot } from "../../types/map";
-import useMapStore from "../../stores/map-store";
+import useMapStore from "../../stores/mapStore";
 
 interface PlayceMapMarkerProps {
   spot: spot;

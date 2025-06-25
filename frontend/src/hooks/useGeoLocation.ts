@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useMapStore from "../stores/map-store";
+import useMapStore from "../stores/mapStore";
 
 export const useGeoLocation = (options = {}) => {
   const { setPosition } = useMapStore();
