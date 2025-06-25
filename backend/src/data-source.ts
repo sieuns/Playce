@@ -6,6 +6,11 @@ import { Store } from "./entities/Store";
 import { StoreImage } from "./entities/StoreImage";
 import { Favorite } from "./entities/Favorite";
 import { Broadcast } from "./entities/Broadcast";
+import { Sport } from "./entities/Sport";
+import { League } from "./entities/League";
+import { BusinessNumber } from "./entities/BusiniessNumber";
+import { BigRegion } from "./entities/BigRegion";
+import { SmallRegion } from "./entities/SmallRegion";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -15,6 +20,6 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: false,
-  logging: true,
-  entities: [User, Store, StoreImage, Favorite, Broadcast],
+  logging: false,
+  entities: [User, Store, StoreImage, Favorite, Broadcast, BusinessNumber, BigRegion, SmallRegion, Sport, League ],
 });

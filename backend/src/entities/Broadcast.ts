@@ -1,4 +1,3 @@
-// src/entities/Broadcast.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,8 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Store } from "./Store";
+import { Sport } from "./Sport";
+import { League } from "./League";
 
 @Entity("broadcasts")
 export class Broadcast {
@@ -27,11 +28,19 @@ export class Broadcast {
   @Column({ type: "time" })
   match_time!: string;
 
-  @Column()
-  sport!: string;
+  @ManyToOne(() => Sport, (sport) => sport.broadcasts, { nullable: false })
+  @JoinColumn({
+    name: "sport_id",
+    foreignKeyConstraintName: "fk_broadcast_sport",
+  })
+  sport!: Sport;
 
-  @Column()
-  league!: string;
+  @ManyToOne(() => League, (league) => league.broadcasts, { nullable: false })
+  @JoinColumn({
+    name: "league_id",
+    foreignKeyConstraintName: "fk_broadcast_league",
+  })
+  league!: League;
 
   @Column({ nullable: true })
   team_one!: string;
@@ -42,6 +51,6 @@ export class Broadcast {
   @Column("text", { nullable: true })
   etc!: string;
 
-  @CreateDateColumn({ type: "timestamp"})
+  @CreateDateColumn({ type: "timestamp" })
   created_at!: Date;
 }
