@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import 'reflect-metadata';
 
 // 스웨거
 import swaggerUi from 'swagger-ui-express';

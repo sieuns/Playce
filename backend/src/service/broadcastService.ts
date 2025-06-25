@@ -1,26 +1,18 @@
 const broadcastService = {
-    // 1. 일정 등록
-    createBroadcast: async (data: any) => {
-      console.log('📺중계: 1. 일정 등록');
-      return { id: 1 }; // 더미 ID 리턴
-    },
-  
-    // 2. 일정 삭제
-    deleteBroadcast: async (broadcastId: number) => {
-      console.log(`📺중계: 2. 일정 삭제 - ID ${broadcastId}`);
-    },
-  
-    // 3. 일정 수정
-    updateBroadcast: async (broadcastId: number, data: any) => {
-      console.log(`📺중계: 3. 일정 수정 - ID ${broadcastId}`);
-    },
-  
-    // 4. 특정 식당의 일정 조회
-    getBroadcastsByStore: async (storeId: number) => {
-      console.log(`📺중계: 4. 특정 식당 일정 조회 - Store ID ${storeId}`);
-      return [];
-    }
-  };
-  
-  export default broadcastService;
-  
+  createBroadcast: async (data: any) => {
+    console.log('더미 등록', data);
+    return { id: 1 };  // id 포함 리턴 (필수)
+  },
+  deleteBroadcast: async (id: number) => {
+    console.log('더미 삭제', id);
+  },
+  updateBroadcast: async (id: number, data: any) => {
+    console.log('더미 수정', id, data);
+  },
+  getBroadcastsByStore: async (storeId: number) => {
+    console.log('더미 조회', storeId);
+    return [{ id: 1, store_id: storeId, match_date: '2025-06-25', match_time: '18:00', sport: 'soccer', league: 'K League' }];
+  },
+};
+
+export default broadcastService;

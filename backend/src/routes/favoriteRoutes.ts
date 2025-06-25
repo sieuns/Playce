@@ -22,7 +22,7 @@ const router = Router();
  *       200:
  *         description: 즐겨찾기 목록 조회 성공
  */
-router.post('/:store_id', favoriteController.addFavorite); // 1. 즐겨찾기 추가
+router.get('/', favoriteController.getFavorites); // 1. 즐겨찾기 목록 조회
 
 /**
  * @swagger
@@ -38,11 +38,12 @@ router.post('/:store_id', favoriteController.addFavorite); // 1. 즐겨찾기 �
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     responses:
  *       201:
  *         description: 즐겨찾기 추가 성공
  */
-router.delete('/:store_id', favoriteController.removeFavorite); // 2. 즐겨찾기 삭제
+router.post('/:store_id', favoriteController.addFavorite); // 2. 즐겨찾기 추가
 
 /**
  * @swagger
@@ -58,10 +59,11 @@ router.delete('/:store_id', favoriteController.removeFavorite); // 2. 즐겨찾�
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     responses:
  *       200:
  *         description: 즐겨찾기 삭제 성공
  */
-router.get('/', favoriteController.getFavorites); // 3. 즐겨찾기 목록 조회
+router.delete('/:store_id', favoriteController.removeFavorite); // 3. 즐겨찾기 삭제
 
 export default router;

@@ -38,26 +38,37 @@ const router = Router();
  *             properties:
  *               store_name:
  *                 type: string
+ *                 example: 플레이스 강남점
  *               business_number:
  *                 type: string
+ *                 example: 123-45-67890
  *               address:
  *                 type: string
+ *                 example: 서울특별시 강남구 테헤란로 123
  *               lat:
  *                 type: number
+ *                 example: 37.5665
  *               lng:
  *                 type: number
+ *                 example: 126.9780
  *               phone:
  *                 type: string
+ *                 example: 02-1234-5678
  *               opening_hours:
  *                 type: string
+ *                 example: 매일 10:00 ~ 23:00
  *               menus:
  *                 type: string
+ *                 example: 맥주, 피자, 치킨
  *               type:
  *                 type: string
+ *                 example: 스포츠펍
  *               img_id:
  *                 type: integer
+ *                 example: 5
  *               description:
  *                 type: string
+ *                 example: 축구 경기 생중계가 있는 강남 최고의 스포츠펍
  *     responses:
  *       201:
  *         description: 식당이 등록되었습니다.
@@ -65,9 +76,8 @@ const router = Router();
  *         description: 필수 입력값 누락
  *       401:
  *         description: 유효하지 않은 토큰
- *
  */
-router.post("/", storeController.registerStore); // 1. 식당 등록
+router.post("/", storeController.registerStore);
 
 /**
  * @swagger
@@ -84,6 +94,7 @@ router.post("/", storeController.registerStore); // 1. 식당 등록
  *         schema:
  *           type: integer
  *         description: 수정할 식당의 고유 ID
+ *         example: 1
  *     requestBody:
  *       required: true
  *       content:
@@ -93,32 +104,37 @@ router.post("/", storeController.registerStore); // 1. 식당 등록
  *             properties:
  *               store_name:
  *                 type: string
- *                 description: 식당 이름
+ *                 example: 플레이스 강남점
  *               business_number:
  *                 type: string
- *                 description: 사업자 등록번호
+ *                 example: 123-45-67890
  *               address:
  *                 type: string
+ *                 example: 서울특별시 강남구 테헤란로 123
  *               lat:
  *                 type: number
- *                 format: float
+ *                 example: 37.5665
  *               lng:
  *                 type: number
- *                 format: float
+ *                 example: 126.9780
  *               phone:
  *                 type: string
+ *                 example: 02-1234-5678
  *               opening_hours:
  *                 type: string
+ *                 example: 매일 10:00 ~ 23:00
  *               menus:
  *                 type: string
+ *                 example: 맥주, 피자, 치킨
  *               type:
  *                 type: string
+ *                 example: 스포츠펍
  *               img_id:
  *                 type: integer
- *                 description: 대표 이미지 ID
+ *                 example: 3
  *               description:
  *                 type: string
- *             description: 수정하고 싶은 필드만 포함해서 전송 (전부 수정 가능)
+ *                 example: 최신 프리미어리그 경기 중계!
  *     responses:
  *       200:
  *         description: 식당 정보가 수정되었습니다.
@@ -129,7 +145,7 @@ router.post("/", storeController.registerStore); // 1. 식당 등록
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.patch("/:id", storeController.updateStore); // 2. 식당 수정
+router.patch("/:id", storeController.updateStore);
 
 /**
  * @swagger
@@ -145,19 +161,19 @@ router.patch("/:id", storeController.updateStore); // 2. 식당 수정
  *         required: true
  *         schema:
  *           type: integer
+ *         example: 1
  *         description: 삭제할 식당의 고유 ID
-*     responses:
-*       200:
-*         description: 식당이 삭제되었습니다.
-*       401:
-*         description: 유효하지 않은 토큰
-*       403:
-*         description: 권한 없음 (본인 식당 아님)
-*       404:
-*         description: 식당을 찾을 수 없음
-
+ *     responses:
+ *       200:
+ *         description: 식당이 삭제되었습니다.
+ *       401:
+ *         description: 유효하지 않은 토큰
+ *       403:
+ *         description: 권한 없음 (본인 식당 아님)
+ *       404:
+ *         description: 식당을 찾을 수 없음
  */
-router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
+router.delete("/:id", storeController.deleteStore);
 
 /**
  * @swagger
@@ -166,13 +182,14 @@ router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
  *     summary: 식당 상세 조회
  *     tags: [Store]
  *     security:
- *       - bearerAuth: []  # 조건부 토큰
+ *       - bearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
  *         schema:
  *           type: integer
+ *         example: 1
  *         description: 식당 고유 ID
  *     responses:
  *       200:
@@ -184,22 +201,30 @@ router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
  *               properties:
  *                 store_name:
  *                   type: string
+ *                   example: 플레이스 강남점
  *                 address:
  *                   type: string
+ *                   example: 서울특별시 강남구 테헤란로 123
  *                 phone:
  *                   type: string
+ *                   example: 02-1234-5678
  *                 opening_hours:
  *                   type: string
+ *                   example: 매일 10:00 ~ 23:00
  *                 menus:
  *                   type: string
+ *                   example: 맥주, 피자, 치킨
  *                 type:
  *                   type: string
+ *                   example: 스포츠펍
  *                 img_list:
  *                   type: array
  *                   items:
  *                     type: string
+ *                   example: ["https://image.com/1.jpg", "https://image.com/2.jpg"]
  *                 description:
  *                   type: string
+ *                   example: EPL 생중계 가능!
  *                 broadcasts:
  *                   type: array
  *                   items:
@@ -208,22 +233,30 @@ router.delete("/:id", storeController.deleteStore); // 3. 식당 삭제
  *                       match_date:
  *                         type: string
  *                         format: date
+ *                         example: 2025-06-30
  *                       match_time:
  *                         type: string
+ *                         format: time
+ *                         example: 20:00:00
  *                       sport:
  *                         type: string
+ *                         example: soccer
  *                       league:
  *                         type: string
+ *                         example: K League
  *                       team_one:
  *                         type: string
+ *                         example: FC서울
  *                       team_two:
  *                         type: string
+ *                         example: 수원삼성
  *                       etc:
  *                         type: string
+ *                         example: 경기 후 이벤트 있음
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.get("/mypage", storeController.getMyStores); // 5. 내 식당 목록
+router.get("/:id", storeController.getStoreDetail);
 
 /**
  * @swagger
@@ -248,19 +281,23 @@ router.get("/mypage", storeController.getMyStores); // 5. 내 식당 목록
  *                     properties:
  *                       store_id:
  *                         type: integer
+ *                         example: 1
  *                         description: 식당 고유 ID
  *                       store_name:
  *                         type: string
+ *                         example: 플레이스 강남점
  *                         description: 식당 이름
  *                       main_img:
  *                         type: string
+ *                         example: https://image.com/1.jpg
  *                         description: 식당 대표 사진 URL
  *                       address:
  *                         type: string
+ *                         example: 서울특별시 강남구 테헤란로 123
  *                         description: 식당 주소
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.get("/:id", storeController.getStoreDetail); // 4. 식당 상세 조회
+router.get("/mypage", storeController.getMyStores);
 
 export default router;
