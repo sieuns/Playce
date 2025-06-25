@@ -28,27 +28,35 @@ const router = Router();
  *             properties:
  *               store_id:
  *                 type: integer
+ *                 example: 1
  *               match_date:
  *                 type: string
  *                 format: date
+ *                 example: "2025-06-24"
  *               match_time:
  *                 type: string
  *                 format: time
+ *                 example: "18:30:00"
  *               sport:
  *                 type: string
+ *                 example: "soccer"
  *               league:
  *                 type: string
+ *                 example: "K League"
  *               team_one:
  *                 type: string
+ *                 example: "FC Seoul"
  *               team_two:
  *                 type: string
+ *                 example: "Suwon Samsung"
  *               etc:
  *                 type: string
+ *                 example: "비고 내용"
  *     responses:
  *       201:
  *         description: 중계 일정 등록 성공
  */
-router.post('/', broadcastController.createBroadcast); // 1. 일정 등록
+router.post('/', broadcastController.createBroadcast);
 
 /**
  * @swagger
@@ -64,11 +72,12 @@ router.post('/', broadcastController.createBroadcast); // 1. 일정 등록
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     responses:
  *       200:
  *         description: 삭제 성공
  */
-router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일정 삭제
+router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
 
 /**
  * @swagger
@@ -84,6 +93,7 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     requestBody:
  *       content:
  *         application/json:
@@ -93,28 +103,35 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast); // 2. 일
  *               match_date:
  *                 type: string
  *                 format: date
+ *                 example: "2025-06-25"
  *               match_time:
  *                 type: string
  *                 format: time
+ *                 example: "20:00:00"
  *               sport:
  *                 type: string
+ *                 example: "baseball"
  *               league:
  *                 type: string
+ *                 example: "KBO"
  *               team_one:
  *                 type: string
+ *                 example: "LG Twins"
  *               team_two:
  *                 type: string
+ *                 example: "Doosan Bears"
  *               etc:
  *                 type: string
+ *                 example: "우천시 취소"
  *     responses:
  *       200:
  *         description: 수정 성공
  */
-router.patch('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일정 수정
+router.patch('/:broadcasts_id', broadcastController.updateBroadcast);
 
 /**
  * @swagger
- * /stores/{store_id}/broadcasts:
+ * /broadcasts/stores/{store_id}:
  *   get:
  *     summary: 특정 식당의 중계 일정 목록 조회
  *     tags: [Broadcasts]
@@ -124,10 +141,11 @@ router.patch('/:broadcasts_id', broadcastController.updateBroadcast); // 3. 일�
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     responses:
  *       200:
  *         description: 중계 일정 목록 조회 성공
  */
-router.get('/store/:store_id', broadcastController.getBroadcastsByStore); // 4. 특정 식당 일정 조회
+router.get('/stores/:store_id', broadcastController.getBroadcastsByStore);
 
 export default router;
