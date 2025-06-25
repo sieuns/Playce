@@ -4,16 +4,19 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  Unique,
   JoinColumn,
+  Point,
+  Index,
 } from "typeorm";
 import { User } from "./User";
 import { StoreImage } from "./StoreImage";
 import { Favorite } from "./Favorite";
 import { Broadcast } from "./Broadcast";
+import { BusinessNumber } from "./BusiniessNumber";
+import { BigRegion } from "./BigRegion";
+import { SmallRegion } from "./SmallRegion";
 
 @Entity("stores")
-@Unique(["business_number"])
 export class Store {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -28,23 +31,37 @@ export class Store {
   @Column()
   store_name!: string;
 
-  @Column()
-  business_number!: string;
+  @ManyToOne(() => BusinessNumber, (bn) => bn.stores, { nullable: false })
+  @JoinColumn({
+    name: "business_number_id",
+    foreignKeyConstraintName: "fk_store_business_number",
+  })
+  businessNumber!: BusinessNumber;
 
   @Column()
   address!: string;
 
-  @Column()
-  big_region!: string;
+  @ManyToOne(() => BigRegion, (br) => br.stores, { nullable: false })
+  @JoinColumn({
+    name: "big_region_id",
+    foreignKeyConstraintName: "fk_store_bigregion",
+  })
+  bigRegion!: BigRegion;
 
-  @Column()
-  small_region!: string;
+  @ManyToOne(() => SmallRegion, (sr) => sr.stores, { nullable: false })
+  @JoinColumn({
+    name: "small_region_id",
+    foreignKeyConstraintName: "fk_store_smallregion",
+  })
+  smallRegion!: SmallRegion;
 
-  @Column("float")
-  lat!: number;
-
-  @Column("float")
-  lng!: number;
+  @Index({ spatial: true })
+  @Column({
+    type: "point",
+    spatialFeatureType: "Point",
+    srid: 4326,
+  })
+  location!: Point;
 
   @Column()
   phone!: string;
