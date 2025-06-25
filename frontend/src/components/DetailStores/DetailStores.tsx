@@ -43,16 +43,28 @@ const dummyData: RestaurantDetail = {
   ],
 };
 
-// ==================
+interface RestaurantDetailComponentProps {
+  onClose: () => void;
+}
 
 const TABS = ["홈", "메뉴", "중계"] as const;
 type Tab = (typeof TABS)[number];
 
-export default function RestaurantDetailComponent() {
+export default function RestaurantDetailComponent({
+  onClose,
+}: RestaurantDetailComponentProps) {
   const [currentTab, setCurrentTab] = useState<Tab>("홈");
 
   return (
-    <div className="fixed left-6 bottom-6 w-[350px] bg-white rounded-xl shadow-lg overflow-hidden z-50">
+    <div className="fixed left-6 bottom-6 w-[350px] bg-white rounded-xl shadow-lg overflow-hidden z-[9999]">
+      {/* 닫기 버튼 */}
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 z-10 bg-white/90 border border-emerald-200 rounded-full p-2 shadow hover:bg-emerald-100 transition"
+        aria-label="닫기"
+      >
+        ×
+      </button>
       {/* 이미지 */}
       <div className="w-full h-44 bg-gray-100 flex items-center justify-center">
         {dummyData.img_list[0] ? (
@@ -115,7 +127,7 @@ export default function RestaurantDetailComponent() {
             </div>
             <div className="flex items-center gap-2">
               <FiFileText className="text-xl" />
-              <span>{dummyData.type}</span> {/* 업종을 제일 밑으로 이동 */}
+              <span>{dummyData.type}</span>
             </div>
           </div>
         )}
