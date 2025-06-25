@@ -7,7 +7,7 @@ export class BigRegion {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ name: 'name' })
   name!: string;
 
   @OneToMany(() => SmallRegion, sr => sr.bigRegion)

@@ -7,11 +7,11 @@ export class Sport {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ name: 'name' })
   name!: string;
 
-  @Column()
-  is_team_competition!: boolean;
+  @Column({ name: 'is_team_competition' })
+  isTeamCompetition!: boolean;
 
   @OneToMany(() => League, league => league.sport)
   leagues!: League[];

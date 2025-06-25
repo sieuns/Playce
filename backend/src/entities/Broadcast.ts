@@ -22,11 +22,11 @@ export class Broadcast {
   })
   store!: Store;
 
-  @Column({ type: "date" })
-  match_date!: string;
+  @Column({ name: 'match_date', type: "date" })
+  matchDate!: string;
 
-  @Column({ type: "time" })
-  match_time!: string;
+  @Column({ name: 'match_time', type: "time" })
+  matchTime!: string;
 
   @ManyToOne(() => Sport, (sport) => sport.broadcasts, { nullable: false })
   @JoinColumn({
@@ -42,15 +42,15 @@ export class Broadcast {
   })
   league!: League;
 
-  @Column({ nullable: true })
-  team_one!: string;
+  @Column({ name: 'team_one', nullable: true })
+  teamOne!: string;
 
-  @Column({ nullable: true })
-  team_two!: string;
+  @Column({ name: 'team_two', nullable: true })
+  teamTwo!: string;
 
-  @Column("text", { nullable: true })
+  @Column("text", { name: 'etc', nullable: true })
   etc!: string;
 
-  @CreateDateColumn({ type: "timestamp" })
-  created_at!: Date;
+  @CreateDateColumn({ name: "created_at", type: "timestamp" })
+  createdAt!: Date;
 }

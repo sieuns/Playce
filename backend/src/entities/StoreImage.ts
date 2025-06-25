@@ -19,9 +19,9 @@ export class StoreImage {
   })
   store!: Store;
 
-  @Column()
-  img_url!: string;
+  @Column({ name: "img_url" })
+  imgUrl!: string;
 
-  @Column()
-  is_main!: boolean;
+  @Column({ name: "is_main" })
+  isMain!: boolean;
 }

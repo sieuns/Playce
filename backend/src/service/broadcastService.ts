@@ -32,7 +32,7 @@ const deleteBroadcast = async (broadcastId: number) => {
 const getBroadcastsByStore = async (storeId: number) => {
   const broadcasts = await broadcastRepo.find({
     where: { store: { id: storeId } },
-    order: { match_date: "ASC", match_time: "ASC" },
+    order: { matchDate: "ASC", matchTime: "ASC" },
   });
   return broadcasts;
 };

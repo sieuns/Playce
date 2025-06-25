@@ -18,7 +18,7 @@ export class League {
   @JoinColumn({ name: "sport_id", foreignKeyConstraintName: "fk_league_sport" })
   sport!: Sport;
   
-  @Column()
+  @Column({ name: 'name' })
   name!: string;
 
   @OneToMany(() => Broadcast, (bc) => bc.league)

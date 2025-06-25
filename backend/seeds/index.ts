@@ -1,11 +1,37 @@
-import "./regionSeeder";
-import "./sportLeagueSeeder";
-import "./businessNumberSeeder";
-import "./userSeeder";
-import "./storeSeeder";
-import "./broadcastSeeder";
-import "./favoriteSeeder";
+import "reflect-metadata";
+import { AppDataSource } from "../src/data-source";
 
-console.log("✅ 시드 데이터 입력 완료");
+import { seedBusinessNumbers } from "./businessNumberSeeder";
+import { seedRegions } from "./regionSeeder";
+import { seedSportLeagues } from "./sportLeagueSeeder";
 
-// npx ts-node seed/index.ts    <- 데이터 넣을 때 실행하는 명령어
+import { seedUsers } from "./userSeeder";
+import { seedStores } from "./storeSeeder";
+import { seedBroadcasts } from "./broadcastSeeder";
+import { seedFavorites } from "./favoriteSeeder";
+
+const runSeeders = async () => {
+  await AppDataSource.initialize();
+  console.log("📦 DB 연결");
+
+  try {
+    await seedBusinessNumbers();
+    await seedRegions();
+    await seedSportLeagues();
+
+    await seedUsers();
+    await seedStores();
+    await seedBroadcasts();
+    await seedFavorites();
+
+    console.log("🌱 Seed 완료");
+    process.exit(0);
+  } catch (error) {
+    console.error("❌ Seed 오류: ", error);
+    process.exit(1);
+  } finally {
+    await AppDataSource.destroy();
+  }
+};
+
+runSeeders();
