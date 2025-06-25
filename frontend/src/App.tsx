@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import SearchPage from "./pages/SearchPage";
 
 function App() {
