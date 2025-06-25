@@ -1,10 +1,10 @@
-import Home from "./pages/Home";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
-    <div className="min-h-screen font-sans bg-gray-50">
-      <Home />
-    </div>
+    <main className="min-h-screen bg-gray-50 font-sans">
+      <SearchPage />
+    </main>
   );
 }
 
