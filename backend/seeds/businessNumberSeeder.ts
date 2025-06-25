@@ -1,6 +1,6 @@
 // seed/businessNumberSeeder.ts
 import { AppDataSource } from "../src/data-source";
-import { BusinessNumber } from "../src/entities/BusinessNumber";
+import { BusinessNumber } from "../src/entities/BusiniessNumber";
 
 const businessNumbers = [
   { number: "111-11-12345", is_valid: true },
