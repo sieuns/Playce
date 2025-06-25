@@ -12,7 +12,7 @@ import { User } from "./User";
 import { StoreImage } from "./StoreImage";
 import { Favorite } from "./Favorite";
 import { Broadcast } from "./Broadcast";
-import { BusinessNumber } from "./BusiniessNumber";
+import { BusinessNumber } from "./BusinessNumber";
 import { BigRegion } from "./BigRegion";
 import { SmallRegion } from "./SmallRegion";
 
@@ -28,8 +28,8 @@ export class Store {
   })
   user!: User;
 
-  @Column()
-  store_name!: string;
+  @Column({ name: "store_name" })
+  storeName!: string;
 
   @ManyToOne(() => BusinessNumber, (bn) => bn.stores, { nullable: false })
   @JoinColumn({
@@ -38,7 +38,7 @@ export class Store {
   })
   businessNumber!: BusinessNumber;
 
-  @Column()
+  @Column({ name: "address" })
   address!: string;
 
   @ManyToOne(() => BigRegion, (br) => br.stores, { nullable: false })
@@ -57,25 +57,26 @@ export class Store {
 
   @Index({ spatial: true })
   @Column({
+    name: "location",
     type: "point",
     spatialFeatureType: "Point",
     srid: 4326,
   })
-  location!: Point;
+  location!: string;
 
-  @Column()
+  @Column({ name: "phone" })
   phone!: string;
 
-  @Column()
-  opening_hours!: string;
+  @Column({ name: "opening_hours" })
+  openingHours!: string;
 
-  @Column("text")
+  @Column("text", { name: "menus" })
   menus!: string;
 
-  @Column()
+  @Column({ name: "type" })
   type!: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'description', nullable: true })
   description!: string;
 
   @OneToMany(() => StoreImage, (img) => img.store)

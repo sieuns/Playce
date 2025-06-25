@@ -8,7 +8,7 @@ import { Favorite } from "./entities/Favorite";
 import { Broadcast } from "./entities/Broadcast";
 import { Sport } from "./entities/Sport";
 import { League } from "./entities/League";
-import { BusinessNumber } from "./entities/BusiniessNumber";
+import { BusinessNumber } from "./entities/BusinessNumber";
 import { BigRegion } from "./entities/BigRegion";
 import { SmallRegion } from "./entities/SmallRegion";
 

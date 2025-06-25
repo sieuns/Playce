@@ -2,16 +2,16 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique } from 'typeo
 import { Store } from './Store';
 
 @Entity('business_numbers')
-@Unique(['business_number'])
+@Unique(['businessNumber'])
 export class BusinessNumber {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  business_number!: string;
+  @Column({ name: 'business_number' })
+  businessNumber!: string;
 
-  @Column()
-  is_valid!: boolean;
+  @Column({ name: 'is_valid' })
+  isValid!: boolean;
 
   @OneToMany(() => Store, store => store.businessNumber)
   stores!: Store[];

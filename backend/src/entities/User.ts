@@ -9,19 +9,19 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ name: 'email' })
   email!: string;
 
-  @Column()
+  @Column({ name: 'password' })
   password!: string;
 
-  @Column()
+  @Column({ name: 'name' })
   name!: string;
 
-  @Column()
+  @Column({ name: 'nickname' })
   nickname!: string;
 
-  @Column()
+  @Column({ name: 'phone' })
   phone!: string;
 
   @OneToMany(() => Store, store => store.user)

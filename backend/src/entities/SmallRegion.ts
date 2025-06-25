@@ -14,15 +14,15 @@ export class SmallRegion {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  name!: string;
-
   @ManyToOne(() => BigRegion, (br) => br.smallRegions, { nullable: false })
   @JoinColumn({
     name: "big_region_id",
     foreignKeyConstraintName: "fk_smallregion_bigregion",
   })
   bigRegion!: BigRegion;
+
+  @Column({ name: "name" })
+  name!: string;
 
   @OneToMany(() => Store, (store) => store.smallRegion)
   stores!: Store[];
