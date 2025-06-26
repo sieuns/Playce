@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import broadcastService from '../service/broadcastService';
+import { AuthRequest } from '../middlewares/authMiddleware';
 
-const createBroadcast = async (req: Request, res: Response) => {
+const createBroadcast = async (req: AuthRequest, res: Response) => {
   try {
-    const newBroadcast = await broadcastService.createBroadcast(req.body);
+    const userId = req.user!.userId;
+    const newBroadcast = await broadcastService.createBroadcast(req.body, userId);
     res.status(201).json({
       message: '중계 일정이 등록되었습니다.',
       broadcast_id: newBroadcast.id,
@@ -14,10 +16,11 @@ const createBroadcast = async (req: Request, res: Response) => {
   }
 };
 
-const deleteBroadcast = async (req: Request, res: Response) => {
+const deleteBroadcast = async (req: AuthRequest, res: Response) => {
   try {
+    const userId = req.user!.userId;
     const { broadcasts_id } = req.params;
-    await broadcastService.deleteBroadcast(Number(broadcasts_id));
+    await broadcastService.deleteBroadcast(Number(broadcasts_id), userId);
     res.status(200).json({ message: '중계 일정이 삭제되었습니다.' });
   } catch (error) {
     console.error(error);
@@ -25,10 +28,11 @@ const deleteBroadcast = async (req: Request, res: Response) => {
   }
 };
 
-const updateBroadcast = async (req: Request, res: Response) => {
+const updateBroadcast = async (req: AuthRequest, res: Response) => {
   try {
+    const userId = req.user!.userId;
     const { broadcasts_id } = req.params;
-    await broadcastService.updateBroadcast(Number(broadcasts_id), req.body);
+    await broadcastService.updateBroadcast(Number(broadcasts_id), req.body, userId);
     res.status(200).json({ message: '중계 일정이 수정되었습니다.' });
   } catch (error) {
     console.error(error);

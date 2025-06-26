@@ -10,14 +10,21 @@ const sportRepo = AppDataSource.getRepository(Sport);
 const leagueRepo = AppDataSource.getRepository(League);
 
 // 중계 일정 등록
-const createBroadcast = async (data: any) => {
-  const store = await storeRepo.findOneBy({ id: data.store_id });
+const createBroadcast = async (data: any, userId: number) => {
+  const store = await storeRepo.findOne({
+    where: { id: data.store_id },
+    relations: ["user"],
+  });
   const sport = await sportRepo.findOneBy({ id: data.sport_id });
   const league = await leagueRepo.findOneBy({ id: data.league_id });
 
   if (!store) throw new Error("존재하지 않는 매장입니다.");
   if (!sport) throw new Error("존재하지 않는 스포츠입니다.");
   if (!league) throw new Error("존재하지 않는 리그입니다.");
+
+  if (store.user.id !== userId) {
+    throw new Error("권한이 없습니다.");
+  }
 
   const newBroadcast = broadcastRepo.create({
     store,
@@ -35,12 +42,27 @@ const createBroadcast = async (data: any) => {
 };
 
 // 중계 일정 수정
-const updateBroadcast = async (broadcastId: number, data: any) => {
+const updateBroadcast = async (broadcastId: number, data: any, userId: number) => {
   const broadcast = await broadcastRepo.findOne({
     where: { id: broadcastId },
-    relations: ["store", "sport", "league"],
+    relations: ["store", "store.user",  "sport", "league"],
   });
   if (!broadcast) throw new Error("해당 중계 일정을 찾을 수 없습니다.");
+
+  // 권한 확인
+  if (broadcast.store.user.id !== userId) {
+    throw new Error("권한이 없습니다.");
+  }
+
+  if (data.store_id) {
+    const store = await storeRepo.findOne({
+      where: { id: data.store_id },
+      relations: ["user"], // store의 user도 같이 조회
+    });
+    if (!store) throw new Error("존재하지 않는 매장입니다.");
+    if (store.user.id !== userId) throw new Error("권한이 없습니다.");
+    broadcast.store = store;
+  }
 
   // 관계형 데이터 수정 처리
   if (data.store_id) {
@@ -73,11 +95,18 @@ const updateBroadcast = async (broadcastId: number, data: any) => {
 };
 
 // 중계 일정 삭제
-const deleteBroadcast = async (broadcastId: number) => {
-  const result = await broadcastRepo.delete(broadcastId);
-  if (result.affected === 0) {
-    throw new Error("삭제할 중계 일정이 없습니다.");
+const deleteBroadcast = async (broadcastId: number, userId: number) => {
+  const broadcast = await broadcastRepo.findOne({
+    where: { id: broadcastId },
+    relations: ["store", "store.user"], 
+  });
+  if (!broadcast) throw new Error("삭제할 중계 일정이 없습니다.");
+
+  if (broadcast.store.user.id !== userId) {
+    throw new Error("권한이 없습니다.");
   }
+
+  await broadcastRepo.delete(broadcastId);
 };
 
 // 특정 식당의 중계 일정 조회

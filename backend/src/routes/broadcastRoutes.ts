@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import broadcastController from '../controller/broadcastController';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -56,7 +57,7 @@ const router = Router();
  *       201:
  *         description: 중계 일정 등록 성공
  */
-router.post('/', broadcastController.createBroadcast);
+router.post('/', authenticate, broadcastController.createBroadcast);
 
 /**
  * @swagger
@@ -77,7 +78,7 @@ router.post('/', broadcastController.createBroadcast);
  *       200:
  *         description: 삭제 성공
  */
-router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
+router.delete('/:broadcasts_id', authenticate,broadcastController.deleteBroadcast);
 
 /**
  * @swagger
@@ -127,7 +128,7 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
  *       200:
  *         description: 수정 성공
  */
-router.patch('/:broadcasts_id', broadcastController.updateBroadcast);
+router.patch('/:broadcasts_id', authenticate, broadcastController.updateBroadcast);
 
 /**
  * @swagger
