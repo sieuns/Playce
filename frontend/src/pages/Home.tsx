@@ -25,6 +25,7 @@ const Home: React.FC = () => {
     <div className="flex">
       <SearchPage />
       <div>
+        {/* 테스트용 */}
         {/* <FavoriteSidebar /> */}
         {/* <RestaurantDetailComponent /> */}
       </div>
