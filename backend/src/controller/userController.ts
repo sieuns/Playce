@@ -28,7 +28,8 @@ const userController = {
     next: NextFunction
   ) => {
     try {
-      await userService.requestResetPassword();
+      const {email} = req.body;
+      await userService.requestResetPassword(email);
       res
         .status(201)
         .json({ success: true, message: "메일이 전송되었습니다." });

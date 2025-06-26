@@ -114,37 +114,37 @@ router.post('/login', userController.login); // 2. 로그인
 /**
  * @swagger
  * /users/reset:
- *  post:
- *    summary: 비밀번호 초기화 요청
- *    tags: [User]
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            required:
- *              - email
- *            properties:
- *              email:
- *                type: string
- *                format: email
- *                example: user@mail.com
- *            responses:
- *              201:
- *                description: 요청 성공
- *                content:
- *                  application/json:
- *                    schema:
- *                      type: object
- *                      properties:
- *                        message:
- *                          type: string
- *                  example: "메일이 전송되었습니다."
- *      400:
- *        description: 이메일 미입력 또는 유효하지 않은 이메일
+ *   post:
+ *     summary: 비밀번호 초기화 요청
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: user@mail.com
+ *     responses:
+ *       201:
+ *         description: 요청 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 메일이 전송되었습니다.
+ *       400:
+ *         description: 이메일 미입력 또는 유효하지 않은 이메일
  */
-router.post('/reset', userController.requestResetPassword); // 3. 비밀번호 초기화 요청
+router.post("/reset", userController.requestResetPassword); // 3. 비밀번호 초기화 요청
 
 /**
  * @swagger

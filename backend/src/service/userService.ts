@@ -3,6 +3,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
 import bcrpyt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { sendMail } from "../utils/email";
 require("dotenv").config();
 
 const userService = {
@@ -27,7 +28,7 @@ const userService = {
     }
 
     const hashPassword = await bcrpyt.hash(password, 10);
-    
+
     const formatPhone = (phone: string): string => {
       const onlyDigits = phone.replace(/\D/g, "");
       return onlyDigits.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
@@ -35,13 +36,12 @@ const userService = {
 
     const formattedPhone = formatPhone(phone);
 
-
     const newUser = userRepository.create({
       email,
       password: hashPassword,
       name,
       nickname,
-      phone:formattedPhone,
+      phone: formattedPhone,
     });
 
     await userRepository.save(newUser);
@@ -74,8 +74,33 @@ const userService = {
     return token;
   },
   // 3. 비밀번호 초기화 요청
-  requestResetPassword: async () => {
-    console.log("👤 유저 : 3. 비밀번호 초기화 요청");
+  requestResetPassword: async (email: string) => {
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOneBy({ email });
+
+    if (!user) {
+      const error = new Error("가입된 이메일이 없습니다.");
+      (error as any).status = 404;
+      throw error;
+    }
+
+    const jwtSecret = process.env.PRIVATE_KEY;
+    if (!jwtSecret) {
+      throw new Error("JWT 시크릿 키가 설정되지 않았습니다.");
+    }
+
+    const token = jwt.sign({ email: user.email }, jwtSecret, {
+      expiresIn: "10m",
+    });
+
+    const resetUrl = `https://your-frontend.com/reset-password?token=${token}`;
+    const html = `<p>비밀번호를 재설정하려면 아래 링크를 클릭하세요:</p><a href="${resetUrl}">${resetUrl}</a>`;
+
+    await sendMail({
+      to: email,
+      subject: "비밀번호 재설정",
+      html,
+    });
   },
   // 4. 비밀번호 초기화
   resetPassword: async () => {
