@@ -1,5 +1,7 @@
 import { Router} from 'express';
 import userController from '../controller/userController';
+import { JoinValidator } from '../middlewares/userValidator';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -62,7 +64,7 @@ const router = Router();
  *      409:
  *        description: 중복된 이메일 입력
  */
-router.post('/join', userController.join); // 1. 회원가입
+router.post('/join', JoinValidator, userController.join); // 1. 회원가입
 
 /**
  * @swagger
@@ -209,7 +211,7 @@ router.patch('/reset', userController.resetPassword); // 4. 비밀번호 초기�
  *      401:
  *        description: 유효하지 않은 토큰
  */
-router.get('/me', userController.getMyInfo); // 5. 내 정보 조회
+router.get('/me', authenticate, userController.getMyInfo); // 5. 내 정보 조회
 
 /**
  * @swagger
@@ -243,6 +245,6 @@ router.get('/me', userController.getMyInfo); // 5. 내 정보 조회
  *                  type: string
  *                  example: "닉네임이 변경되었습니다."
  */
-router.patch('/nickname', userController.updateNickname); // 6. 닉네임 변경
+router.patch('/nickname',authenticate, userController.updateNickname); // 6. 닉네임 변경
 
 export default router;
