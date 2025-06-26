@@ -24,7 +24,7 @@ const router = Router();
  *         application/json:
  *           schema:
  *             type: object
- *             required: [store_id, match_date, match_time, sport, league]
+ *             required: [store_id, match_date, match_time, sport_id, league_id]
  *             properties:
  *               store_id:
  *                 type: integer
@@ -37,12 +37,12 @@ const router = Router();
  *                 type: string
  *                 format: time
  *                 example: "18:30:00"
- *               sport:
- *                 type: string
- *                 example: "soccer"
- *               league:
- *                 type: string
- *                 example: "K League"
+ *               sport_id:
+ *                 type: integer
+ *                 example: "1"
+ *               league_id:
+ *                 type: integer
+ *                 example: "1"
  *               team_one:
  *                 type: string
  *                 example: "FC Seoul"
@@ -108,12 +108,12 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
  *                 type: string
  *                 format: time
  *                 example: "20:00:00"
- *               sport:
- *                 type: string
- *                 example: "baseball"
- *               league:
- *                 type: string
- *                 example: "KBO"
+ *               sport_id:
+ *                 type: integer
+ *                 example: "1"
+ *               league_id:
+ *                 type: integer
+ *                 example: "1"
  *               team_one:
  *                 type: string
  *                 example: "LG Twins"
