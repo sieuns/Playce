@@ -1,3 +1,4 @@
+// FavoriteSidebar.jsx
 import { useState } from "react";
 import {
   FiChevronRight,
@@ -8,34 +9,31 @@ import {
 import { dummyFavorites } from "../../data/dummyFavorites";
 
 export default function FavoriteSidebar() {
-  // 더미데이터를 상태로 관리 (삭제 반영)
   const [favorites, setFavorites] = useState(dummyFavorites);
   const [expanded, setExpanded] = useState(false);
 
-  // 보여줄 목록 (펼침 여부에 따라 3개 or 전체)
   const visibleFavorites = expanded ? favorites : favorites.slice(0, 3);
 
-  // 삭제 핸들러
   const handleRemove = (store_id: number) => {
     setFavorites(favorites.filter((f) => f.store_id !== store_id));
   };
 
   return (
-    <aside className="w-[360px] h-full bg-white shadow-2xl flex flex-col border-r border-gray-100">
+    <section className="w-full bg-white rounded-xl shadow-md border border-gray-100 px-0 py-0 mb-4">
       {/* 헤더 및 토글 */}
       <button
-        className="flex items-center w-full h-16 px-4 border-b border-gray-100 bg-white group"
+        className="flex items-center w-full h-14 px-4 border-b border-gray-50 bg-white group"
         onClick={() => setExpanded((prev) => !prev)}
         aria-label="즐겨찾기 펼치기"
       >
-        <FiStar className="text-emerald-500 text-2xl mr-2" />
-        <span className="text-xl font-bold tracking-tight flex-1 text-left">
+        <FiStar className="text-emerald-500 text-xl mr-2" />
+        <span className="text-lg font-bold tracking-tight flex-1 text-left">
           즐겨찾기
         </span>
         {expanded ? (
-          <FiChevronDown className="text-gray-400 text-2xl group-hover:text-emerald-500 transition" />
+          <FiChevronDown className="text-gray-400 text-xl group-hover:text-emerald-500 transition" />
         ) : (
-          <FiChevronRight className="text-gray-400 text-2xl group-hover:text-emerald-500 transition" />
+          <FiChevronRight className="text-gray-400 text-xl group-hover:text-emerald-500 transition" />
         )}
       </button>
       {/* 안내문구 (접혔을 때만) */}
@@ -47,25 +45,21 @@ export default function FavoriteSidebar() {
         </div>
       )}
       {/* 즐겨찾기 리스트 */}
-      <ul
-        className={`flex-1 overflow-y-auto p-4 space-y-4 transition-all duration-300 ${
-          expanded ? "max-h-[600px] opacity-100" : "max-h-[220px] opacity-90"
-        }`}
-      >
+      <ul className="flex-1 p-2 space-y-2">
         {visibleFavorites.length === 0 ? (
-          <li className="text-gray-400 text-center py-12">
+          <li className="text-gray-400 text-center py-8">
             즐겨찾기한 식당이 없습니다.
           </li>
         ) : (
           visibleFavorites.map((store) => (
             <li
               key={store.store_id}
-              className="flex items-center bg-gray-50 rounded-xl shadow-sm hover:shadow-md transition-shadow p-3 gap-4 group"
+              className="flex items-center w-full bg-gray-50 rounded-lg shadow border border-gray-100 hover:shadow-md transition-shadow p-2 gap-3 group"
             >
               <img
                 src={store.main_img || "/noimg.png"}
                 alt={store.store_name}
-                className="w-14 h-14 rounded-lg object-cover bg-gray-200 border border-gray-100"
+                className="w-12 h-12 rounded object-cover bg-gray-200 border border-gray-100"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1">
@@ -80,18 +74,17 @@ export default function FavoriteSidebar() {
                   {store.address}
                 </div>
               </div>
-              {/* 삭제 버튼 */}
               <button
                 onClick={() => handleRemove(store.store_id)}
-                className="w-9 h-9 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition ml-2"
+                className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition ml-1"
                 aria-label="삭제"
               >
-                <FiTrash2 className="text-gray-400 group-hover:text-red-500 text-lg" />
+                <FiTrash2 className="text-gray-400 group-hover:text-red-500 text-base" />
               </button>
             </li>
           ))
         )}
       </ul>
-    </aside>
+    </section>
   );
 }
