@@ -1,0 +1,43 @@
+import { useState } from "react";
+import ModalBase from "../Common/ModalBase";
+import Sidebar from "../Mypage/Sidebar";
+import FavoriteList from "./FavortieList";
+import UserInfo from "./UserInfo";
+import RestaurantManager from "./RestaurantManage";
+
+type TabType = "favorite" | "profile" | "restaurant";
+
+interface MypageProps {
+  onClose: () => void;
+}
+
+const MypageModal = ({ onClose }: MypageProps) => {
+  const [selectedTab, setSelectedTab] = useState<TabType>("favorite");
+
+  return (
+    <ModalBase onClose={onClose} hideHeader>
+      <div className="flex h-[400px] bg-white rounded-xl overflow-hidden">
+        {/* 왼쪽 사이드바 */}
+        <Sidebar selected={selectedTab} onSelect={setSelectedTab}/>
+
+        {/* 오른쪽 콘텐츠 영역 */}
+        <div className="flex-1 p-6 overflow-y-auto relative">
+          {/* 닫기 버튼 */}
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-4 text-gray-400 hover:text-primary5 text-2xl"
+          >
+            &times;
+          </button>
+
+          {/* 콘텐츠 */}
+          {selectedTab === "favorite" && <FavoriteList />}
+          {selectedTab === "profile" && <UserInfo />}
+          {selectedTab === "restaurant" && <RestaurantManager />}
+        </div>
+      </div>
+    </ModalBase>
+  );
+};
+
+export default MypageModal;
