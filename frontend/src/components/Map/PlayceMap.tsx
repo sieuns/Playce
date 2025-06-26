@@ -12,7 +12,6 @@ const PlayceMap: React.FC = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedSpot, setSelectedSpot] = useState<spot | null>(null);
 
-  console.log("isDetailOpen:", isDetailOpen);
   return (
     <div className="relative w-full h-screen">
       <Map
