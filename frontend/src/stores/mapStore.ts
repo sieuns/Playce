@@ -34,6 +34,11 @@ const useMapStore = create<MapState>((set) => ({
       name: "마커 3",
       position: { lat: 37.56568, lng: 126.97558 },
     },
+    {
+      id: 4,
+      name: "춘천시청",
+      position: { lat: 37.881315, lng: 127.72997 },
+    },
   ],
   isRefreshBtnOn: false,
   setPosition: (pos) => {

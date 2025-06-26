@@ -9,6 +9,7 @@ import SearchButton from "../layouts/Search/SearchButton";
 import SearchResultList from "../layouts/Search/SearchResultList";
 import AppLogoHeader from "../components/LogoHeader/AppLogoHeader";
 import FavoriteSidebar from "../components/FavoriteSidebar/FavoriteSidebar";
+import TodayBroadcastSidebar from "../components/TodayBroadcasts/TodayBroadCasts";
 
 const SearchPage = () => {
   const [showRegionModal, setShowRegionModal] = useState(false);
@@ -37,7 +38,13 @@ const SearchPage = () => {
   return (
     <div className="h-screen bg-white">
       {/* 사이드바 */}
-      <aside className="w-[430px] p-0 overflow-y-auto border-r bg-white">
+      <aside
+        className="w-[430px] h-screen overflow-y-auto border-r bg-white"
+        style={{
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE, Edge
+        }}
+      >
         {/* 앱 이름/로고 */}
         <AppLogoHeader />
 
@@ -116,6 +123,11 @@ const SearchPage = () => {
         {/* 즐겨찾기 영역 */}
         <div className="mt-4 px-3">
           <FavoriteSidebar />
+        </div>
+
+        {/* 오늘의 중계일정 영역 - 여기서 추가! */}
+        <div className="mt-4 px-3">
+          <TodayBroadcastSidebar />
         </div>
 
         {/* 결과 리스트 */}
