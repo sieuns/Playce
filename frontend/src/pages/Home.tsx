@@ -1,6 +1,7 @@
 import AuthHeader from "../components/Auth/AuthHeader";
 import LoginModal from "../components/Auth/Login";
 import SignupModal from "../components/Auth/Signup";
+import Broadcasts from "../components/Broadcasts/Broadcasts";
 import Map from "../components/Map/PlayceMap";
 import SpotRefreshButton from "../components/Map/SpotRefreshButton";
 import { useGeoLocation } from "../hooks/useGeoLocation";
@@ -29,6 +30,7 @@ const Home: React.FC = () => {
         <AuthHeader />
         <LoginModal />
         <SignupModal />
+        {/* <Broadcasts /> */}
       </div>
     </div>
   );
