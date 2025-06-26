@@ -1,12 +1,12 @@
 import { useState } from "react";
-import RegionModal from "../layouts/Search/RegionModal";
+import RegionModal from "../components/Search/RegionModal";
 import { useRegionStore } from "../stores/regionStore";
 import { getMainRegion } from "../data/regions";
-import SportModal from "../layouts/Search/SportModal";
+import SportModal from "../components/Search/SportModal";
 import { useSportStore } from "../stores/sportStore";
-import SearchInput from "../layouts/Search/SearchInput";
-import SearchButton from "../layouts/Search/SearchButton";
-import SearchResultList from "../layouts/Search/SearchResultList";
+import SearchInput from "../components/Search/SearchInput";
+import SearchButton from "../components/Search/SearchButton";
+import SearchResultList from "../components/Search/SearchResultList";
 import AppLogoHeader from "../components/LogoHeader/AppLogoHeader";
 import FavoriteSidebar from "../components/FavoriteSidebar/FavoriteSidebar";
 import TodayBroadcastSidebar from "../components/TodayBroadcasts/TodayBroadCasts";
