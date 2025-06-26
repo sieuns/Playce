@@ -13,7 +13,7 @@ const PlayceMap: React.FC = () => {
   const [selectedSpot, setSelectedSpot] = useState<spot | null>(null);
 
   return (
-    <div className="relative w-full h-screen">
+    <>
       <Map
         className="w-full h-full"
         center={position}
@@ -53,7 +53,7 @@ const PlayceMap: React.FC = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
