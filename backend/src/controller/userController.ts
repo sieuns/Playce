@@ -51,12 +51,8 @@ const userController = {
   getMyInfo: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       const userId = req.user!.userId;
-
-      const formatPhone = (phone: string): string => {
-        return phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
-      };
+      
       const userInfo = await userService.getMyInfo(userId);
-      userInfo.phone = formatPhone(userInfo.phone);
 
       res.status(200).json({ success: true, data: userInfo });
     } catch (error) {
@@ -64,12 +60,25 @@ const userController = {
     }
   },
   // 6. 닉네임 변경
-  updateNickname: async (req: Request, res: Response, next: NextFunction) => {
+  updateNickname: async (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      await userService.updateNickname();
-      res
-        .status(200)
-        .json({ success: true, message: "닉네임이 변경되었습니다." });
+      const userId = req.user!.userId;
+      const { nickname } = req.body;
+
+      if (!nickname) {
+        res.status(400).json({ message: "변경할 닉네임을 입력해주세요." });
+        return;
+      }
+
+      await userService.updateNickname(userId, nickname);
+      res.status(200).json({
+        success: true,
+        message: "닉네임이 성공적으로 변경되었습니다.",
+      });
     } catch (error) {
       next(error);
     }

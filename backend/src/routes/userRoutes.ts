@@ -245,6 +245,6 @@ router.get('/me', authenticate, userController.getMyInfo); // 5. 내 정보 조�
  *                  type: string
  *                  example: "닉네임이 변경되었습니다."
  */
-router.patch('/nickname', userController.updateNickname); // 6. 닉네임 변경
+router.patch('/nickname',authenticate, userController.updateNickname); // 6. 닉네임 변경
 
 export default router;

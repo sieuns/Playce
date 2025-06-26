@@ -74,25 +74,35 @@ const userService = {
     console.log("👤 유저 : 4. 비밀번호 초기화");
   },
   // 5. 내 정보 조회
-  getMyInfo: async (userId : number) => {
+  getMyInfo: async (userId: number) => {
     const userRepository = AppDataSource.getRepository(User);
     const user = await userRepository.findOne({
-      where: {id: userId},
-      select : ["email", "name", "nickname","phone"],
-    })
+      where: { id: userId },
+      select: ["email", "name", "nickname", "phone"],
+    });
 
     if (!user) {
-      const error = new Error ("사용자를 찾을 수 없습니다.");
+      const error = new Error("사용자를 찾을 수 없습니다.");
       (error as any).status = 404;
       throw error;
     }
 
     return user;
   },
-  
+
   // 6. 닉네임 변경
-  updateNickname: async () => {
-    console.log("👤 유저 : 6. 닉네임 변경");
+  updateNickname: async (userId: number, newNickname: string) => {
+    const userRepository = AppDataSource.getRepository(User);
+
+    const user = await userRepository.findOneBy({ id: userId });
+    if (!user) {
+      const error = new Error("사용자를 찾을 수 없습니다.");
+      (error as any).status = 404;
+      throw error;
+    }
+
+    user.nickname = newNickname;
+    await userRepository.save(user);
   },
 };
 
