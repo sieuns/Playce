@@ -27,13 +27,21 @@ const userService = {
     }
 
     const hashPassword = await bcrpyt.hash(password, 10);
+    
+    const formatPhone = (phone: string): string => {
+      const onlyDigits = phone.replace(/\D/g, "");
+      return onlyDigits.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    };
+
+    const formattedPhone = formatPhone(phone);
+
 
     const newUser = userRepository.create({
       email,
       password: hashPassword,
       name,
       nickname,
-      phone: phone.replace(/-/g, ""),
+      phone:formattedPhone,
     });
 
     await userRepository.save(newUser);
