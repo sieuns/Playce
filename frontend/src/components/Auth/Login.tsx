@@ -5,6 +5,7 @@ import type { LoginProps } from "../../api/auth.api";
 import InputText from "../Common/InputText";
 import useAuthStore from "../../stores/authStore";
 import Button from "../Common/Button";
+import ErrorText from "./ErrorText";
 
 const LoginModal = () => {
   //   const { userLogin } = useAuth();
@@ -39,9 +40,7 @@ const LoginModal = () => {
               inputType="email"
               {...register("email", { required: true })}
             />
-            {errors.email && (
-              <p className="error-text">이메일을 입력해주세요.</p>
-            )}
+            {errors.email && <ErrorText message="이메일을 입력해주세요" />}
           </fieldset>
           <fieldset>
             <InputText
@@ -49,9 +48,7 @@ const LoginModal = () => {
               inputType="password"
               {...register("password", { required: true })}
             />
-            {errors.password && (
-              <p className="error-text">비밀번호를 입력해주세요.</p>
-            )}
+            {errors.password && <ErrorText message="비밀번호를 입력해주세요" />}
           </fieldset>
           <Button type="submit" className="mt-5">
             로그인
