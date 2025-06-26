@@ -1,5 +1,5 @@
 import SearchResultItem from "./SearchResultItem";
-import { mockSearchResults } from "../../data/SearchResult";
+import { mockSearchResults } from "../../data/searchResult";
 import { useState } from "react";
 
 type SortType = "distance" | "date";
