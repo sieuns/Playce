@@ -33,7 +33,7 @@ const SearchPage = () => {
     : `${sport} ${league} ${teams[0]} 외 ${teams.length - 1}팀`;
 
   return (
-    <div className="flex h-screen">
+    <div className="h-screen bg-white">
       {/* 사이드바 */}
       <aside className="w-[430px] p-3 overflow-y-auto border-r">
         <div className="-mx-3 -my-3 bg-primary4 px-3 py-3">
@@ -112,11 +112,6 @@ const SearchPage = () => {
           <SearchResultList />
         </div>
       </aside>
-
-      {/* 메인 영역 (지도 등) */}
-      <main className="flex-1 relative bg-gray-100 flex items-center justify-center">
-        <p className="text-gray-400">지도 또는 검색 결과 영역</p>
-      </main>
     </div>
   );
 };
