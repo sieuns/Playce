@@ -1,6 +1,7 @@
 import { Router} from 'express';
 import userController from '../controller/userController';
 import { JoinValidator } from '../middlewares/userValidator';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -210,7 +211,7 @@ router.patch('/reset', userController.resetPassword); // 4. 비밀번호 초기�
  *      401:
  *        description: 유효하지 않은 토큰
  */
-router.get('/me', userController.getMyInfo); // 5. 내 정보 조회
+router.get('/me', authenticate, userController.getMyInfo); // 5. 내 정보 조회
 
 /**
  * @swagger
