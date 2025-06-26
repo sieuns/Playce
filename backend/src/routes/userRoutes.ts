@@ -1,5 +1,6 @@
 import { Router} from 'express';
 import userController from '../controller/userController';
+import { JoinValidator } from '../middlewares/userValidator';
 
 const router = Router();
 
@@ -62,7 +63,7 @@ const router = Router();
  *      409:
  *        description: 중복된 이메일 입력
  */
-router.post('/join', userController.join); // 1. 회원가입
+router.post('/join', JoinValidator, userController.join); // 1. 회원가입
 
 /**
  * @swagger

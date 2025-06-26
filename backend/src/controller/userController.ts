@@ -5,7 +5,7 @@ const userController = {
   // 1. 회원가입
   join: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await userService.join();
+      await userService.join(req);
       res.status(201).json({ success: true, message: '회원가입 성공!'});
     } catch (error) {
       next(error);
@@ -14,8 +14,8 @@ const userController = {
   // 2. 로그인
   login: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await userService.login();
-      res.status(200).json({ success: true, message: '로그인 성공!'});
+      const token = await userService.login(req);
+      res.status(201).json({ success: true, message: '로그인 성공!', token});
     } catch (error) {
       next(error);
     }
