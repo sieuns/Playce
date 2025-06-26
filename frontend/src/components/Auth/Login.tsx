@@ -8,7 +8,7 @@ import Button from "../Common/Button";
 
 const LoginModal = () => {
   //   const { userLogin } = useAuth();
-  const { isLoginModalOpen, setIsLoginModalOpen } = useAuthStore();
+  const { storeLogin, isLoginModalOpen, setIsLoginModalOpen } = useAuthStore();
 
   const {
     register,
@@ -18,7 +18,11 @@ const LoginModal = () => {
 
   const onSubmit = (data: LoginProps) => {
     // userLogin(data);
-    alert(data);
+    // 임시로 로그인 완료되도록 설정
+    alert("로그인이 완료되었습니다.");
+    console.log(data);
+    storeLogin("");
+    setIsLoginModalOpen(false);
   };
 
   const handleCancel = () => {

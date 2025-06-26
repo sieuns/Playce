@@ -1,30 +1,60 @@
 import { Button } from "antd";
-import { FaRegUser, FaSignInAlt } from "react-icons/fa";
+import {
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUserAlt,
+  FaUserPlus,
+} from "react-icons/fa";
 import useAuthStore from "../../stores/authStore";
+// import { useAuth } from "../../hooks/useAuth";
 
 const AuthHeader: React.FC = () => {
-  const { setIsLoginModalOpen, setIsSignupModalOpen } = useAuthStore();
+  const { isLoggedIn, storeLogout, setIsLoginModalOpen, setIsSignupModalOpen } =
+    useAuthStore();
+  // const { userLogout } = useAuth();
   return (
     <div className="absolute top-5 right-5 z-10 text-lg">
       <div className="flex gap-3">
-        <Button
-          icon={<FaSignInAlt />}
-          size="large"
-          onClick={() => {
-            setIsLoginModalOpen(true);
-          }}
-        >
-          로그인
-        </Button>
-        <Button
-          icon={<FaRegUser />}
-          size="large"
-          onClick={() => {
-            setIsSignupModalOpen(true);
-          }}
-        >
-          회원가입
-        </Button>
+        {isLoggedIn ? (
+          <>
+            <Button
+              icon={<FaSignOutAlt />}
+              size="large"
+              onClick={() => {
+                // userLogout();
+                // 임시로 로그아웃되도록 설정
+                alert("로그아웃이 완료되었습니다");
+                storeLogout();
+              }}
+            >
+              로그아웃
+            </Button>
+            <Button icon={<FaUserAlt />} size="large">
+              마이페이지
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              icon={<FaSignInAlt />}
+              size="large"
+              onClick={() => {
+                setIsLoginModalOpen(true);
+              }}
+            >
+              로그인
+            </Button>
+            <Button
+              icon={<FaUserPlus />}
+              size="large"
+              onClick={() => {
+                setIsSignupModalOpen(true);
+              }}
+            >
+              회원가입
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

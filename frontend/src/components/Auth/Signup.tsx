@@ -24,7 +24,8 @@ const SignupModal = () => {
 
   const onSubmit = (data: SignupProps) => {
     // userSignup(data);
-    alert(data);
+    alert("회원가입이 완료되었습니다");
+    console.log(data);
   };
 
   return (

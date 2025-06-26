@@ -33,7 +33,7 @@ const SearchPage = () => {
     : `${sport} ${league} ${teams[0]} 외 ${teams.length - 1}팀`;
 
   return (
-    <div className="absolute top-0 left-0 h-screen z-10 bg-white">
+    <div className="h-screen bg-white">
       {/* 사이드바 */}
       <aside className="w-[430px] p-3 overflow-y-auto border-r">
         <div className="-mx-3 -my-3 bg-primary4 px-3 py-3">

@@ -20,14 +20,16 @@ const Home: React.FC = () => {
   useGeoLocation(geolocationOptions);
 
   return (
-    <div className="relative w-full h-screen">
-      <Map />
+    <div className="flex">
       <SearchPage />
-      {/* 이 위치에서 재탐색 버튼 */}
-      {isRefreshBtnOn && <SpotRefreshButton />}
-      <AuthHeader />
-      <LoginModal />
-      <SignupModal />
+      <div className="relative w-full h-screen">
+        <Map />
+        {/* 이 위치에서 재탐색 버튼 */}
+        {isRefreshBtnOn && <SpotRefreshButton />}
+        <AuthHeader />
+        <LoginModal />
+        <SignupModal />
+      </div>
     </div>
   );
 };
