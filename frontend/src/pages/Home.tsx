@@ -1,17 +1,17 @@
 import AuthHeader from "../components/Auth/AuthHeader";
 import LoginModal from "../components/Auth/Login";
 import SignupModal from "../components/Auth/Signup";
-import RestaurantDetailComponent from "../components/DetailStores/DetailStores";
-import FavoriteSidebar from "../components/FavoriteSidebar/FavoriteSidebar";
 import Map from "../components/Map/PlayceMap";
 import SpotRefreshButton from "../components/Map/SpotRefreshButton";
+import MypageModal from "../components/Mypage/MypageModal";
 import { useGeoLocation } from "../hooks/useGeoLocation";
-
 import useMapStore from "../stores/mapStore";
+import useMypageStore from "../stores/mypageStore";
 import SearchPage from "./SearchPage";
 
 const Home: React.FC = () => {
   const { isRefreshBtnOn } = useMapStore();
+  const { isMypageOpen, setIsMypageOpen } = useMypageStore();
 
   const geolocationOptions = {
     enableHighAccuracy: true,
@@ -24,11 +24,6 @@ const Home: React.FC = () => {
   return (
     <div className="flex">
       <SearchPage />
-      <div>
-        {/* 테스트용 */}
-        {/* <FavoriteSidebar /> */}
-        {/* <RestaurantDetailComponent /> */}
-      </div>
       <div className="relative w-full h-screen">
         <Map />
         {/* 이 위치에서 재탐색 버튼 */}
@@ -37,6 +32,7 @@ const Home: React.FC = () => {
         <LoginModal />
         <SignupModal />
       </div>
+      {isMypageOpen && <MypageModal onClose={() => setIsMypageOpen(false)} />}
     </div>
   );
 };

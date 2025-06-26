@@ -10,41 +10,7 @@ import {
   FiTv,
 } from "react-icons/fi";
 import { FaUtensils } from "react-icons/fa";
-import type { RestaurantDetail } from "../../types/restaurant.types";
-
-// 더미 데이터 (삭제 예정)
-const dummyData: RestaurantDetail = {
-  store_name: "리버풀펍 바(BAR)",
-  address: "서울 중구 북창동",
-  phone: "0507-1332-4885",
-  opening_hours: "매일 18:00 ~ 03:00",
-  menus: ["피자", "치킨", "볶음우동", "생맥주500ml"],
-  type: "펍/호프",
-  img_list: [
-    "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&w=400&q=80",
-  ],
-  description: "다양한 맥주를 즐기는 시원한 공간",
-  broadcasts: [
-    {
-      match_date: "2025-07-01",
-      match_time: "21:00",
-      sport: "축구",
-      league: "EPL",
-      team_one: "리버풀",
-      team_two: "맨체스터 Utd",
-      etc: "빅매치",
-    },
-    {
-      match_date: "2025-07-02",
-      match_time: "20:00",
-      sport: "야구",
-      league: "KBO",
-      team_one: "두산",
-      team_two: "LG",
-      etc: "",
-    },
-  ],
-};
+import { dummyRestaurantDetail } from "../../data/dummyRestaurantDetail"; // 변경된 import
 
 const TABS = ["홈", "메뉴", "중계"] as const;
 type Tab = (typeof TABS)[number];
@@ -60,10 +26,9 @@ export default function RestaurantDetailComponent({
 
   return (
     <aside className="fixed left-0 top-0 h-full w-[370px] z-[100] bg-white shadow-2xl border-r border-gray-100 flex flex-col font-pretendard">
-      {/* 닫기(뒤로가기) 버튼: 오른쪽 바깥 세로 중앙 */}
+      {/* 닫기(뒤로가기) 버튼 */}
       <button
         onClick={onClose}
-        // left-[350px] 또는 left-[340px] 등으로 조정
         className="fixed left-[350px] top-1/2 -translate-y-1/2 z-[120] w-12 h-12 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center hover:bg-emerald-50 transition"
         aria-label="상세보기 닫기"
         style={{ boxShadow: "0 2px 16px 0 rgba(0,0,0,0.10)" }}
@@ -73,16 +38,16 @@ export default function RestaurantDetailComponent({
 
       {/* 이미지 */}
       <div className="w-full h-44 bg-gray-100 flex items-center justify-center relative">
-        {dummyData.img_list[0] ? (
+        {dummyRestaurantDetail.img_list[0] ? (
           <img
-            src={dummyData.img_list[0]}
-            alt={dummyData.store_name}
+            src={dummyRestaurantDetail.img_list[0]}
+            alt={dummyRestaurantDetail.store_name}
             className="w-full h-full object-cover"
           />
         ) : (
           <span className="text-gray-400">이미지 없음</span>
         )}
-        {/* 저장/공유 버튼: 이미지 좌상단 */}
+        {/* 저장/공유 버튼 */}
         <div className="absolute left-4 top-4 flex gap-2 z-10">
           <button className="bg-white/80 rounded-full p-2 shadow hover:bg-emerald-100 transition">
             <FiStar className="text-emerald-500 text-lg" />
@@ -93,7 +58,7 @@ export default function RestaurantDetailComponent({
         </div>
       </div>
 
-      {/* 탭 메뉴 (컬러 강조 없이, 깔끔하게) */}
+      {/* 탭 메뉴 */}
       <div className="flex border-b border-gray-200 bg-white sticky top-0 z-10">
         {TABS.map((tab) => (
           <button
@@ -119,23 +84,27 @@ export default function RestaurantDetailComponent({
         {/* 홈 탭 */}
         {currentTab === "홈" && (
           <div className="flex flex-col gap-4">
-            <h2 className="text-lg font-bold mb-2">{dummyData.store_name}</h2>
-            <p className="mb-2 text-gray-700">{dummyData.description}</p>
+            <h2 className="text-lg font-bold mb-2">
+              {dummyRestaurantDetail.store_name}
+            </h2>
+            <p className="mb-2 text-gray-700">
+              {dummyRestaurantDetail.description}
+            </p>
             <div className="flex items-center gap-2">
               <FiMapPin className="text-xl" />
-              <span>{dummyData.address}</span>
+              <span>{dummyRestaurantDetail.address}</span>
             </div>
             <div className="flex items-center gap-2">
               <FiClock className="text-xl" />
-              <span>{dummyData.opening_hours}</span>
+              <span>{dummyRestaurantDetail.opening_hours}</span>
             </div>
             <div className="flex items-center gap-2">
               <FiPhone className="text-xl" />
-              <span>{dummyData.phone}</span>
+              <span>{dummyRestaurantDetail.phone}</span>
             </div>
             <div className="flex items-center gap-2">
               <FiFileText className="text-xl" />
-              <span>{dummyData.type}</span>
+              <span>{dummyRestaurantDetail.type}</span>
             </div>
           </div>
         )}
@@ -143,8 +112,9 @@ export default function RestaurantDetailComponent({
         {/* 메뉴 탭 */}
         {currentTab === "메뉴" && (
           <ul className="grid grid-cols-1 gap-3">
-            {dummyData.menus && dummyData.menus.length > 0 ? (
-              dummyData.menus.map((menu, idx) => (
+            {dummyRestaurantDetail.menus &&
+            dummyRestaurantDetail.menus.length > 0 ? (
+              dummyRestaurantDetail.menus.map((menu, idx) => (
                 <li
                   key={idx}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-50 shadow-sm hover:bg-gray-100 transition group"
@@ -164,8 +134,8 @@ export default function RestaurantDetailComponent({
         {/* 중계 탭 */}
         {currentTab === "중계" && (
           <ul className="flex flex-col gap-4">
-            {dummyData.broadcasts.length > 0 ? (
-              dummyData.broadcasts.map((b, idx) => (
+            {dummyRestaurantDetail.broadcasts.length > 0 ? (
+              dummyRestaurantDetail.broadcasts.map((b, idx) => (
                 <li
                   key={idx}
                   className="rounded-xl bg-gradient-to-r from-emerald-50 to-white shadow p-4 flex flex-col gap-1 border border-emerald-100"
