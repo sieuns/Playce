@@ -9,22 +9,27 @@ const storeRepo = AppDataSource.getRepository(Store);
 const sportRepo = AppDataSource.getRepository(Sport);
 const leagueRepo = AppDataSource.getRepository(League);
 
-// 중계 일정 등록
-const createBroadcast = async (data: any, userId: number) => {
+
+// 매장 소유권 확인
+const checkStoreOwnership = async (storeId: number, userId: number) => {
   const store = await storeRepo.findOne({
-    where: { id: data.store_id },
+    where: { id: storeId },
     relations: ["user"],
   });
-  const sport = await sportRepo.findOneBy({ id: data.sport_id });
-  const league = await leagueRepo.findOneBy({ id: data.league_id });
-
   if (!store) throw new Error("존재하지 않는 매장입니다.");
-  if (!sport) throw new Error("존재하지 않는 스포츠입니다.");
-  if (!league) throw new Error("존재하지 않는 리그입니다.");
+  if (store.user.id !== userId) throw new Error("권한이 없습니다.");
+  return store;
+};
 
-  if (store.user.id !== userId) {
-    throw new Error("권한이 없습니다.");
-  }
+// 중계 일정 생성
+const createBroadcast = async (data: any, userId: number) => {
+  const store = await checkStoreOwnership(data.store_id, userId);
+
+  const sport = await sportRepo.findOneBy({ id: data.sport_id });
+  if (!sport) throw new Error("존재하지 않는 스포츠입니다.");
+
+  const league = await leagueRepo.findOneBy({ id: data.league_id });
+  if (!league) throw new Error("존재하지 않는 리그입니다.");
 
   const newBroadcast = broadcastRepo.create({
     store,
@@ -45,29 +50,15 @@ const createBroadcast = async (data: any, userId: number) => {
 const updateBroadcast = async (broadcastId: number, data: any, userId: number) => {
   const broadcast = await broadcastRepo.findOne({
     where: { id: broadcastId },
-    relations: ["store", "store.user",  "sport", "league"],
+    relations: ["store", "store.user", "sport", "league"],
   });
   if (!broadcast) throw new Error("해당 중계 일정을 찾을 수 없습니다.");
 
-  // 권한 확인
-  if (broadcast.store.user.id !== userId) {
-    throw new Error("권한이 없습니다.");
-  }
+  if (broadcast.store.user.id !== userId) throw new Error("권한이 없습니다.");
 
-  if (data.store_id) {
-    const store = await storeRepo.findOne({
-      where: { id: data.store_id },
-      relations: ["user"], // store의 user도 같이 조회
-    });
-    if (!store) throw new Error("존재하지 않는 매장입니다.");
-    if (store.user.id !== userId) throw new Error("권한이 없습니다.");
-    broadcast.store = store;
-  }
-
-  // 관계형 데이터 수정 처리
-  if (data.store_id) {
-    const store = await storeRepo.findOneBy({ id: data.store_id });
-    if (!store) throw new Error("존재하지 않는 매장입니다.");
+  if (data.store_id && data.store_id !== broadcast.store.id) {
+    // store 변경 시 권한 재검증
+    const store = await checkStoreOwnership(data.store_id, userId);
     broadcast.store = store;
   }
 
@@ -83,7 +74,6 @@ const updateBroadcast = async (broadcastId: number, data: any, userId: number) =
     broadcast.league = league;
   }
 
-  // 일반 필드 업데이트
   broadcast.matchDate = data.match_date ?? broadcast.matchDate;
   broadcast.matchTime = data.match_time ?? broadcast.matchTime;
   broadcast.teamOne = data.team_one ?? broadcast.teamOne;
@@ -98,18 +88,15 @@ const updateBroadcast = async (broadcastId: number, data: any, userId: number) =
 const deleteBroadcast = async (broadcastId: number, userId: number) => {
   const broadcast = await broadcastRepo.findOne({
     where: { id: broadcastId },
-    relations: ["store", "store.user"], 
+    relations: ["store", "store.user"],
   });
   if (!broadcast) throw new Error("삭제할 중계 일정이 없습니다.");
 
-  if (broadcast.store.user.id !== userId) {
-    throw new Error("권한이 없습니다.");
-  }
+  if (broadcast.store.user.id !== userId) throw new Error("권한이 없습니다.");
 
   await broadcastRepo.delete(broadcastId);
 };
 
-// 특정 식당의 중계 일정 조회
 const getBroadcastsByStore = async (storeId: number) => {
   const broadcasts = await broadcastRepo.find({
     where: { store: { id: storeId } },

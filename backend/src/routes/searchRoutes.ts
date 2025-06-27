@@ -1,5 +1,6 @@
 import { Router } from "express";
 import searchController from "../controller/searchController";
+import { NearbySearchValidator } from "../middlewares/searchValidator";
 
 const router = Router();
 
@@ -101,7 +102,7 @@ const router = Router();
  *                               type: string
  *                               example: 빅매치!
  */
-router.get("/nearby", searchController.getNearbyStores);
+router.get("/nearby", NearbySearchValidator, searchController.getNearbyStores);
 
 
 /**

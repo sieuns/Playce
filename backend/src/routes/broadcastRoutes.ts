@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import broadcastController from '../controller/broadcastController';
 import { authenticate } from '../middlewares/authMiddleware';
+import { createBroadcastValidator, updateBroadcastValidator } from "../middlewares/broadcastValidator";
 
 const router = Router();
 
@@ -37,7 +38,7 @@ const router = Router();
  *               match_time:
  *                 type: string
  *                 format: time
- *                 example: "18:30:00"
+ *                 example: "18:30"
  *               sport_id:
  *                 type: integer
  *                 example: "1"
@@ -57,7 +58,7 @@ const router = Router();
  *       201:
  *         description: 중계 일정 등록 성공
  */
-router.post('/', authenticate, broadcastController.createBroadcast);
+router.post('/', authenticate, createBroadcastValidator, broadcastController.createBroadcast);
 
 /**
  * @swagger
@@ -108,7 +109,7 @@ router.delete('/:broadcasts_id', authenticate,broadcastController.deleteBroadcas
  *               match_time:
  *                 type: string
  *                 format: time
- *                 example: "20:00:00"
+ *                 example: "20:00"
  *               sport_id:
  *                 type: integer
  *                 example: "1"
@@ -128,7 +129,7 @@ router.delete('/:broadcasts_id', authenticate,broadcastController.deleteBroadcas
  *       200:
  *         description: 수정 성공
  */
-router.patch('/:broadcasts_id', authenticate, broadcastController.updateBroadcast);
+router.patch('/:broadcasts_id', authenticate, updateBroadcastValidator, broadcastController.updateBroadcast);
 
 /**
  * @swagger
