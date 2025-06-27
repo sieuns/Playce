@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { FiStar, FiTrash2, FiChevronRight } from "react-icons/fi";
+import {
+  FiStar,
+  FiTrash2,
+  FiChevronRight,
+  FiChevronLeft,
+} from "react-icons/fi";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import DetailStores from "../DetailStores/DetailStores";
 import type { RestaurantDetail } from "../../types/restaurant.types";
@@ -74,7 +79,7 @@ const FavoriteList = () => {
                 className="p-2 rounded-full bg-gray-50 hover:bg-emerald-100 transition-colors shadow"
                 aria-label="식당 상세보기"
               >
-                <FiChevronRight className="text-emerald-500 text-xl" />
+                <FiChevronLeft className="text-emerald-500 text-xl" />
               </button>
               {/* 삭제 버튼 */}
               <button
