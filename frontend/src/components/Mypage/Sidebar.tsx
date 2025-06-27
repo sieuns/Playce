@@ -30,7 +30,7 @@ const SidebarItem = ({ icon, label, active, onClick }: SidebarItemProps) => {
 
 const Sidebar = ({ selected, onSelect }: SidebarProps) => {
   return (
-    <div className="w-[160px] bg-primary4 px-4 py-10 flex flex-col gap-2">
+    <div className="w-[220px] bg-primary4 px-4 py-10 flex flex-col gap-2">
       <div className="flex flex-col gap-2 mt-1">
         <SidebarItem
           icon={<FaStar />}

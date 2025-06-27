@@ -20,7 +20,7 @@ const ModalBase = ({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-lg w-[600px] max-h-[90vh] overflow-hidden flex flex-col"
+        className="bg-white rounded-xl shadow-lg w-[800px] h-[600px] max-w-[90vw] max-h-[90vh] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {!hideHeader && (
@@ -34,7 +34,6 @@ const ModalBase = ({
             </button>
           </div>
         )}
-
 
         {/* 콘텐츠 */}
         {children}
