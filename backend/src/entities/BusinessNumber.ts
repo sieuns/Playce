@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, Unique } from 'typeorm';
 import { Store } from './Store';
 
 @Entity('business_numbers')
@@ -13,6 +13,6 @@ export class BusinessNumber {
   @Column({ name: 'is_valid' })
   isValid!: boolean;
 
-  @OneToMany(() => Store, store => store.businessNumber)
-  stores!: Store[];
+  @OneToOne(() => Store, store => store.businessNumber)
+  store!: Store;
 }

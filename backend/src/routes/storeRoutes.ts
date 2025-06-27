@@ -1,5 +1,7 @@
 import { Router } from "express";
 import storeController from "../controller/storeController";
+import { authenticate } from "../middlewares/authMiddleware";
+import { createStoreValidator } from "../middlewares/storeValidator";
 
 const router = Router();
 
@@ -28,47 +30,42 @@ const router = Router();
  *               - store_name
  *               - business_number
  *               - address
- *               - lat
- *               - lng
  *               - phone
  *               - opening_hours
  *               - menus
  *               - type
- *               - img_id
  *             properties:
  *               store_name:
  *                 type: string
- *                 example: 플레이스 강남점
+ *                 example: 펍 카와우소
  *               business_number:
  *                 type: string
- *                 example: 123-45-67890
+ *                 example: 333-33-12345
  *               address:
  *                 type: string
- *                 example: 서울특별시 강남구 테헤란로 123
- *               lat:
- *                 type: number
- *                 example: 37.5665
- *               lng:
- *                 type: number
- *                 example: 126.9780
+ *                 example: 서울특별시 중구 세종대로 80 지하1층
  *               phone:
  *                 type: string
  *                 example: 02-1234-5678
  *               opening_hours:
  *                 type: string
- *                 example: 매일 10:00 ~ 23:00
+ *                 example: 매일 11:00 ~ 24:00
  *               menus:
  *                 type: string
- *                 example: 맥주, 피자, 치킨
+ *                 example: 뇨끼, 샐러드, 피시 앤 칩스
  *               type:
  *                 type: string
- *                 example: 스포츠펍
- *               img_id:
- *                 type: integer
- *                 example: 5
+ *                 example: 펍
  *               description:
  *                 type: string
+ *                 nullable: true
  *                 example: 축구 경기 생중계가 있는 강남 최고의 스포츠펍
+ *               img_urls:
+ *                 type: string[]
+ *                 nullable: true
+ *                 example:
+ *                  - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EC%95%88%EA%B2%BD%EA%B3%BC-%EC%96%91%EC%B4%88%EA%B0%80%EC%9E%88%EB%8A%94-%ED%85%8C%EC%9D%B4%EB%B8%94-NXzahh27tDQ'
+ *                  - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EB%B0%98%EC%AF%A4-%EC%B1%84%EC%9B%8C%EC%A7%84-%EC%99%80%EC%9D%B8-%EC%9E%94-%EC%98%86%EC%97%90-%EB%B0%98%EC%AF%A4-%EB%B9%88-%ED%88%AC%EB%AA%85-%ED%8C%8C%EC%9D%B8%ED%8A%B8-%EC%9E%94-OxKFC5u0980'
  *     responses:
  *       201:
  *         description: 식당이 등록되었습니다.
@@ -77,7 +74,7 @@ const router = Router();
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.post("/", storeController.registerStore);
+router.post("/", authenticate, createStoreValidator, storeController.registerStore);
 
 /**
  * @swagger
@@ -256,7 +253,7 @@ router.delete("/:id", storeController.deleteStore);
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.get("/:id", storeController.getStoreDetail);
+router.get("/:id", storeController.getStoreDetail); 
 
 /**
  * @swagger

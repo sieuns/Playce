@@ -1,5 +1,5 @@
-import "dotenv/config";
 import "reflect-metadata";
+import "dotenv/config";
 import express from "express";
 
 // TypeORM 설정
@@ -15,9 +15,6 @@ import storeRoutes from "./routes/storeRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import favoriteRoutes from "./routes/favoriteRoutes";
-
-// 기타
-import testMiddleware from "./middlewares/test";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,13 +32,8 @@ app.use("/favorites", favoriteRoutes); // 즐겨찾기
 
 // 정의되지 않은 라우터 -> 404 에러 처리
 app.use((req, res, next) => {
-  res.status(404).send("Not Found");
+  res.status(404).send("❌ Not Found");
 });
-
-// TODO: 제대로된 미들웨어 등록할
-// TODO: 필요하다면 커스텀 에러를 만들 것
-// 에러 처리 미들웨어 등록
-app.use(testMiddleware);
 
 // TypeORM 연결 후 서버 실행
 AppDataSource.initialize()
@@ -52,5 +44,5 @@ AppDataSource.initialize()
     });
   })
   .catch((error: any) => {
-    console.error("DB 연결 실패:", error);
+    console.error("❌ DB 연결 실패:", error);
   });
