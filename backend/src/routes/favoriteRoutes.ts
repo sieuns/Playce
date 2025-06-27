@@ -1,5 +1,6 @@
-import { Router } from 'express';
-import favoriteController from '../controller/favoriteController';
+import { Router } from "express";
+import favoriteController from "../controller/favoriteController";
+import { authenticate } from "../middlewares/authMiddleware";
 
 const router = Router();
 
@@ -21,8 +22,33 @@ const router = Router();
  *     responses:
  *       200:
  *         description: 즐겨찾기 목록 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 stores:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       store_id:
+ *                         type: integer
+ *                         example: 1
+ *                       store_name:
+ *                         type: string
+ *                         example: "신라면옥"
+ *                       main_img:
+ *                         type: string
+ *                         example: "https://cdn.example.com/image.jpg"
+ *                       address:
+ *                         type: string
+ *                         example: "서울시 강남구"
+ *                       type:
+ *                         type: string
+ *                         example: "한식"
  */
-router.get('/', favoriteController.getFavorites); // 1. 즐겨찾기 목록 조회
+router.get("/", authenticate, favoriteController.getFavorites); // 1. 즐겨찾기 목록 조회
 
 /**
  * @swagger
@@ -43,7 +69,7 @@ router.get('/', favoriteController.getFavorites); // 1. 즐겨찾기 목록 조�
  *       201:
  *         description: 즐겨찾기 추가 성공
  */
-router.post('/:store_id', favoriteController.addFavorite); // 2. 즐겨찾기 추가
+router.post("/:store_id", authenticate, favoriteController.addFavorite); // 2. 즐겨찾기 추가
 
 /**
  * @swagger
@@ -64,6 +90,6 @@ router.post('/:store_id', favoriteController.addFavorite); // 2. 즐겨찾기 �
  *       200:
  *         description: 즐겨찾기 삭제 성공
  */
-router.delete('/:store_id', favoriteController.removeFavorite); // 3. 즐겨찾기 삭제
+router.delete("/:store_id", authenticate, favoriteController.removeFavorite); // 3. 즐겨찾기 삭제
 
 export default router;
