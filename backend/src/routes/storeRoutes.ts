@@ -1,7 +1,7 @@
 import { Router } from "express";
 import storeController from "../controller/storeController";
 import { authenticate, optionalAuthenticate } from "../middlewares/authMiddleware";
-import { createStoreValidator } from "../middlewares/storeValidator";
+import { createStoreValidator, updateStoreValidator } from "../middlewares/storeValidator";
 
 const router = Router();
 
@@ -74,7 +74,7 @@ const router = Router();
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.post("/", authenticate, createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
+router.post("/", createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
 
 /**
  * @swagger
@@ -184,7 +184,7 @@ router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식�
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.patch("/:storeId", authenticate, storeController.updateStore); // 2. 식당 수정 (🔒)
+router.patch("/:storeId", updateStoreValidator, storeController.updateStore); // 2. 식당 수정 (🔒)
 
 /**
  * @swagger
@@ -212,7 +212,7 @@ router.patch("/:storeId", authenticate, storeController.updateStore); // 2. 식�
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.delete("/:storeId", storeController.deleteStore); // 3. 식당 삭제 (🔒)
+router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식당 삭제 (🔒)
 
 /**
  * @swagger

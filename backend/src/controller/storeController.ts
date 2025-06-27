@@ -8,9 +8,10 @@ const storeController = {
   registerStore: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       console.log("\n🍴 식당 등록");
-      const userId: number = req.user!.userId;
+      const userId: number = 1;//req.user!.userId;
+      const createData = req.body;
 
-      await storeService.createStore(userId, req.body);
+      await storeService.createStore(userId, createData);
 
       console.log("✅ 식당 등록 - 성공");
       res.status(201).json({ success: true, message: "식당 등록" });
@@ -23,9 +24,11 @@ const storeController = {
   updateStore: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       console.log("\n🍴 식당 수정");
-      const userId: number = req.user!.userId;
+      const userId: number = 1; //req.user!.userId;
+      const storeId: number = parseInt(req.params.storeId);
+      const updateData = req.body;
 
-      await storeService.updateStore();
+      await storeService.updateStore(userId, storeId, updateData);
 
       console.log("✅ 식당 수정 - 성공");
       res.status(200).json({ success: true, message: "식당 수정" });
@@ -38,7 +41,7 @@ const storeController = {
   deleteStore: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       console.log("\n🍴 식당 삭제");
-      const userId: number = 1; //req.user!.userId;
+      const userId: number = req.user!.userId;
       const storeId = parseInt(req.params.storeId);
 
       if (isNaN(storeId)) {

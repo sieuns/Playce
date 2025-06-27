@@ -8,10 +8,11 @@ import { StoreImage } from "../entities/StoreImage";
 import { getCoordinatesByAddress } from "../utils/kakaoAPI";
 import { normalizeRegionName } from "../utils/regionNormalizer";
 import { Broadcast } from "../entities/Broadcast";
+import { getLocationDataFromAddress } from "../utils/locationUtils";
 
 const storeService = {
   // 1. 식당 등록
-  createStore: async (userId: number, data: any) => {
+  createStore: async (userId: number, createData: any) => {
     const { 
       store_name: storeName, 
       business_number: businessNumber,
@@ -22,7 +23,7 @@ const storeService = {
       type,
       description,
       img_urls: imgUrls
-    } = data;
+    } = createData;
 
     // 사업자등록번호 유효성 검사
     const businessNumberRepo = AppDataSource.getRepository(BusinessNumber);
@@ -44,39 +45,11 @@ const storeService = {
 
     console.log(`- 사업자등록번호(id: ${findBusinessNumber.id}, number: ${findBusinessNumber.businessNumber})`);
 
-    // DB에서 지역 대/소분류 id 찾기
-    const { bigRegionName, smallRegionName, lat, lng } = await getCoordinatesByAddress(address);
-    console.log(bigRegionName, smallRegionName);
-
+    // 주소-위치-지역 변환 및 DB 조회
     const bigRegionRepo = AppDataSource.getRepository(BigRegion);
     const smallRegionRepo = AppDataSource.getRepository(SmallRegion);
-
-    const normalizeBigRegionName = normalizeRegionName(bigRegionName);
-    const findBigRegion = await bigRegionRepo.findOne({
-      where: { name: Like(`${normalizeBigRegionName}%`) }
-    });
-    if (!findBigRegion) {
-      const error = new Error('유효하지 않은 지역-대분류입니다.');
-      (error as any).status = 400;
-      throw error;
-    }
-
-    const findSmallRegion = await smallRegionRepo.findOne({
-      where: {
-        name: Like(`${smallRegionName}%`),
-        bigRegion: findBigRegion
-      }
-    });
-    if (!findSmallRegion) {
-      const error = new Error('유효하지 않은 지역-소분류입니다.');
-      (error as any).status = 400;
-      throw error;
-    }
-    console.log(`- 지역 id : 대분류(id: ${findBigRegion.id}, name: ${bigRegionName}), 소분류(id: ${findSmallRegion.id}, name: ${smallRegionName})`);
-
-    // Point 객체 생성
-    const location = `POINT(${lng} ${lat})`;
-    console.log('- Point 객체 : ', location);
+    
+    const { location, bigRegion, smallRegion } = await getLocationDataFromAddress(address, bigRegionRepo, smallRegionRepo);
 
     // stores에 정보 저장
     const storeRepo = AppDataSource.getRepository(Store);
@@ -85,8 +58,8 @@ const storeService = {
       storeName,
       businessNumber: findBusinessNumber,
       address,
-      bigRegion: findBigRegion,
-      smallRegion: findSmallRegion,
+      bigRegion,
+      smallRegion,
       location,
       phone,
       openingHours,
@@ -96,7 +69,7 @@ const storeService = {
     });
 
     const saveStore = await storeRepo.save(newStore);
-    console.log('- store에 데이터 저장 완료');
+    console.log('- stores : 데이터 저장 완료');
 
     // store_images에 데이터 저장
     if (imgUrls && Array.isArray(imgUrls) && imgUrls.length > 0) {
@@ -110,15 +83,12 @@ const storeService = {
       );
 
       await storeImageRepo.save(newStoreImages);
-      console.log(`- ${newStoreImages.length}개의 이미지 저장 완료`);
+      console.log(`- store_image : ${newStoreImages.length}개의 이미지 저장 완료`);
     }
   },
   // 2. 식당 수정
-  updateStore: async () => {
-    console.log("식당 수정");
-    // const error = new Error("해당 식당을 찾을 수 없습니다.");
-    // (error as any).status = 404;
-    // throw error;
+  updateStore: async (userId: number, storeId: number, updateData: any) => {
+    console.log('식당 수정');
   },
   // 3. 식당 삭제
   deleteStore: async (userId: number, storeId: number) => {
