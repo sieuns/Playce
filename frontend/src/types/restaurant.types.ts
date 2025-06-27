@@ -9,6 +9,7 @@ export interface Broadcast {
 }
 
 export interface RestaurantDetail {
+  id: number;
   store_name: string;
   address: string;
   phone: string;
