@@ -1,21 +1,40 @@
-// FavoriteSidebar.jsx
 import { useState } from "react";
 import {
+  FiChevronLeft,
   FiChevronRight,
-  FiChevronDown,
   FiStar,
   FiTrash2,
 } from "react-icons/fi";
-import { dummyFavorites } from "../../data/dummyFavorites";
+import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
+import DetailStores from "../DetailStores/DetailStores";
+import type { RestaurantDetail } from "../../types/restaurant.types";
 
 export default function FavoriteSidebar() {
-  const [favorites, setFavorites] = useState(dummyFavorites);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([1, 2, 3, 4, 5]);
   const [expanded, setExpanded] = useState(false);
+  const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
+    null
+  );
+
+  const favorites = dummyRestaurantDetails
+    .filter((store) => favoriteIds.includes(store.id))
+    .map((store) => ({
+      store_id: store.id,
+      store_name: store.store_name,
+      main_img: store.img_list?.[0] || "",
+      address: store.address,
+      type: store.type,
+    }));
 
   const visibleFavorites = expanded ? favorites : favorites.slice(0, 3);
 
   const handleRemove = (store_id: number) => {
-    setFavorites(favorites.filter((f) => f.store_id !== store_id));
+    setFavoriteIds((ids) => ids.filter((id) => id !== store_id));
+  };
+
+  const handleShowDetail = (store_id: number) => {
+    const detail = dummyRestaurantDetails.find((d) => d.id === store_id);
+    if (detail) setSelectedDetail(detail);
   };
 
   return (
@@ -31,7 +50,7 @@ export default function FavoriteSidebar() {
           즐겨찾기
         </span>
         {expanded ? (
-          <FiChevronDown className="text-gray-400 text-xl group-hover:text-emerald-500 transition" />
+          <FiChevronRight className="text-gray-400 text-xl group-hover:text-emerald-500 transition rotate-90" />
         ) : (
           <FiChevronRight className="text-gray-400 text-xl group-hover:text-emerald-500 transition" />
         )}
@@ -74,8 +93,20 @@ export default function FavoriteSidebar() {
                   {store.address}
                 </div>
               </div>
+              {/* 상세보기 < 버튼 */}
               <button
-                onClick={() => handleRemove(store.store_id)}
+                onClick={() => handleShowDetail(store.store_id)}
+                className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-emerald-50 transition ml-1"
+                aria-label="상세보기"
+              >
+                <FiChevronLeft className="text-emerald-500 text-xl" />
+              </button>
+              {/* 삭제 버튼 */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemove(store.store_id);
+                }}
                 className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition ml-1"
                 aria-label="삭제"
               >
@@ -85,6 +116,13 @@ export default function FavoriteSidebar() {
           ))
         )}
       </ul>
+      {/* 상세보기 사이드바/모달 */}
+      {selectedDetail && (
+        <DetailStores
+          detail={selectedDetail}
+          onClose={() => setSelectedDetail(null)}
+        />
+      )}
     </section>
   );
 }
