@@ -4,57 +4,60 @@ import useMapStore from "../../stores/mapStore";
 import PlayceMapMarker from "./PlayceMapMarker";
 import PlayceModal from "./PlayceModal";
 import RestaurantDetailComponent from "../DetailStores/DetailStores";
-import type { spot } from "../../types/map";
+import React from "react";
+import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
+import type { RestaurantDetail } from "../../types/restaurant.types";
 
 const PlayceMap: React.FC = () => {
   const { position, spots, openedModal, closeModal, setRefreshBtn } =
     useMapStore();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [selectedSpot, setSelectedSpot] = useState<spot | null>(null);
+  const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
+    null
+  );
 
-  console.log("isDetailOpen:", isDetailOpen);
   return (
-    <div className="relative w-full h-screen">
+    <>
       <Map
         className="w-full h-full"
         center={position}
-        onClick={() => {
-          closeModal();
-        }}
-        onDragEnd={() => {
-          setRefreshBtn(true);
-        }}
+        onClick={closeModal}
+        onDragEnd={() => setRefreshBtn(true)}
       >
-        {spots.map((spot) => (
-          <div key={spot.id}>
-            <PlayceMapMarker spot={spot} />
-            {openedModal === spot.id && (
-              <PlayceModal
-                spot={spot}
-                onDetailClick={(spot, detail) => {
-                  closeModal();
-                  setSelectedSpot(spot);
-                  setIsDetailOpen(true);
-                  console.log(detail);
-                }}
-                onClose={closeModal}
-              />
-            )}
-          </div>
-        ))}
+        {spots.map((spot) => {
+          const detail = dummyRestaurantDetails.find((d) => d.id === spot.id);
+          return (
+            <React.Fragment key={spot.id}>
+              <PlayceMapMarker spot={spot} />
+              {openedModal === spot.id && detail && (
+                <PlayceModal
+                  spot={spot}
+                  detail={detail}
+                  // 이벤트 버블링 문제 해결을 위해 onMouseDown에서 stopPropagation!
+                  onDetailClick={(_spot, detail) => {
+                    setSelectedDetail(detail!);
+                    setIsDetailOpen(true);
+                    closeModal();
+                  }}
+                  onClose={closeModal}
+                />
+              )}
+            </React.Fragment>
+          );
+        })}
       </Map>
-      {isDetailOpen && selectedSpot && (
+      {isDetailOpen && selectedDetail && (
         <div className="fixed left-0 top-0 h-full w-[370px] z-[9999] shadow-2xl bg-white">
           <RestaurantDetailComponent
-            // spot={selectedSpot}
+            detail={selectedDetail}
             onClose={() => {
               setIsDetailOpen(false);
-              setSelectedSpot(null);
+              setSelectedDetail(null);
             }}
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

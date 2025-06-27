@@ -1,6 +1,6 @@
 import { regionMap } from "../../data/regions";
 import { useRegionStore } from "../../stores/regionStore";
-import Tag from "../common/Tag";
+import Tag from "../Common/Tag";
 
 const RegionPanel = () => {
   const { mainRegion, subRegions, setMainRegion, toggleSubRegion } =

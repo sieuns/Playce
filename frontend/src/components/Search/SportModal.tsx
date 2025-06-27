@@ -1,4 +1,4 @@
-import ModalBase from "../common/ModalBase";
+import ModalBase from "../Common/ModalBase";
 import SportPanel from "./SportPanel";
 import { useSportStore } from "../../stores/sportStore";
 

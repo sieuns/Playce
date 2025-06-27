@@ -1,12 +1,15 @@
 import { useState } from "react";
-import RegionModal from "../layouts/Search/RegionModal";
+import RegionModal from "../components/Search/RegionModal";
 import { useRegionStore } from "../stores/regionStore";
 import { getMainRegion } from "../data/regions";
-import SportModal from "../layouts/Search/SportModal";
+import SportModal from "../components/Search/SportModal";
 import { useSportStore } from "../stores/sportStore";
-import SearchInput from "../layouts/Search/SearchInput";
-import SearchButton from "../layouts/Search/SearchButton";
-import SearchResultList from "../layouts/Search/SearchResultList";
+import SearchInput from "../components/Search/SearchInput";
+import SearchButton from "../components/Search/SearchButton";
+import SearchResultList from "../components/Search/SearchResultList";
+import AppLogoHeader from "../components/LogoHeader/AppLogoHeader";
+import FavoriteSidebar from "../components/FavoriteSidebar/FavoriteSidebar";
+import TodayBroadcastSidebar from "../components/TodayBroadcasts/TodayBroadCasts";
 
 const SearchPage = () => {
   const [showRegionModal, setShowRegionModal] = useState(false);
@@ -35,8 +38,18 @@ const SearchPage = () => {
   return (
     <div className="h-screen bg-white">
       {/* 사이드바 */}
-      <aside className="w-[430px] p-3 overflow-y-auto border-r">
-        <div className="-mx-3 -my-3 bg-primary4 px-3 py-3">
+      <aside
+        className="w-[430px] h-screen overflow-y-auto border-r bg-white"
+        style={{
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE, Edge
+        }}
+      >
+        {/* 앱 이름/로고 */}
+        <AppLogoHeader />
+
+        {/* 검색 영역 */}
+        <div className="bg-primary4 px-3 py-3">
           {/* 지역/경기 선택 */}
           <div className="flex gap-2 mb-2 w-full">
             <div className="flex-1">
@@ -107,8 +120,18 @@ const SearchPage = () => {
           </div>
         </div>
 
+        {/* 즐겨찾기 영역 */}
+        <div className="mt-4 px-3">
+          <FavoriteSidebar />
+        </div>
+
+        {/* 오늘의 중계일정 영역 - 여기서 추가! */}
+        <div className="mt-4 px-3">
+          <TodayBroadcastSidebar />
+        </div>
+
         {/* 결과 리스트 */}
-        <div className="mt-4 -mx-3">
+        <div className="mt-4 px-3">
           <SearchResultList />
         </div>
       </aside>

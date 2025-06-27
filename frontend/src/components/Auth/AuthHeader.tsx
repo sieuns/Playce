@@ -6,12 +6,15 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 import useAuthStore from "../../stores/authStore";
+import useMypageStore from "../../stores/mypageStore";
 // import { useAuth } from "../../hooks/useAuth";
 
 const AuthHeader: React.FC = () => {
   const { isLoggedIn, storeLogout, setIsLoginModalOpen, setIsSignupModalOpen } =
     useAuthStore();
+
   // const { userLogout } = useAuth();
+  const { setIsMypageOpen } = useMypageStore();
   return (
     <div className="absolute top-5 right-5 z-10 text-lg">
       <div className="flex gap-3">
@@ -29,9 +32,14 @@ const AuthHeader: React.FC = () => {
             >
               로그아웃
             </Button>
-            <Button icon={<FaUserAlt />} size="large">
+            <Button
+              icon={<FaUserAlt />}
+              size="large"
+              onClick={() => setIsMypageOpen(true)}
+            >
               마이페이지
             </Button>
+            {/* 마이페이지 버튼 */}
           </>
         ) : (
           <>

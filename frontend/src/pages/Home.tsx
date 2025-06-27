@@ -4,13 +4,15 @@ import SignupModal from "../components/Auth/Signup";
 import Broadcasts from "../components/Broadcasts/Broadcasts";
 import Map from "../components/Map/PlayceMap";
 import SpotRefreshButton from "../components/Map/SpotRefreshButton";
+import MypageModal from "../components/Mypage/MypageModal";
 import { useGeoLocation } from "../hooks/useGeoLocation";
-
 import useMapStore from "../stores/mapStore";
+import useMypageStore from "../stores/mypageStore";
 import SearchPage from "./SearchPage";
 
 const Home: React.FC = () => {
   const { isRefreshBtnOn } = useMapStore();
+  const { isMypageOpen, setIsMypageOpen } = useMypageStore();
 
   const geolocationOptions = {
     enableHighAccuracy: true,
@@ -32,6 +34,7 @@ const Home: React.FC = () => {
         <SignupModal />
         {/* <Broadcasts /> */}
       </div>
+      {isMypageOpen && <MypageModal onClose={() => setIsMypageOpen(false)} />}
     </div>
   );
 };

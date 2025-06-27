@@ -1,4 +1,4 @@
-import ModalBase from "../../layouts/common/ModalBase";
+import ModalBase from "../common/ModalBase";
 import RegionPanel from "./RegionPanel";
 import { useRegionStore } from "../../stores/regionStore";
 
