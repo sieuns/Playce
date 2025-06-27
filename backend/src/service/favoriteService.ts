@@ -68,10 +68,14 @@ const favoriteService = {
 
     const favorites = await favoriteRepository.find({
       where: { user: { id: userId } },
-      relations: ["store", "store.images"], 
+      relations: ["store", "store.images"],
       order: { createdAt: "ASC" },
     });
 
+    if (favorites.length === 0) {
+      throw new Error("즐겨찾기 목록이 없습니다.");
+    }
+    
     return favorites.map((fav) => {
       const images = fav.store.images || [];
       const mainImage = images.find((img) => img.isMain);
