@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import storeService from "../service/storeService";
-import { logApiError } from "../util/errorHandler";
+import { logApiError } from "../utils/errorHandler";
 import { AuthRequest } from "../middlewares/authMiddleware";
 
 const storeController = {

@@ -5,8 +5,8 @@ import { BusinessNumber } from "../entities/BusinessNumber";
 import { SmallRegion } from "../entities/SmallRegion";
 import { Store } from "../entities/Store";
 import { StoreImage } from "../entities/StoreImage";
-import { getCoordinatesByAddress } from "../util/kakaoAPI";
-import { normalizeRegionName } from "../util/regionNormalizer";
+import { getCoordinatesByAddress } from "../utils/kakaoAPI";
+import { normalizeRegionName } from "../utils/regionNormalizer";
 
 const storeServcie = {
   // 1. 식당 등록
