@@ -116,7 +116,7 @@ router.post("/", authenticate, createStoreValidator, storeController.registerSto
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.get("/mypage", storeController.getMyStores); // 5. 내 식당 목록 조회 (🔒) <- 라우팅 순서 문제로 위치 수정
+router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식당 목록 조회 (🔒) <- 라우팅 순서 문제로 위치 수정
 
 /**
  * @swagger
@@ -200,7 +200,7 @@ router.patch("/:storeId", authenticate, storeController.updateStore); // 2. 식�
  *         required: true
  *         schema:
  *           type: integer
- *         example: 1
+ *         example: 3
  *         description: 삭제할 식당의 고유 ID
  *     responses:
  *       200:
@@ -212,7 +212,7 @@ router.patch("/:storeId", authenticate, storeController.updateStore); // 2. 식�
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식당 삭제 (🔒)
+router.delete("/:storeId", storeController.deleteStore); // 3. 식당 삭제 (🔒)
 
 /**
  * @swagger

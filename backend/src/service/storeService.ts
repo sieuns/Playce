@@ -7,6 +7,7 @@ import { Store } from "../entities/Store";
 import { StoreImage } from "../entities/StoreImage";
 import { getCoordinatesByAddress } from "../utils/kakaoAPI";
 import { normalizeRegionName } from "../utils/regionNormalizer";
+import { Broadcast } from "../entities/Broadcast";
 
 const storeService = {
   // 1. 식당 등록
@@ -120,11 +121,33 @@ const storeService = {
     // throw error;
   },
   // 3. 식당 삭제
-  deleteStore: async () => {
-    console.log("식당 삭제");
-    // const error = new Error("삭제 권한이 없습니다.");
-    // (error as any).status = 403;
-    // throw error;
+  deleteStore: async (userId: number, storeId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const storeToDelete = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: ['user'],
+    });
+
+    // 식당 유효성 검사
+    if (!storeToDelete) {
+      const error = new Error('식당을 찾을 수 없습니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 통과');
+
+    // 소유권 확인
+    if (storeToDelete.user.id !== userId) {
+      const error = new Error('해당 식당에 대한 삭제 권한이 없습니다.');
+      (error as any).status = 403;
+      throw error;
+    }
+    console.log('- 식당 소유권 확인');
+
+    // 삭제
+    await storeRepo.remove(storeToDelete);
+    return;
   },
   // 4. 식당 상세 조회
   getStoreDetail: async (userId: number | undefined, storeId: number) => {

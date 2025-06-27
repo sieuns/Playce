@@ -11,6 +11,7 @@ import { League } from "./entities/League";
 import { BusinessNumber } from "./entities/BusinessNumber";
 import { BigRegion } from "./entities/BigRegion";
 import { SmallRegion } from "./entities/SmallRegion";
+import path from "path";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -21,5 +22,17 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
-  entities: [User, Store, StoreImage, Favorite, Broadcast, BusinessNumber, BigRegion, SmallRegion, Sport, League ],
+  entities: [
+    User,
+    Store,
+    StoreImage,
+    Favorite,
+    Broadcast,
+    BusinessNumber,
+    BigRegion,
+    SmallRegion,
+    Sport,
+    League,
+  ],
+  migrations: [path.join(__dirname, "migrations", "*.ts")],
 });

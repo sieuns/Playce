@@ -22,7 +22,10 @@ export class Store {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => User, (user) => user.stores, { nullable: false })
+  @ManyToOne(() => User, (user) => user.stores, { 
+    nullable: false,
+    onDelete: 'CASCADE' 
+  })
   @JoinColumn({
     name: "user_id",
     foreignKeyConstraintName: "fk_store_user",

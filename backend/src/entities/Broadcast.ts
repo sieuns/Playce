@@ -15,7 +15,10 @@ export class Broadcast {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Store, (store) => store.broadcasts, { nullable: false })
+  @ManyToOne(() => Store, (store) => store.broadcasts, { 
+    nullable: false,
+    onDelete: 'CASCADE' 
+  })
   @JoinColumn({
     name: "store_id",
     foreignKeyConstraintName: "fk_broadcast_store",

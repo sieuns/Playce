@@ -12,7 +12,10 @@ export class StoreImage {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Store, (store) => store.images, { nullable: false })
+  @ManyToOne(() => Store, (store) => store.images, {
+    nullable: false,
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({
     name: "store_id",
     foreignKeyConstraintName: "fk_storeimage_store",
