@@ -3,7 +3,7 @@ import ModalBase from "../Common/ModalBase";
 import Sidebar from "../Mypage/Sidebar";
 import FavoriteList from "./FavortieList";
 import UserInfo from "./UserInfo";
-import RestaurantManager from "./RestaurantManage";
+import RestaurantManager from "./RestaurantManage/RestaurantManager";
 
 type TabType = "favorite" | "profile" | "restaurant";
 
@@ -16,9 +16,9 @@ const MypageModal = ({ onClose }: MypageProps) => {
 
   return (
     <ModalBase onClose={onClose} hideHeader>
-      <div className="flex h-[400px] bg-white rounded-xl overflow-hidden">
+      <div className="flex h-full bg-white rounded-xl overflow-hidden">
         {/* 왼쪽 사이드바 */}
-        <Sidebar selected={selectedTab} onSelect={setSelectedTab}/>
+        <Sidebar selected={selectedTab} onSelect={setSelectedTab} />
 
         {/* 오른쪽 콘텐츠 영역 */}
         <div className="flex-1 p-6 overflow-y-auto relative">

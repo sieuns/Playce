@@ -13,6 +13,7 @@ module.exports = {
         primary2: "#CAE8BD",
         primary3: "#DDF6D2",
         primary4: "#ECFAE5",
+        lightgray: "#CCCCCC",
       },
     },
   },
