@@ -1,43 +1,47 @@
 import { Request, Response, NextFunction } from "express";
+import { AuthRequest } from "../middlewares/authMiddleware";
 import favoriteService from "../service/favoriteService";
 
 const favoriteController = {
   // 1. 즐겨찾기 추가
-  addFavorite: async (req: Request, res: Response, next: NextFunction) => {
+  addFavorite: async (req: AuthRequest, res: Response) => {
     try {
-      const { store_id } = req.params;
-      const userId = 1; // 목업 유저 ID
-      const result = await favoriteService.addFavorite(userId, Number(store_id));
-      res.status(201).json({ success: true, message: '즐겨찾기가 추가되었습니다.', favorite_id: result.id });
-    } catch (error) {
-      next(error);
+      const userId = req.user!.userId;
+      const storeId = parseInt(req.params.store_id);
+      const result = await favoriteService.addFavorite(userId, storeId);
+      res.status(201).json(result);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
   },
 
   // 2. 즐겨찾기 삭제
-  removeFavorite: async (req: Request, res: Response, next: NextFunction) => {
+  removeFavorite: async (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      const { store_id } = req.params;
-      const userId = 1; // 목업 유저 ID
-      await favoriteService.removeFavorite(userId, Number(store_id));
-      res.status(200).json({ success: true, message: '즐겨찾기가 삭제되었습니다.' });
-    } catch (error) {
+      const storeId = parseInt(req.params.store_id);
+      const userId = req.user!.userId;
+
+      const result = await favoriteService.removeFavorite(userId, storeId);
+      res.status(200).json(result);
+    } catch (error: any) {
       next(error);
     }
   },
 
   // 3. 즐겨찾기 목록 조회
-  getFavorites: async (req: Request, res: Response, next: NextFunction) => {
+  getFavorites: async (req: AuthRequest, res: Response) => {
     try {
-      const userId = 1; // 목업 유저 ID
+      const userId = req.user!.userId;
       const favorites = await favoriteService.getFavorites(userId);
-      res.status(200).json({ success: true, stores: favorites });
-    } catch (error) {
-      next(error);
+      res.status(200).json({ stores: favorites });
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
     }
-  }
+  },
 };
-
-
 
 export default favoriteController;
