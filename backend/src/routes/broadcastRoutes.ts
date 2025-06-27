@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import broadcastController from '../controller/broadcastController';
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -24,7 +25,7 @@ const router = Router();
  *         application/json:
  *           schema:
  *             type: object
- *             required: [store_id, match_date, match_time, sport, league]
+ *             required: [store_id, match_date, match_time, sport_id, league_id]
  *             properties:
  *               store_id:
  *                 type: integer
@@ -37,12 +38,12 @@ const router = Router();
  *                 type: string
  *                 format: time
  *                 example: "18:30:00"
- *               sport:
- *                 type: string
- *                 example: "soccer"
- *               league:
- *                 type: string
- *                 example: "K League"
+ *               sport_id:
+ *                 type: integer
+ *                 example: "1"
+ *               league_id:
+ *                 type: integer
+ *                 example: "1"
  *               team_one:
  *                 type: string
  *                 example: "FC Seoul"
@@ -56,7 +57,7 @@ const router = Router();
  *       201:
  *         description: 중계 일정 등록 성공
  */
-router.post('/', broadcastController.createBroadcast);
+router.post('/', authenticate, broadcastController.createBroadcast);
 
 /**
  * @swagger
@@ -77,7 +78,7 @@ router.post('/', broadcastController.createBroadcast);
  *       200:
  *         description: 삭제 성공
  */
-router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
+router.delete('/:broadcasts_id', authenticate,broadcastController.deleteBroadcast);
 
 /**
  * @swagger
@@ -108,12 +109,12 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
  *                 type: string
  *                 format: time
  *                 example: "20:00:00"
- *               sport:
- *                 type: string
- *                 example: "baseball"
- *               league:
- *                 type: string
- *                 example: "KBO"
+ *               sport_id:
+ *                 type: integer
+ *                 example: "1"
+ *               league_id:
+ *                 type: integer
+ *                 example: "1"
  *               team_one:
  *                 type: string
  *                 example: "LG Twins"
@@ -127,7 +128,7 @@ router.delete('/:broadcasts_id', broadcastController.deleteBroadcast);
  *       200:
  *         description: 수정 성공
  */
-router.patch('/:broadcasts_id', broadcastController.updateBroadcast);
+router.patch('/:broadcasts_id', authenticate, broadcastController.updateBroadcast);
 
 /**
  * @swagger

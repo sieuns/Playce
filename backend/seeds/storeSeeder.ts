@@ -41,6 +41,23 @@ const stores = [
     type: "한식",
     description: "서울 시청 근처에서 유명한 해장국 맛집. 진하고 깔끔한 국물이 특징",
   },
+  {
+    user: { id: 5 },
+    storeName: "서울시청점 김밥천국",
+    businessNumber: { id: 3 },
+    address: "서울특별시 중구 세종대로 18길 6",
+    bigRegion: { id: 1 },
+    smallRegion: { id: 24 },
+    // location: { type: "Point" as const, coordinates: [126.977945, 37.566295] },
+    location: "POINT(126.977945 37.566295)",
+    // lat: 37.566295,
+    // lng: 126.977945,
+    phone: "02-123-4567",
+    openingHours: "매일 08:00 ~ 21:00",
+    menus: "북어국, 공기밥",
+    type: "한식",
+    description: "서울 시청 근처에서 유명한 해장국 맛집. 진하고 깔끔한 국물이 특징",
+  },
 ];
 
 const storeImages = [
