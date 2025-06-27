@@ -8,7 +8,7 @@ import { StoreImage } from "../entities/StoreImage";
 import { getCoordinatesByAddress } from "../utils/kakaoAPI";
 import { normalizeRegionName } from "../utils/regionNormalizer";
 
-const storeServcie = {
+const storeService = {
   // 1. 식당 등록
   createStore: async (userId: number, data: any) => {
     const { 
@@ -127,19 +127,80 @@ const storeServcie = {
     // throw error;
   },
   // 4. 식당 상세 조회
-  getStoreDetail: async () => {
-    console.log("식당 상세 조회");
-    // const error = new Error("해당 식당이 존재하지 않습니다.");
-    // (error as any).status = 404;
-    // throw error;
+  getStoreDetail: async (userId: number | undefined, storeId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const store = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: [
+        'user',
+        'images',
+        'broadcasts',
+        'broadcasts.sport',
+        'broadcasts.league'
+      ]
+    });
+
+    if (!store) {
+      const error = new Error('존재하지 않는 식당입니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- store 유효성 검사');
+
+    const imgListData = store.images.map(img => img.imgUrl);
+    const broadcastData = store.broadcasts.map(bc => ({
+      match_date: bc.matchDate,
+      match_time: bc.matchTime,
+      sport: bc.sport.name,
+      league: bc.league.name,
+      team_one: bc.teamOne,
+      team_two: bc.teamTwo,
+      etc: bc.etc,
+    }));
+    const isOwner = !!userId && userId === store.user.id;
+
+    const responseData = {
+      store_name: store.storeName,
+      address: store.address,
+      phone: store.phone,
+      opening_hours: store.openingHours,
+      menus: store.menus,
+      type: store.type,
+      img_list: imgListData,
+      description: store.description,
+      broadcasts: broadcastData,
+      is_owner: isOwner,
+    };
+    console.log('- 응답 데이터 : ', responseData);
+
+    return responseData;
   },
   // 5. 내 식당 목록
-  getMyStores: async () => {
-    console.log("내가 등록한 식당 목록");
-    // const error = new Error("인증 정보가 없습니다.");
-    // (error as any).status = 401;
-    // throw error;
+  getMyStores: async (userId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const myStores= await storeRepo.find({
+      where: { user: { id: userId } },
+      relations: ['images'],
+      select: ['id', 'storeName', 'address'],
+    });
+
+    const responseData = myStores.map(store => {
+      const mainImageObj = store.images.find(img => img.isMain);
+      const mainImage = mainImageObj ? mainImageObj.imgUrl : null;
+
+      return {
+        store_id: store.id,
+        store_name: store.storeName,
+        main_img: mainImage,
+        address: store.address,
+      }
+    });
+    console.log('- 응답 데이터 : ', responseData);
+
+    return responseData;
   },
 };
 
-export default storeServcie;
+export default storeService;
