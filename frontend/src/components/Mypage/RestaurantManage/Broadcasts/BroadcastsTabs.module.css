@@ -1,0 +1,7 @@
+.broadcastsTab :global(.ant-tabs-nav-wrap)::before,
+.broadcastsTab :global(.ant-tabs-nav-wrap)::after,
+.broadcastsTab :global(.ant-tabs-nav-more) {
+  display: none !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
