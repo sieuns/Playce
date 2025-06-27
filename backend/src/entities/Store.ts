@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
   JoinColumn,
   Point,
   Index,
@@ -31,7 +32,7 @@ export class Store {
   @Column({ name: "store_name" })
   storeName!: string;
 
-  @ManyToOne(() => BusinessNumber, (bn) => bn.stores, { nullable: false })
+  @OneToOne(() => BusinessNumber, (bn) => bn.store, { nullable: false })
   @JoinColumn({
     name: "business_number_id",
     foreignKeyConstraintName: "fk_store_business_number",

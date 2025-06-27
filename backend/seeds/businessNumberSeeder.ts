@@ -4,7 +4,13 @@ import { BusinessNumber } from "../src/entities/BusinessNumber";
 const businessNumbers = [
   { businessNumber: "111-11-12345", isValid: true },
   { businessNumber: "222-22-12345", isValid: true },
-  { businessNumber: "333-33-12345", isValid: false },
+  { businessNumber: "333-33-12345", isValid: true },
+  { businessNumber: "444-44-12345", isValid: true },
+  { businessNumber: "555-55-12345", isValid: true },
+  { businessNumber: "666-66-12345", isValid: true },
+  { businessNumber: "777-77-12345", isValid: true },
+  { businessNumber: "888-88-12345", isValid: true },
+  { businessNumber: "999-99-12345", isValid: false },
 ];
 
 export const seedBusinessNumbers = async () => {
