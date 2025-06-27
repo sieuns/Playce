@@ -10,15 +10,15 @@ import {
   FiX,
 } from "react-icons/fi";
 
+const defaultImage =
+  "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&w=400&q=80";
+
 interface PlayceModalProps {
-  spot: spot; // 위치 정보
-  detail?: RestaurantDetail; // 상세 정보 (API에서 받아오거나, 없으면 undefined)
+  spot: spot;
+  detail?: RestaurantDetail;
   onDetailClick: (spot: spot, detail?: RestaurantDetail) => void;
   onClose: () => void;
 }
-
-const defaultImage =
-  "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&w=400&q=80";
 
 const PlayceModal = ({
   spot,
@@ -72,7 +72,11 @@ const PlayceModal = ({
       </div>
       {/* 상세보기 버튼 */}
       <button
-        onClick={() => onDetailClick(spot, detail)}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={() => {
+          console.log("PlayceModal 상세보기 버튼 클릭!", spot, detail);
+          onDetailClick(spot, detail);
+        }}
         className="w-full py-2 rounded-lg bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition"
       >
         상세보기
