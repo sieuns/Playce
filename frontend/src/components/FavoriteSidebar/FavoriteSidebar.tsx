@@ -1,23 +1,40 @@
-// FavoriteSidebar.jsx
 import { useState } from "react";
 import {
   FiChevronRight,
-  FiChevronDown,
   FiStar,
   FiTrash2,
 } from "react-icons/fi";
-import { dummyFavorites } from "../../data/dummyFavorites";
+import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
+import DetailStores from "../DetailStores/DetailStores";
+import type { RestaurantDetail } from "../../types/restaurant.types";
 
 export default function FavoriteSidebar() {
-  const [favorites, setFavorites] = useState(dummyFavorites);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([1, 2, 3, 4, 5]);
   const [expanded, setExpanded] = useState(false);
+  const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
+    null
+  );
+
+  const favorites = dummyRestaurantDetails
+    .filter((store) => favoriteIds.includes(store.id))
+    .map((store) => ({
+      store_id: store.id,
+      store_name: store.store_name,
+      main_img: store.img_list?.[0] || "",
+      address: store.address,
+      type: store.type,
+    }));
 
   const visibleFavorites = expanded ? favorites : favorites.slice(0, 3);
 
   const handleRemove = (store_id: number) => {
-    setFavorites(favorites.filter((f) => f.store_id !== store_id));
+    setFavoriteIds((ids) => ids.filter((id) => id !== store_id));
   };
 
+  const handleShowDetail = (store_id: number) => {
+    const detail = dummyRestaurantDetails.find((d) => d.id === store_id);
+    if (detail) setSelectedDetail(detail);
+  };
   return (
     <section className="w-full bg-white mb-4">
       <div>
@@ -31,21 +48,9 @@ export default function FavoriteSidebar() {
           <span className="text-lg font-bold text-mainText tracking-tight flex-1 text-left">
             즐겨찾기
           </span>
-          {expanded ? (
-            <FiChevronDown className="text-gray-600 text-xl group-hover:text-primary5 transition" />
-          ) : (
-            <FiChevronRight className="text-gray-600 text-xl group-hover:text-primary5 transition" />
-          )}
         </button>
-        {/* 안내문구 (접혔을 때만) */}
-        {!expanded && (
-          <div className="px-4 pt-3 pb-1 text-sm text-subText leading-relaxed">
-            저장한 즐겨찾기에 대해 '홈 목록 추가'한 장소가 나옵니다.
-            <br />
-            자주 쓰는 즐겨찾기를 더 빠르게 사용해 보세요.
-          </div>
-        )}
       </div>
+
       <div className="border-t border-gray-200 my-1" />
       {/* 즐겨찾기 리스트 */}
       <div>
@@ -74,7 +79,7 @@ export default function FavoriteSidebar() {
                     <span className="font-semibold truncate">
                       {store.store_name}
                     </span>
-                    <span className="ml-1 text-xs px-2 py-0.5 rounded  bg-primary3 text-primary5">
+                    <span className="ml-1 text-xs px-2 py-0.5 rounded bg-primary3 text-primary5">
                       {store.type}
                     </span>
                   </div>
@@ -82,8 +87,22 @@ export default function FavoriteSidebar() {
                     {store.address}
                   </div>
                 </div>
+
+                {/* 상세보기 버튼 */}
                 <button
-                  onClick={() => handleRemove(store.store_id)}
+                  onClick={() => handleShowDetail(store.store_id)}
+                  className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-primary1 transition ml-1"
+                  aria-label="상세보기"
+                >
+                  <FiChevronRight className="text-primary5 text-xl" />
+                </button>
+
+                {/* 삭제 버튼 */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemove(store.store_id);
+                  }}
                   className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-red-50 transition ml-1"
                   aria-label="삭제"
                 >
@@ -93,6 +112,14 @@ export default function FavoriteSidebar() {
             ))
           )}
         </ul>
+
+        {/* 상세보기 사이드바/모달 */}
+        {selectedDetail && (
+          <DetailStores
+            detail={selectedDetail}
+            onClose={() => setSelectedDetail(null)}
+          />
+        )}
       </div>
     </section>
   );

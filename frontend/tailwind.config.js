@@ -16,6 +16,9 @@ module.exports = {
 
         mainText:"#3A3A3A",
         subText:"#9CA3AF",
+
+        lightgray: "#CCCCCC",
+
       },
     },
   },
