@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import Button from "../Common/Button";
 import {
   FaSignInAlt,
   FaSignOutAlt,
@@ -22,7 +22,8 @@ const AuthHeader: React.FC = () => {
           <>
             <Button
               icon={<FaSignOutAlt />}
-              size="large"
+              scheme="secondary"
+              size="medium"
               onClick={() => {
                 // userLogout();
                 // 임시로 로그아웃되도록 설정
@@ -34,7 +35,8 @@ const AuthHeader: React.FC = () => {
             </Button>
             <Button
               icon={<FaUserAlt />}
-              size="large"
+              size="medium"
+              scheme="secondary"
               onClick={() => setIsMypageOpen(true)}
             >
               마이페이지
@@ -45,7 +47,8 @@ const AuthHeader: React.FC = () => {
           <>
             <Button
               icon={<FaSignInAlt />}
-              size="large"
+              size="medium"
+              scheme="secondary"
               onClick={() => {
                 setIsLoginModalOpen(true);
               }}
@@ -54,7 +57,8 @@ const AuthHeader: React.FC = () => {
             </Button>
             <Button
               icon={<FaUserPlus />}
-              size="large"
+              size="medium"
+              scheme="secondary"
               onClick={() => {
                 setIsSignupModalOpen(true);
               }}

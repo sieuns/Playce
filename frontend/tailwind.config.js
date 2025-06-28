@@ -13,6 +13,9 @@ module.exports = {
         primary2: "#CAE8BD",
         primary3: "#DDF6D2",
         primary4: "#ECFAE5",
+
+        mainText:"#3A3A3A",
+        subText:"#9CA3AF",
       },
     },
   },

@@ -1,45 +1,75 @@
 import React from "react";
 import classNames from "classnames";
 
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  scheme?: "primary" | "secondary";
-  size?: "small" | "medium" | "large";
+  scheme?: "primary" | "secondary" | "close" | "tab";
+  size?: "small" | "medium" | "large" | "icon";
   isLoading?: boolean;
-  className?: string;
+  fullWidth?: boolean;
+  icon?: React.ReactNode;
 }
 
-const Button = ({
-  children,
-  scheme = "primary",
-  size = "medium",
-  isLoading = false,
-  disabled = false,
-  className,
-  ...props
-}: ButtonProps) => {
-  const baseClass =
-    "w-full rounded-md font-semibold transition-colors duration-200 disabled:cursor-not-allowed";
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      scheme = "primary",
+      size = "medium",
+      isLoading = false,
+      fullWidth = false,
+      icon,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const baseStyle =
+      "inline-flex items-center justify-center font-semibold rounded transition-colors duration-200";
 
-  const sizeClass = {
-    small: "py-2 px-3 text-sm",
-    medium: "py-3 px-4 text-base",
-    large: "py-4 px-6 text-lg",
-  }[size];
+    const schemeStyle = {
+      primary:
+        "bg-primary1 text-white border border-primary1 hover:bg-primary5 hover:border-primary5",
+      secondary:
+        "bg-white text-primary1 border border-primary1 hover:bg-primary5 hover:border-primary5 hover:text-white",
 
-  const schemeClass =
-    scheme === "primary"
-      ? "bg-gray-300 text-white hover:bg-gray-500"
-      : "bg-gray-200 text-gray-800 hover:bg-gray-400 hover:text-white";
+      close: "text-gray-400 hover:text-primary5",
+      tab: "bg-transparent text-gray-400 hover:text-primary5 border-b-2 border-transparent",
+    };
 
-  return (
-    <button
-      className={classNames(baseClass, sizeClass, schemeClass, className)}
-      disabled={disabled || isLoading}
-      {...props}
-    >
-      {isLoading ? "로딩중..." : children}
-    </button>
-  );
-};
+    const sizeStyle = {
+      small: "px-3 py-1 text-sm",
+      medium: "px-4 py-2 text-base",
+      large: "px-5 py-3 text-lg",
+      icon: "p-2 text-xl",
+    };
 
+    return (
+      <button
+        ref={ref}
+        disabled={isLoading || props.disabled}
+        className={classNames(
+          baseStyle,
+          schemeStyle[scheme],
+          sizeStyle[size],
+          fullWidth && "w-full",
+          isLoading && "opacity-60 cursor-not-allowed",
+          className
+        )}
+        {...props}
+      >
+        {isLoading ? (
+          "로딩중..."
+        ) : (
+          <>
+            {icon && <span className="mr-2 flex items-center">{icon}</span>}
+            {children}
+          </>
+        )}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
 export default Button;
