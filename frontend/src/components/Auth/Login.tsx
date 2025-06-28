@@ -1,4 +1,3 @@
-import { Modal } from "antd";
 // import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import type { LoginProps } from "../../api/auth.api";
@@ -6,9 +5,10 @@ import InputText from "../Common/InputText";
 import useAuthStore from "../../stores/authStore";
 import Button from "../Common/Button";
 import ErrorText from "./ErrorText";
+import ModalBase from "../Common/ModalBase";
 
 const LoginModal = () => {
-  //   const { userLogin } = useAuth();
+  // const { userLogin } = useAuth();
   const { storeLogin, isLoginModalOpen, setIsLoginModalOpen } = useAuthStore();
 
   const {
@@ -30,14 +30,16 @@ const LoginModal = () => {
     setIsLoginModalOpen(false);
   };
 
+  if (!isLoginModalOpen) return null;
+
   return (
-    <Modal open={isLoginModalOpen} onCancel={handleCancel} footer={null}>
+    <ModalBase onClose={handleCancel} title="로그인" width="400px">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-5 p-5 mt-5">
+        <div className="flex flex-col gap-5 p-5">
           <fieldset>
             <InputText
               placeholder="이메일"
-              inputType="email"
+              type="email"
               {...register("email", { required: true })}
             />
             {errors.email && <ErrorText message="이메일을 입력해주세요" />}
@@ -45,17 +47,17 @@ const LoginModal = () => {
           <fieldset>
             <InputText
               placeholder="비밀번호"
-              inputType="password"
+              type="password"
               {...register("password", { required: true })}
             />
             {errors.password && <ErrorText message="비밀번호를 입력해주세요" />}
           </fieldset>
-          <Button type="submit" className="mt-5">
+          <Button type="submit" className="mt-5" scheme="primary">
             로그인
           </Button>
         </div>
       </form>
-    </Modal>
+    </ModalBase>
   );
 };
 

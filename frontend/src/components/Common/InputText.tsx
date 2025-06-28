@@ -1,25 +1,25 @@
-import React, { type ForwardedRef } from "react";
+import React from "react";
+import classNames from "classnames";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  inputType?: string;
+interface InputTextProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
 }
 
-const InputText = React.forwardRef(
-  (
-    { placeholder, inputType = "text", ...props }: Props,
-    ref: ForwardedRef<HTMLInputElement>
-  ) => {
+const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(
+  ({ className, type = "text", ...props }, ref) => {
     return (
       <input
-        className="w-full p-2 text-[16px] border border-gray-300 border-1.5 rounded-md"
-        type={inputType}
-        placeholder={placeholder}
         ref={ref}
-        autoComplete="off"
+        type={type}
+        className={classNames(
+          "border px-4 py-2 rounded w-full hover:border-primary1 focus:border-primary1 focus:outline-none focus:ring-1 focus:ring-primary1 transition-all",
+          className
+        )}
         {...props}
       />
     );
   }
 );
 
+InputText.displayName = "InputText";
 export default InputText;

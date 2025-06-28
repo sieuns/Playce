@@ -11,6 +11,8 @@ import {
 } from "react-icons/fi";
 import { FaUtensils } from "react-icons/fa";
 import type { RestaurantDetail } from "../../types/restaurant.types";
+import Button from "../Common/Button";
+import classNames from "classnames";
 
 const TABS = ["홈", "메뉴", "중계"] as const;
 type Tab = (typeof TABS)[number];
@@ -30,20 +32,20 @@ export default function RestaurantDetailComponent({
     <aside className="fixed left-0 top-0 h-full w-[430px] z-[100] bg-white shadow-2xl border-r border-gray-100 flex flex-col font-pretendard">
       {/* 상단: 로고와 닫기(X) 버튼을 같은 flex row에 배치 */}
       <div className="relative h-12 border-b border-gray-100 bg-white">
-        <span className="absolute left-8 top-1/2 -translate-y-1/2 text-2xl font-bold tracking-tight text-emerald-600 font-pretendard">
+        <span className="absolute left-8 top-1/2 -translate-y-1/2 text-2xl font-bold tracking-tight text-primary5 font-pretendard">
           Playce
         </span>
         <button
           onClick={onClose}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full hover:bg-emerald-50 transition"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full hover:text-priamry5 transition"
           aria-label="상세보기 닫기"
         >
-          <FiX className="text-emerald-500 text-2xl" />
+          <FiX className="text-primary5 text-2xl" />
         </button>
       </div>
 
       {/* 이미지 */}
-      <div className="w-full h-56 bg-gradient-to-tr from-emerald-50 via-white to-orange-50 flex items-center justify-center relative">
+      <div className="w-full h-56 bg-gradient-to-tr via-white to-orange-50 flex items-center justify-center relative">
         {detail.img_list[0] ? (
           <img
             src={detail.img_list[0]}
@@ -56,10 +58,10 @@ export default function RestaurantDetailComponent({
         {/* 저장/공유 버튼 */}
         <div className="absolute left-6 top-6 flex gap-3 z-10">
           <button className="bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition">
-            <FiStar className="text-emerald-500 text-lg" />
+            <FiStar className="text-primary5 text-lg" />
           </button>
           <button className="bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition">
-            <FiShare2 className="text-emerald-500 text-lg" />
+            <FiShare2 className="text-primary5 text-lg" />
           </button>
         </div>
       </div>
@@ -67,21 +69,19 @@ export default function RestaurantDetailComponent({
       {/* 탭 메뉴 */}
       <div className="flex border-b border-gray-200 bg-white sticky top-0 z-10">
         {TABS.map((tab) => (
-          <button
+          <Button
             key={tab}
-            className={`flex-1 py-3 text-base font-semibold flex items-center justify-center gap-1 transition-all
-              ${
-                currentTab === tab
-                  ? "text-emerald-600 border-b-2 border-emerald-400 bg-white"
-                  : "text-gray-400 hover:text-emerald-600"
-              }`}
+            scheme="tab"
+            className={classNames(
+              "flex-1 py-3 flex items-center justify-center gap-1 transition-all",
+              currentTab === tab && "text-primary5 border-primary5 bg-white"
+            )}
             onClick={() => setCurrentTab(tab)}
-            style={{ background: "none" }}
           >
             {tab === "메뉴" && <FaUtensils className="text-base" />}
             {tab === "중계" && <FiTv className="text-base" />}
             {tab}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -118,12 +118,14 @@ export default function RestaurantDetailComponent({
               detail.menus.map((menu, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center gap-3 px-5 py-3 rounded-lg bg-gray-50 shadow-sm hover:bg-gray-100 transition group"
+                  className={`flex items-center gap-3 px-5 py-3 ${
+                    idx !== detail.menus.length - 1
+                      ? "border-b border-gray-200"
+                      : ""
+                  }`}
                 >
-                  <FaUtensils className="text-emerald-400 text-lg" />
-                  <span className="font-medium text-gray-700 group-hover:text-emerald-700 transition">
-                    {menu}
-                  </span>
+                  <FaUtensils className="text-primary1 text-lg" />
+                  <span className="font-medium text-gray-700">{menu}</span>
                 </li>
               ))
             ) : (
@@ -139,10 +141,10 @@ export default function RestaurantDetailComponent({
               detail.broadcasts.map((b, idx) => (
                 <li
                   key={idx}
-                  className="rounded-xl bg-gradient-to-r from-emerald-50 to-white shadow p-4 flex flex-col gap-1 border border-emerald-100"
+                  className="rounded-xl p-4 flex flex-col gap-1 border border-primary2"
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <FiTv className="text-emerald-500" />
+                    <FiTv className="text-primary5" />
                     <span className="font-semibold">
                       {b.league} {b.sport}
                     </span>
@@ -152,10 +154,10 @@ export default function RestaurantDetailComponent({
                   </div>
                   <div className="flex items-center gap-2 text-base font-bold text-gray-800">
                     {b.team_one}
-                    <span className="mx-1 text-emerald-400">vs</span>
+                    <span className="mx-1 text-primary5">vs</span>
                     {b.team_two}
                     {b.etc && (
-                      <span className="ml-2 text-xs text-emerald-600 bg-emerald-100 rounded px-2 py-0.5">
+                      <span className="ml-2 text-xs bg-primary3 text-primary5 rounded px-2 py-0.5">
                         {b.etc}
                       </span>
                     )}
