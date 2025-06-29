@@ -8,7 +8,7 @@ const storeController = {
   registerStore: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       console.log("\n🍴 식당 등록");
-      const userId: number = 1;//req.user!.userId;
+      const userId: number = req.user!.userId;
       const createData = req.body;
 
       await storeService.createStore(userId, createData);

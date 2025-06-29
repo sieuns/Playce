@@ -74,7 +74,7 @@ const router = Router();
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.post("/", createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
+router.post("/", authenticate, createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
 
 /**
  * @swagger
@@ -143,37 +143,27 @@ router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식�
  *             properties:
  *               store_name:
  *                 type: string
- *                 example: 플레이스 강남점
- *               business_number:
- *                 type: string
- *                 example: 123-45-67890
+ *                 example: 교촌치킨 서울시청점
  *               address:
  *                 type: string
- *                 example: 서울특별시 강남구 테헤란로 123
- *               lat:
- *                 type: number
- *                 example: 37.5665
- *               lng:
- *                 type: number
- *                 example: 126.9780
+ *                 example: 서울 중구 세종대로18길 6 1-2층
  *               phone:
  *                 type: string
- *                 example: 02-1234-5678
+ *                 example: 000-111-1234
  *               opening_hours:
  *                 type: string
- *                 example: 매일 10:00 ~ 23:00
+ *                 example: 매일 12:00 ~ 24:00
  *               menus:
  *                 type: string
- *                 example: 맥주, 피자, 치킨
+ *                 example: 교촌 오리지날
  *               type:
  *                 type: string
- *                 example: 스포츠펍
+ *                 example: 치킨
  *               img_id:
  *                 type: integer
- *                 example: 3
  *               description:
  *                 type: string
- *                 example: 최신 프리미어리그 경기 중계!
+ *                 example: 
  *     responses:
  *       200:
  *         description: 식당 정보가 수정되었습니다.

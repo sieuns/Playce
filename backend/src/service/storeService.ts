@@ -5,9 +5,6 @@ import { BusinessNumber } from "../entities/BusinessNumber";
 import { SmallRegion } from "../entities/SmallRegion";
 import { Store } from "../entities/Store";
 import { StoreImage } from "../entities/StoreImage";
-import { getCoordinatesByAddress } from "../utils/kakaoAPI";
-import { normalizeRegionName } from "../utils/regionNormalizer";
-import { Broadcast } from "../entities/Broadcast";
 import { getLocationDataFromAddress } from "../utils/locationUtils";
 
 const storeService = {
@@ -88,7 +85,88 @@ const storeService = {
   },
   // 2. 식당 수정
   updateStore: async (userId: number, storeId: number, updateData: any) => {
-    console.log('식당 수정');
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const storeToUpdate = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: ['user']
+    });
+
+    // 식당 유효성 검사
+    if (!storeToUpdate) {
+      const error = new Error('해당 식당을 찾을 수 없습니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : DB에 있는지');
+
+    if (storeToUpdate.user.id !== userId) {
+      const error = new Error('해당 식당을 수정할 권한이 없습니다.');
+      (error as any).status = 403;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : 소유권 확인');
+
+    const allowedFields = [
+      'store_name',
+      'address',
+      'phone',
+      'opening_hours',
+      'menus',
+      'type',
+      'description',
+      'img_urls',
+    ];
+    const receiveFields = Object.keys(updateData);
+    const invalidFields = receiveFields.filter(field => !allowedFields.includes(field));
+    if (invalidFields.length > 0) {
+      const error = new Error(`수정할 수 없는 항목(들)이 포함되어 있습니다. (${invalidFields.join(', ')})`);
+      (error as any).status = 400;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : 수정할 수 없는 필드 포함 여부');
+
+    // DB 업데이트
+    if (updateData.store_name !== undefined) storeToUpdate.storeName = updateData.store_name;
+    if (updateData.phone !== undefined) storeToUpdate.phone = updateData.phone;
+    if (updateData.opening_hours !== undefined) storeToUpdate.openingHours = updateData.opening_hours;
+    if (updateData.menus !== undefined) storeToUpdate.menus = updateData.menus;
+    if (updateData.type !== undefined) storeToUpdate.type = updateData.type;
+    if (updateData.description !== undefined) storeToUpdate.description = updateData.description;
+    
+    if (updateData.address !== undefined) { // 주소 -> location, bigRegion, smallRegion 같이 수정
+      const bigRegionRepo = AppDataSource.getRepository(BigRegion);
+      const smallRegionRepo = AppDataSource.getRepository(SmallRegion);
+
+      const { location, bigRegion, smallRegion } = await getLocationDataFromAddress(
+        updateData.address,
+        bigRegionRepo,
+        smallRegionRepo
+      );
+
+      storeToUpdate.address = updateData.address;
+      storeToUpdate.location = location;
+      storeToUpdate.bigRegion = bigRegion;
+      storeToUpdate.smallRegion = smallRegion;
+    }
+
+    if (updateData.img_urls !== undefined) { // 이미지 -> 전체 삭제 후 재등록
+      const storeImageRepo = AppDataSource.getRepository(StoreImage);
+
+      await storeImageRepo.delete({ store: { id: storeId } }); // 기존 이미지 삭제
+
+      const newImages = updateData.img_urls.map((url: string, index: number) =>
+        storeImageRepo.create({
+          store: storeToUpdate,
+          imgUrl: url,
+          isMain: index ===0
+        })
+      );
+      await storeImageRepo.save(newImages);
+    }
+
+    await storeRepo.save(storeToUpdate);
+    console.log('- 수정 완료');
   },
   // 3. 식당 삭제
   deleteStore: async (userId: number, storeId: number) => {
