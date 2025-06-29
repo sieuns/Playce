@@ -5,12 +5,11 @@ import { BusinessNumber } from "../entities/BusinessNumber";
 import { SmallRegion } from "../entities/SmallRegion";
 import { Store } from "../entities/Store";
 import { StoreImage } from "../entities/StoreImage";
-import { getCoordinatesByAddress } from "../utils/kakaoAPI";
-import { normalizeRegionName } from "../utils/regionNormalizer";
+import { getLocationDataFromAddress } from "../utils/locationUtils";
 
-const storeServcie = {
+const storeService = {
   // 1. 식당 등록
-  createStore: async (userId: number, data: any) => {
+  createStore: async (userId: number, createData: any) => {
     const { 
       store_name: storeName, 
       business_number: businessNumber,
@@ -21,7 +20,7 @@ const storeServcie = {
       type,
       description,
       img_urls: imgUrls
-    } = data;
+    } = createData;
 
     // 사업자등록번호 유효성 검사
     const businessNumberRepo = AppDataSource.getRepository(BusinessNumber);
@@ -43,39 +42,11 @@ const storeServcie = {
 
     console.log(`- 사업자등록번호(id: ${findBusinessNumber.id}, number: ${findBusinessNumber.businessNumber})`);
 
-    // DB에서 지역 대/소분류 id 찾기
-    const { bigRegionName, smallRegionName, lat, lng } = await getCoordinatesByAddress(address);
-    console.log(bigRegionName, smallRegionName);
-
+    // 주소-위치-지역 변환 및 DB 조회
     const bigRegionRepo = AppDataSource.getRepository(BigRegion);
     const smallRegionRepo = AppDataSource.getRepository(SmallRegion);
-
-    const normalizeBigRegionName = normalizeRegionName(bigRegionName);
-    const findBigRegion = await bigRegionRepo.findOne({
-      where: { name: Like(`${normalizeBigRegionName}%`) }
-    });
-    if (!findBigRegion) {
-      const error = new Error('유효하지 않은 지역-대분류입니다.');
-      (error as any).status = 400;
-      throw error;
-    }
-
-    const findSmallRegion = await smallRegionRepo.findOne({
-      where: {
-        name: Like(`${smallRegionName}%`),
-        bigRegion: findBigRegion
-      }
-    });
-    if (!findSmallRegion) {
-      const error = new Error('유효하지 않은 지역-소분류입니다.');
-      (error as any).status = 400;
-      throw error;
-    }
-    console.log(`- 지역 id : 대분류(id: ${findBigRegion.id}, name: ${bigRegionName}), 소분류(id: ${findSmallRegion.id}, name: ${smallRegionName})`);
-
-    // Point 객체 생성
-    const location = `POINT(${lng} ${lat})`;
-    console.log('- Point 객체 : ', location);
+    
+    const { location, bigRegion, smallRegion } = await getLocationDataFromAddress(address, bigRegionRepo, smallRegionRepo);
 
     // stores에 정보 저장
     const storeRepo = AppDataSource.getRepository(Store);
@@ -84,8 +55,8 @@ const storeServcie = {
       storeName,
       businessNumber: findBusinessNumber,
       address,
-      bigRegion: findBigRegion,
-      smallRegion: findSmallRegion,
+      bigRegion,
+      smallRegion,
       location,
       phone,
       openingHours,
@@ -95,7 +66,7 @@ const storeServcie = {
     });
 
     const saveStore = await storeRepo.save(newStore);
-    console.log('- store에 데이터 저장 완료');
+    console.log('- stores : 데이터 저장 완료');
 
     // store_images에 데이터 저장
     if (imgUrls && Array.isArray(imgUrls) && imgUrls.length > 0) {
@@ -109,37 +80,198 @@ const storeServcie = {
       );
 
       await storeImageRepo.save(newStoreImages);
-      console.log(`- ${newStoreImages.length}개의 이미지 저장 완료`);
+      console.log(`- store_image : ${newStoreImages.length}개의 이미지 저장 완료`);
     }
   },
   // 2. 식당 수정
-  updateStore: async () => {
-    console.log("식당 수정");
-    // const error = new Error("해당 식당을 찾을 수 없습니다.");
-    // (error as any).status = 404;
-    // throw error;
+  updateStore: async (userId: number, storeId: number, updateData: any) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const storeToUpdate = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: ['user']
+    });
+
+    // 식당 유효성 검사
+    if (!storeToUpdate) {
+      const error = new Error('해당 식당을 찾을 수 없습니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : DB에 있는지');
+
+    if (storeToUpdate.user.id !== userId) {
+      const error = new Error('해당 식당을 수정할 권한이 없습니다.');
+      (error as any).status = 403;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : 소유권 확인');
+
+    const allowedFields = [
+      'store_name',
+      'address',
+      'phone',
+      'opening_hours',
+      'menus',
+      'type',
+      'description',
+      'img_urls',
+    ];
+    const receiveFields = Object.keys(updateData);
+    const invalidFields = receiveFields.filter(field => !allowedFields.includes(field));
+    if (invalidFields.length > 0) {
+      const error = new Error(`수정할 수 없는 항목(들)이 포함되어 있습니다. (${invalidFields.join(', ')})`);
+      (error as any).status = 400;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 완료 : 수정할 수 없는 필드 포함 여부');
+
+    // DB 업데이트
+    if (updateData.store_name !== undefined) storeToUpdate.storeName = updateData.store_name;
+    if (updateData.phone !== undefined) storeToUpdate.phone = updateData.phone;
+    if (updateData.opening_hours !== undefined) storeToUpdate.openingHours = updateData.opening_hours;
+    if (updateData.menus !== undefined) storeToUpdate.menus = updateData.menus;
+    if (updateData.type !== undefined) storeToUpdate.type = updateData.type;
+    if (updateData.description !== undefined) storeToUpdate.description = updateData.description;
+    
+    if (updateData.address !== undefined) { // 주소 -> location, bigRegion, smallRegion 같이 수정
+      const bigRegionRepo = AppDataSource.getRepository(BigRegion);
+      const smallRegionRepo = AppDataSource.getRepository(SmallRegion);
+
+      const { location, bigRegion, smallRegion } = await getLocationDataFromAddress(
+        updateData.address,
+        bigRegionRepo,
+        smallRegionRepo
+      );
+
+      storeToUpdate.address = updateData.address;
+      storeToUpdate.location = location;
+      storeToUpdate.bigRegion = bigRegion;
+      storeToUpdate.smallRegion = smallRegion;
+    }
+
+    if (updateData.img_urls !== undefined) { // 이미지 -> 전체 삭제 후 재등록
+      const storeImageRepo = AppDataSource.getRepository(StoreImage);
+
+      await storeImageRepo.delete({ store: { id: storeId } }); // 기존 이미지 삭제
+
+      const newImages = updateData.img_urls.map((url: string, index: number) =>
+        storeImageRepo.create({
+          store: storeToUpdate,
+          imgUrl: url,
+          isMain: index ===0
+        })
+      );
+      await storeImageRepo.save(newImages);
+    }
+
+    await storeRepo.save(storeToUpdate);
+    console.log('- 수정 완료');
   },
   // 3. 식당 삭제
-  deleteStore: async () => {
-    console.log("식당 삭제");
-    // const error = new Error("삭제 권한이 없습니다.");
-    // (error as any).status = 403;
-    // throw error;
+  deleteStore: async (userId: number, storeId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const storeToDelete = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: ['user'],
+    });
+
+    // 식당 유효성 검사
+    if (!storeToDelete) {
+      const error = new Error('식당을 찾을 수 없습니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- 식당 유효성 검사 통과');
+
+    // 소유권 확인
+    if (storeToDelete.user.id !== userId) {
+      const error = new Error('해당 식당에 대한 삭제 권한이 없습니다.');
+      (error as any).status = 403;
+      throw error;
+    }
+    console.log('- 식당 소유권 확인');
+
+    // 삭제
+    await storeRepo.remove(storeToDelete);
+    return;
   },
   // 4. 식당 상세 조회
-  getStoreDetail: async () => {
-    console.log("식당 상세 조회");
-    // const error = new Error("해당 식당이 존재하지 않습니다.");
-    // (error as any).status = 404;
-    // throw error;
+  getStoreDetail: async (userId: number | undefined, storeId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const store = await storeRepo.findOne({
+      where: { id: storeId },
+      relations: [
+        'user',
+        'images',
+        'broadcasts',
+        'broadcasts.sport',
+        'broadcasts.league'
+      ]
+    });
+
+    if (!store) {
+      const error = new Error('존재하지 않는 식당입니다.');
+      (error as any).status = 404;
+      throw error;
+    }
+    console.log('- store 유효성 검사');
+
+    const imgListData = store.images.map(img => img.imgUrl);
+    const broadcastData = store.broadcasts.map(bc => ({
+      match_date: bc.matchDate,
+      match_time: bc.matchTime,
+      sport: bc.sport.name,
+      league: bc.league.name,
+      team_one: bc.teamOne,
+      team_two: bc.teamTwo,
+      etc: bc.etc,
+    }));
+    const isOwner = !!userId && userId === store.user.id;
+
+    const responseData = {
+      store_name: store.storeName,
+      address: store.address,
+      phone: store.phone,
+      opening_hours: store.openingHours,
+      menus: store.menus,
+      type: store.type,
+      img_list: imgListData,
+      description: store.description,
+      broadcasts: broadcastData,
+      is_owner: isOwner,
+    };
+    console.log('- 응답 데이터 : ', responseData);
+
+    return responseData;
   },
   // 5. 내 식당 목록
-  getMyStores: async () => {
-    console.log("내가 등록한 식당 목록");
-    // const error = new Error("인증 정보가 없습니다.");
-    // (error as any).status = 401;
-    // throw error;
+  getMyStores: async (userId: number) => {
+    const storeRepo = AppDataSource.getRepository(Store);
+
+    const myStores= await storeRepo.find({
+      where: { user: { id: userId } },
+      relations: ['images'],
+      select: ['id', 'storeName', 'address'],
+    });
+
+    const responseData = myStores.map(store => {
+      const mainImageObj = store.images.find(img => img.isMain);
+      const mainImage = mainImageObj ? mainImageObj.imgUrl : null;
+
+      return {
+        store_id: store.id,
+        store_name: store.storeName,
+        main_img: mainImage,
+        address: store.address,
+      }
+    });
+    console.log('- 응답 데이터 : ', responseData);
+
+    return responseData;
   },
 };
 
-export default storeServcie;
+export default storeService;

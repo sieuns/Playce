@@ -8,6 +8,7 @@ import { AppDataSource } from "./data-source";
 // 스웨거
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./docs/swagger";
+// console.log(JSON.stringify(swaggerSpec, null, 2));
 
 // 라우터
 import userRoutes from "./routes/userRoutes";
@@ -38,9 +39,10 @@ app.use((req, res, next) => {
 // TypeORM 연결 후 서버 실행
 AppDataSource.initialize()
   .then(() => {
-    console.log("DB 연결 성공(TypeORM)");
+    console.log("📦 DB 연결 성공(TypeORM)");
     app.listen(port, () => {
-      console.log(`🚀서버가 http://localhost:${port} 에서 실행 중입니다.`);
+      console.log(`🚀 서버 실행 중 : http://localhost:${port}`);
+      console.log(`💡 Swagger 문서 : http://localhost:${port}/api-docs`);
     });
   })
   .catch((error: any) => {

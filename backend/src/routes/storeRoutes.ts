@@ -1,7 +1,7 @@
 import { Router } from "express";
 import storeController from "../controller/storeController";
-import { authenticate } from "../middlewares/authMiddleware";
-import { createStoreValidator } from "../middlewares/storeValidator";
+import { authenticate, optionalAuthenticate } from "../middlewares/authMiddleware";
+import { createStoreValidator, updateStoreValidator } from "../middlewares/storeValidator";
 
 const router = Router();
 
@@ -74,18 +74,60 @@ const router = Router();
  *       401:
  *         description: 유효하지 않은 토큰
  */
-router.post("/", authenticate, createStoreValidator, storeController.registerStore);
+router.post("/", authenticate, createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
 
 /**
  * @swagger
- * /stores/{id}:
+ * /stores/mypage:
+ *   get:
+ *     summary: 내 식당 목록 조회 (마이페이지)
+ *     tags: [Store]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 사용자가 등록한 식당 목록
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 stores:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       store_id:
+ *                         type: integer
+ *                         example: 1
+ *                         description: 식당 고유 ID
+ *                       store_name:
+ *                         type: string
+ *                         example: 플레이스 강남점
+ *                         description: 식당 이름
+ *                       main_img:
+ *                         type: string
+ *                         example: https://image.com/1.jpg
+ *                         description: 식당 대표 사진 URL
+ *                       address:
+ *                         type: string
+ *                         example: 서울특별시 강남구 테헤란로 123
+ *                         description: 식당 주소
+ *       401:
+ *         description: 유효하지 않은 토큰
+ */
+router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식당 목록 조회 (🔒) <- 라우팅 순서 문제로 위치 수정
+
+/**
+ * @swagger
+ * /stores/{storeId}:
  *   patch:
  *     summary: 식당 정보 수정
  *     tags: [Store]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: id
+ *       - name: storeId
  *         in: path
  *         required: true
  *         schema:
@@ -101,37 +143,27 @@ router.post("/", authenticate, createStoreValidator, storeController.registerSto
  *             properties:
  *               store_name:
  *                 type: string
- *                 example: 플레이스 강남점
- *               business_number:
- *                 type: string
- *                 example: 123-45-67890
+ *                 example: 교촌치킨 서울시청점
  *               address:
  *                 type: string
- *                 example: 서울특별시 강남구 테헤란로 123
- *               lat:
- *                 type: number
- *                 example: 37.5665
- *               lng:
- *                 type: number
- *                 example: 126.9780
+ *                 example: 서울 중구 세종대로18길 6 1-2층
  *               phone:
  *                 type: string
- *                 example: 02-1234-5678
+ *                 example: 000-111-1234
  *               opening_hours:
  *                 type: string
- *                 example: 매일 10:00 ~ 23:00
+ *                 example: 매일 12:00 ~ 24:00
  *               menus:
  *                 type: string
- *                 example: 맥주, 피자, 치킨
+ *                 example: 교촌 오리지날
  *               type:
  *                 type: string
- *                 example: 스포츠펍
+ *                 example: 치킨
  *               img_id:
  *                 type: integer
- *                 example: 3
  *               description:
  *                 type: string
- *                 example: 최신 프리미어리그 경기 중계!
+ *                 example: 
  *     responses:
  *       200:
  *         description: 식당 정보가 수정되었습니다.
@@ -142,23 +174,23 @@ router.post("/", authenticate, createStoreValidator, storeController.registerSto
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.patch("/:id", storeController.updateStore);
+router.patch("/:storeId", updateStoreValidator, storeController.updateStore); // 2. 식당 수정 (🔒)
 
 /**
  * @swagger
- * /stores/{id}:
+ * /stores/{storeId}:
  *   delete:
  *     summary: 식당 삭제
  *     tags: [Store]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: id
+ *       - name: storeId
  *         in: path
  *         required: true
  *         schema:
  *           type: integer
- *         example: 1
+ *         example: 3
  *         description: 삭제할 식당의 고유 ID
  *     responses:
  *       200:
@@ -170,18 +202,18 @@ router.patch("/:id", storeController.updateStore);
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.delete("/:id", storeController.deleteStore);
+router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식당 삭제 (🔒)
 
 /**
  * @swagger
- * /stores/{id}:
+ * /stores/{storeId}:
  *   get:
  *     summary: 식당 상세 조회
  *     tags: [Store]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: id
+ *       - name: storeId
  *         in: path
  *         required: true
  *         schema:
@@ -253,48 +285,6 @@ router.delete("/:id", storeController.deleteStore);
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.get("/:id", storeController.getStoreDetail); 
-
-/**
- * @swagger
- * /stores/mypage:
- *   get:
- *     summary: 내 식당 목록 조회 (마이페이지)
- *     tags: [Store]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: 사용자가 등록한 식당 목록
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 stores:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       store_id:
- *                         type: integer
- *                         example: 1
- *                         description: 식당 고유 ID
- *                       store_name:
- *                         type: string
- *                         example: 플레이스 강남점
- *                         description: 식당 이름
- *                       main_img:
- *                         type: string
- *                         example: https://image.com/1.jpg
- *                         description: 식당 대표 사진 URL
- *                       address:
- *                         type: string
- *                         example: 서울특별시 강남구 테헤란로 123
- *                         description: 식당 주소
- *       401:
- *         description: 유효하지 않은 토큰
- */
-router.get("/mypage", storeController.getMyStores);
+router.get("/:storeId", optionalAuthenticate, storeController.getStoreDetail); // 4. 식당 상세 조회 (🔓 optional 토큰 검사)
 
 export default router;

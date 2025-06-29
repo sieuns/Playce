@@ -35,4 +35,6 @@ export const AppDataSource = new DataSource({
     League,
   ],
   migrations: [path.join(__dirname, "migrations", "*.ts")],
-});
+
+}); 
+
