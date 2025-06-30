@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import Button from "../Common/Button";
 import useMapStore from "../../stores/mapStore";
 import { IoReloadOutline } from "react-icons/io5";
 
@@ -7,7 +7,8 @@ const SpotRefreshButton = () => {
   return (
     <Button
       icon={<IoReloadOutline />}
-      size="large"
+      size="medium"
+      scheme="secondary"
       className="absolute top-[80px] left-1/2 -translate-x-1/2 z-10 text-lg"
       onClick={() => setRefreshBtn(false)}
     >

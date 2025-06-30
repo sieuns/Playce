@@ -1,4 +1,5 @@
 import ModalBase from "../Common/ModalBase";
+import Button from "../Common/Button";
 import SportPanel from "./SportPanel";
 import { useSportStore } from "../../stores/sportStore";
 
@@ -11,7 +12,7 @@ interface SportModalProps {
   }) => void;
 }
 
-const SportModal = ({ onClose, onApply}: SportModalProps) => {
+const SportModal = ({ onClose, onApply }: SportModalProps) => {
   const { sport, league, teams, resetSport } = useSportStore();
 
   return (
@@ -20,21 +21,19 @@ const SportModal = ({ onClose, onApply}: SportModalProps) => {
         <SportPanel />
       </div>
       <div className="border-t p-4 flex gap-2">
-        <button
-          onClick={resetSport}
-          className="px-4 py-2 border rounded hover:bg-gray-50"
-        >
+        <Button onClick={resetSport} scheme="secondary">
           초기화
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             onApply({ sport, league, teams });
             onClose();
           }}
-          className="flex-1 px-4 py-2 bg-primary2 text-black rounded hover:bg-primary1"
+          scheme="primary"
+          className="flex-1"
         >
           적용
-        </button>
+        </Button>
       </div>
     </ModalBase>
   );

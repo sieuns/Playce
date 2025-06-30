@@ -71,7 +71,7 @@ export default function TodayBroadcastSidebar() {
             onClick={() => setSelectedSport(sport)}
             className={`px-2 pb-1 text-sm font-semibold border-b-2 ${
               selectedSport === sport
-                ? "border-emerald-500 text-emerald-600"
+                ? "border-primary5 text-primary5"
                 : "border-transparent text-gray-400 hover:text-gray-700"
             } transition`}
             style={{ background: "none" }}
@@ -123,7 +123,7 @@ export default function TodayBroadcastSidebar() {
                 {game.match_time}
               </span>
               {game.etc && (
-                <span className="ml-2 text-xs bg-emerald-100 text-emerald-600 rounded px-2 py-0.5">
+                <span className="ml-2 text-xs bg-primary3 text-primary5 rounded px-2 py-0.5">
                   {game.etc}
                 </span>
               )}

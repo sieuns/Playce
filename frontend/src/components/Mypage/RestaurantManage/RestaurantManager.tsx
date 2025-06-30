@@ -11,7 +11,7 @@ const RestaurantManager = ({ onClose }: MypageProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-between text-lg font-semibold mb-5">
+      <div className="flex items-center justify-between text-lg font-semibold my-5 px-2">
         <div className="flex items-center gap-3">
           {restaurantSubpage !== "restaurant-home" && (
             <FaArrowLeft

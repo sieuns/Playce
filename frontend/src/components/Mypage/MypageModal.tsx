@@ -15,8 +15,12 @@ const MypageModal = ({ onClose }: MypageProps) => {
   const [selectedTab, setSelectedTab] = useState<TabType>("favorite");
 
   return (
-    <ModalBase onClose={onClose} hideHeader>
-      <div className="flex h-full bg-white rounded-xl overflow-hidden">
+    <ModalBase
+      onClose={onClose}
+      hideHeader
+      className="min-h-[700px] min-w-[900px]"
+    >
+      <div className="flex min-h-[700px] bg-white rounded-xl overflow-hidden">
         {/* 왼쪽 사이드바 */}
         <Sidebar selected={selectedTab} onSelect={setSelectedTab} />
 
