@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  FiStar,
-  FiTrash2,
-  FiChevronRight,
-  FiChevronLeft,
-} from "react-icons/fi";
+import { FiTrash2, FiChevronLeft } from "react-icons/fi";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import DetailStores from "../DetailStores/DetailStores";
 import type { RestaurantDetail } from "../../types/restaurant.types";
@@ -40,8 +35,7 @@ const FavoriteList = () => {
 
   return (
     <section className="max-w-lg mx-auto mt-4">
-      <h2 className="flex items-center gap-2 text-2xl font-bold text-emerald-700 pb-4 border-b border-gray-100">
-        <FiStar className="text-yellow-400" />
+      <h2 className="flex items-center gap-2 text-2xl font-bold pb-4 border-b border-gray-100">
         즐겨찾기
       </h2>
       {favoriteStores.length === 0 ? (
