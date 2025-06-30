@@ -13,14 +13,13 @@ module.exports = {
         primary2: "#CAE8BD",
         primary3: "#DDF6D2",
         primary4: "#ECFAE5",
-
-        mainText:"#3A3A3A",
-        subText:"#9CA3AF",
-
-        lightgray: "#CCCCCC",
-
+        lightgray: "#F5F5F5",
+        middlegray: "#CCCCCC",
+        darkgray: "#6A7282",
+        mainText: "#3A3A3A",
+        subText: "#9CA3AF",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

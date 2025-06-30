@@ -1,6 +1,6 @@
-import BroadcastEdit from "../components/Mypage/RestaurantManage/BroadcastEdit";
-import BroadcastRegister from "../components/Mypage/RestaurantManage/BroadcastRegister";
-import BroadcastView from "../components/Mypage/RestaurantManage/BroadcastView";
+import BroadcastEdit from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastEdit";
+import BroadcastRegister from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastRegister";
+import BroadcastView from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastView";
 import RestaurantEdit from "../components/Mypage/RestaurantManage/RestaurantEdit";
 import RestaurantHome from "../components/Mypage/RestaurantManage/RestaurantHome";
 import RestaurantList from "../components/Mypage/RestaurantManage/RestaurantList";
@@ -34,7 +34,7 @@ export const menuItems = [
   },
   {
     key: "schedule-view",
-    label: "중계 일정 확인",
+    label: "중계 일정 관리",
     component: () => <BroadcastView />,
   },
   {

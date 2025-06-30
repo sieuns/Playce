@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   scheme?: "primary" | "secondary" | "close" | "tab";
   size?: "small" | "medium" | "large" | "icon";

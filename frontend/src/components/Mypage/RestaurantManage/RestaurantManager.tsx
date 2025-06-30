@@ -1,26 +1,33 @@
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaTimes } from "react-icons/fa";
 import useMypageStore from "../../../stores/mypageStore";
 import {
   menuItems,
   type MenuKey,
-} from "../../../types/restaurante-manage.types";
+} from "../../../types/restaurant-manage.types";
+import type { MypageProps } from "../MypageModal";
 
-const RestaurantManager = () => {
+const RestaurantManager = ({ onClose }: MypageProps) => {
   const { restaurantSubpage, setRestaurantSubpage } = useMypageStore();
 
   return (
-    <div className="space-y-2 mt-6">
-      <div className="flex items-center gap-3 text-lg font-semibold text-gray-800">
-        {restaurantSubpage !== "restaurant-home" && (
-          <FaArrowLeft
-            className="hover:cursor-pointer"
-            onClick={() => setRestaurantSubpage("restaurant-home")}
-          />
-        )}
-        {getModalTitle(restaurantSubpage)}
+    <>
+      <div className="flex items-center justify-between text-lg font-semibold my-5 px-2">
+        <div className="flex items-center gap-3">
+          {restaurantSubpage !== "restaurant-home" && (
+            <FaArrowLeft
+              className="hover:cursor-pointer hover:text-primary5"
+              onClick={() => setRestaurantSubpage("restaurant-home")}
+            />
+          )}
+          {getModalTitle(restaurantSubpage)}
+        </div>
+        <button onClick={onClose} className="hover:text-primary5">
+          <FaTimes />
+        </button>
       </div>
+
       {getComponents(restaurantSubpage)}
-    </div>
+    </>
   );
 };
 
