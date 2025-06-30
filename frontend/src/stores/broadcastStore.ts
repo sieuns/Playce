@@ -16,11 +16,14 @@ interface BoradcastState {
   year: number;
   month: number;
   date: number;
+  restaurant: string;
+  restaurantId: number;
   broadcastLists: broadcast[];
   viewOption: TViewOption;
   setYear: (year: number) => void;
   setMonth: (month: number) => void;
   setDate: (date: number) => void;
+  setRestaurant: (r: string, rId: number) => void;
   setViewOption: (view: TViewOption) => void;
 }
 
@@ -28,6 +31,8 @@ const useBroadcastStore = create<BoradcastState>((set) => ({
   year: dateInfo.yearNum,
   month: dateInfo.monthNum + 1,
   date: dateInfo.dateNum,
+  restaurant: "",
+  restaurantId: 0,
   broadcastLists: dummyBroadcasts,
   viewOption: "tab",
   setYear: (year) => {
@@ -38,6 +43,9 @@ const useBroadcastStore = create<BoradcastState>((set) => ({
   },
   setDate: (date) => {
     set({ date: date });
+  },
+  setRestaurant: (r: string, rId: number) => {
+    set({ restaurant: r, restaurantId: rId });
   },
   setViewOption: (view) => {
     set({ viewOption: view });

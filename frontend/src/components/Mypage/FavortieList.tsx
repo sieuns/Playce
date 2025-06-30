@@ -35,8 +35,8 @@ const FavoriteList = ({ onClose }: FavoriteListProps) => {
   };
 
   return (
-    <section className="max-w-lg mx-auto mt-4">
-      <div className="flex items-center justify-between text-lg font-semibold my-5 pl-0 pr-2">
+    <section className="px-2">
+      <div className="flex items-center justify-between text-lg font-semibold my-5">
         <div className="flex items-center gap-3">즐겨찾기</div>
         <button
           onClick={onClose}
@@ -55,19 +55,19 @@ const FavoriteList = ({ onClose }: FavoriteListProps) => {
           {favoriteStores.map((store) => (
             <li
               key={store.store_id}
-              className="flex items-center gap-4 py-5 px-2 hover:bg-emerald-50 transition"
+              className="flex items-center gap-4 p-3 hover:bg-primary4 transition"
             >
               <img
                 src={store.main_img || "https://via.placeholder.com/60"}
                 alt={store.store_name}
-                className="w-14 h-14 rounded-lg object-cover border border-gray-100 shadow-sm"
+                className="w-16 h-16 rounded-lg object-cover border border-gray-100 shadow-sm"
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="block text-lg font-semibold text-gray-900 truncate">
                     {store.store_name}
                   </span>
-                  <span className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
+                  <span className="text-xs bg-primary4 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
                     {store.type}
                   </span>
                 </div>

@@ -10,13 +10,19 @@ const RestaurantManager = ({ onClose }: MypageProps) => {
   const { restaurantSubpage, setRestaurantSubpage } = useMypageStore();
 
   return (
-    <>
-      <div className="flex items-center justify-between text-lg font-semibold my-5 px-2">
-        <div className="flex items-center gap-3">
+    <div className="px-2">
+      <div className="flex items-center justify-between text-lg font-semibold my-5">
+        <div>
           {restaurantSubpage !== "restaurant-home" && (
             <FaArrowLeft
               className="hover:cursor-pointer hover:text-primary5"
-              onClick={() => setRestaurantSubpage("restaurant-home")}
+              onClick={() => {
+                if (restaurantSubpage === "schedule-view-broadcasts") {
+                  setRestaurantSubpage("schedule-view-restaurants");
+                } else {
+                  setRestaurantSubpage("restaurant-home");
+                }
+              }}
             />
           )}
           {getModalTitle(restaurantSubpage)}
@@ -26,8 +32,8 @@ const RestaurantManager = ({ onClose }: MypageProps) => {
         </button>
       </div>
 
-      {getComponents(restaurantSubpage)}
-    </>
+      <div>{getComponents(restaurantSubpage)}</div>
+    </div>
   );
 };
 
