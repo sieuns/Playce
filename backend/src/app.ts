@@ -1,5 +1,5 @@
-import "reflect-metadata";
 import "dotenv/config";
+import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 
 // TypeORM 설정
@@ -15,6 +15,8 @@ import storeRoutes from "./routes/storeRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import favoriteRoutes from "./routes/favoriteRoutes";
+
+//헬퍼
 import { fail } from "./utils/response";
 
 const app = express();
@@ -46,15 +48,18 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   return fail(res, message, status);
 });
 
+// TODO: 제대로된 미들웨어 등록할
+// TODO: 필요하다면 커스텀 에러를 만들 것
+// 에러 처리 미들웨어 등록
+
 // TypeORM 연결 후 서버 실행
 AppDataSource.initialize()
   .then(() => {
-    console.log("📦 DB 연결 성공(TypeORM)");
+    console.log("DB 연결 성공(TypeORM)");
     app.listen(port, () => {
-      console.log(`🚀 서버 실행 중 : http://localhost:${port}`);
-      console.log(`💡 Swagger 문서 : http://localhost:${port}/api-docs`);
+      console.log(`🚀서버가 http://localhost:${port} 에서 실행 중입니다.`);
     });
   })
   .catch((error: any) => {
-    console.error("❌ DB 연결 실패:", error);
+    console.error("DB 연결 실패:", error);
   });

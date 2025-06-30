@@ -174,7 +174,7 @@ router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식�
  *       404:
  *         description: 식당을 찾을 수 없음
  */
-router.patch("/:storeId", updateStoreValidator, storeController.updateStore); // 2. 식당 수정 (🔒)
+router.patch("/:storeId", authenticate, updateStoreValidator, storeController.updateStore); // 2. 식당 수정 (🔒)
 
 /**
  * @swagger

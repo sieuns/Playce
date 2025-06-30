@@ -100,6 +100,8 @@ const storeService = {
     }
     console.log('- 식당 유효성 검사 완료 : DB에 있는지');
 
+
+
     if (storeToUpdate.user.id !== userId) {
       const error = new Error('해당 식당을 수정할 권한이 없습니다.');
       (error as any).status = 403;
