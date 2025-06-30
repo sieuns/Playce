@@ -1,22 +1,20 @@
 import { useState } from "react";
-import {
-  FiStar,
-  FiTrash2,
-  FiChevronRight,
-  FiChevronLeft,
-} from "react-icons/fi";
+import { FiTrash2, FiChevronLeft } from "react-icons/fi";
+import { FaTimes } from "react-icons/fa";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import DetailStores from "../DetailStores/DetailStores";
 import type { RestaurantDetail } from "../../types/restaurant.types";
 
-const FavoriteList = () => {
-  // 즐겨찾기 id만 관리 (초기값 예시)
+interface FavoriteListProps {
+  onClose: () => void;
+}
+
+const FavoriteList = ({ onClose }: FavoriteListProps) => {
   const [favoriteIds, setFavoriteIds] = useState<number[]>([1, 2, 3, 4, 5]);
   const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
     null
   );
 
-  // 리스트에 표시할 즐겨찾기 매장 정보 추출 (FavoriteStore 타입처럼)
   const favoriteStores = dummyRestaurantDetails
     .filter((store) => favoriteIds.includes(store.id))
     .map((store) => ({
@@ -27,12 +25,10 @@ const FavoriteList = () => {
       type: store.type,
     }));
 
-  // 삭제
   const handleRemove = (store_id: number) => {
     setFavoriteIds((ids) => ids.filter((id) => id !== store_id));
   };
 
-  // 상세보기 > 버튼 클릭
   const handleShowDetail = (store_id: number) => {
     const detail = dummyRestaurantDetails.find((d) => d.id === store_id);
     if (detail) setSelectedDetail(detail);
@@ -40,10 +36,16 @@ const FavoriteList = () => {
 
   return (
     <section className="max-w-lg mx-auto mt-4">
-      <h2 className="flex items-center gap-2 text-2xl font-bold text-emerald-700 pb-4 border-b border-gray-100">
-        <FiStar className="text-yellow-400" />
-        즐겨찾기
-      </h2>
+      <div className="flex items-center justify-between text-lg font-semibold my-5 pl-0 pr-2">
+        <div className="flex items-center gap-3">즐겨찾기</div>
+        <button
+          onClick={onClose}
+          className="hover:text-primary5"
+          aria-label="마이페이지 닫기"
+        >
+          <FaTimes />
+        </button>
+      </div>
       {favoriteStores.length === 0 ? (
         <div className="text-gray-400 text-center py-16 text-lg tracking-wide">
           즐겨찾기한 매장이 없습니다.
@@ -73,7 +75,7 @@ const FavoriteList = () => {
                   {store.address}
                 </div>
               </div>
-              {/* 상세보기 > 버튼 */}
+              {/* 상세보기 < 버튼 */}
               <button
                 onClick={() => handleShowDetail(store.store_id)}
                 className="p-2 rounded-full bg-gray-50 hover:bg-emerald-100 transition-colors shadow"
@@ -93,7 +95,6 @@ const FavoriteList = () => {
           ))}
         </ul>
       )}
-      {/* 상세보기 사이드바/모달 */}
       {selectedDetail && (
         <DetailStores
           detail={selectedDetail}
