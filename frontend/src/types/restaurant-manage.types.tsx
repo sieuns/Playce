@@ -1,5 +1,4 @@
-import BroadcastEdit from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastEdit";
-import BroadcastRegister from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastRegister";
+import BroadcastRestaurants from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastRestaurants";
 import BroadcastView from "../components/Mypage/RestaurantManage/Broadcasts/BroadcastView";
 import RestaurantEdit from "../components/Mypage/RestaurantManage/RestaurantEdit";
 import RestaurantHome from "../components/Mypage/RestaurantManage/RestaurantHome";
@@ -28,19 +27,14 @@ export const menuItems = [
     component: () => <RestaurantEdit />,
   },
   {
-    key: "schedule-register",
-    label: "중계 일정 등록",
-    component: () => <BroadcastRegister />,
+    key: "schedule-view-restaurants",
+    label: "중계 일정 관리",
+    component: () => <BroadcastRestaurants />,
   },
   {
-    key: "schedule-view",
+    key: "schedule-view-broadcasts",
     label: "중계 일정 관리",
     component: () => <BroadcastView />,
-  },
-  {
-    key: "schedule-edit",
-    label: "중계 일정 수정",
-    component: () => <BroadcastEdit />,
   },
 ] as const;
 

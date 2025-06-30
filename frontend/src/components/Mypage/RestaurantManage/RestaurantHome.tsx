@@ -7,7 +7,11 @@ const RestaurantHome = () => {
   return (
     <div className="flex flex-col divide-y divide-gray-300">
       {menuItems
-        .filter((item) => item.key !== "restaurant-home")
+        .filter(
+          (item) =>
+            item.key !== "restaurant-home" &&
+            item.key !== "schedule-view-broadcasts"
+        )
         .map((item) => (
           <button
             key={item.key}
