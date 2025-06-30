@@ -7,7 +7,7 @@ import RestaurantManager from "./RestaurantManage/RestaurantManager";
 
 type TabType = "favorite" | "profile" | "restaurant";
 
-interface MypageProps {
+export interface MypageProps {
   onClose: () => void;
 }
 
@@ -21,19 +21,13 @@ const MypageModal = ({ onClose }: MypageProps) => {
         <Sidebar selected={selectedTab} onSelect={setSelectedTab} />
 
         {/* 오른쪽 콘텐츠 영역 */}
-        <div className="flex-1 p-6 overflow-y-auto relative">
-          {/* 닫기 버튼 */}
-          <button
-            onClick={onClose}
-            className="absolute top-2 right-4 text-gray-400 hover:text-primary5 text-2xl"
-          >
-            &times;
-          </button>
-
+        <div className="flex-1 p-6 overflow-y-auto scrollbar-hide">
           {/* 콘텐츠 */}
           {selectedTab === "favorite" && <FavoriteList />}
           {selectedTab === "profile" && <UserInfo />}
-          {selectedTab === "restaurant" && <RestaurantManager />}
+          {selectedTab === "restaurant" && (
+            <RestaurantManager onClose={onClose} />
+          )}
         </div>
       </div>
     </ModalBase>

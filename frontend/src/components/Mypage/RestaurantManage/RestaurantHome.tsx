@@ -1,6 +1,6 @@
 import { FaChevronRight } from "react-icons/fa";
 import useMypageStore from "../../../stores/mypageStore";
-import { menuItems } from "../../../types/restaurante-manage.types";
+import { menuItems } from "../../../types/restaurant-manage.types";
 
 const RestaurantHome = () => {
   const { setRestaurantSubpage } = useMypageStore();

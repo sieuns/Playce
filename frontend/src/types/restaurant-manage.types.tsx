@@ -34,7 +34,7 @@ export const menuItems = [
   },
   {
     key: "schedule-view",
-    label: "중계 일정 확인",
+    label: "중계 일정 관리",
     component: () => <BroadcastView />,
   },
   {

@@ -1,21 +1,18 @@
-import { useState } from "react";
 import getDaysInMonth from "../../../../utils/getDaysInMonth";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import TabList from "./TabLists";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { FaBars, FaPlus, FaRegCalendarAlt } from "react-icons/fa";
+import useBroadcastStore, { dateInfo } from "../../../../stores/broadcastStore";
+import Calendar from "./Calendar";
 
 const BroadcastView = () => {
   // 날짜 설정
-  const today = new Date();
-  const yearNum = today.getFullYear();
-  const monthNum = today.getMonth();
-  const dateNum = today.getDate();
+  const { yearNum, monthNum } = dateInfo;
   const twoMonthsAgo = new Date(yearNum, monthNum - 2);
   const twoMonthsLater = new Date(yearNum, monthNum + 2);
 
-  const [year, setYear] = useState(yearNum);
-  const [month, setMonth] = useState(monthNum + 1);
-  const [date, setDate] = useState(dateNum);
+  const { year, month, viewOption, setYear, setMonth, setDate, setViewOption } =
+    useBroadcastStore();
 
   const isInTwoMonths = (year: number, month: number) => {
     const target = new Date(year, month - 1);
@@ -24,31 +21,35 @@ const BroadcastView = () => {
   };
 
   const handleLeft = () => {
-    if (month > 1) {
-      setMonth(month - 1);
-    } else {
-      setYear(year - 1);
-      setMonth(12);
+    let newMonth = month - 1;
+    let newYear = year;
+    if (month === 1) {
+      newMonth = 12;
+      newYear -= 1;
     }
-    setDate(getDaysInMonth(year, month));
+    setYear(newYear);
+    setMonth(newMonth);
+    setDate(getDaysInMonth(newYear, newMonth));
   };
 
   const handleRight = () => {
-    if (month < 12) {
-      setMonth(month + 1);
-    } else {
-      setYear(year + 1);
-      setMonth(1);
+    let newMonth = month + 1;
+    let newYear = year;
+    if (month === 12) {
+      newMonth = 1;
+      newYear += 1;
     }
+    setYear(newYear);
+    setMonth(newMonth);
     setDate(1);
   };
 
   return (
-    <div className="flex flex-col p-3 gap-3">
-      <div className="flex text-[28px] items-center justify-center mb-3 gap-3">
+    <div className="flex flex-col p-3">
+      <div className="flex text-[28px] items-center justify-between mb-5 gap-3">
         {/* 중앙 맞추기용 사용하지 않는 버튼 */}
-        <button className="rounded-xl text-[20px] text-white" disabled={true}>
-          <FaRegCalendarAlt />
+        <button className="text-[25px]">
+          <FaPlus />
         </button>
 
         <div className="flex items-center gap-3">
@@ -79,11 +80,16 @@ const BroadcastView = () => {
           </button>
         </div>
 
-        <button className="rounded-xl text-[25px]" onClick={() => {}}>
-          <FaRegCalendarAlt />
+        <button
+          className="text-[25px]"
+          onClick={() => {
+            setViewOption(viewOption === "tab" ? "calendar" : "tab");
+          }}
+        >
+          {viewOption === "tab" ? <FaRegCalendarAlt /> : <FaBars />}
         </button>
       </div>
-      <TabList year={year} month={month} date={date} />
+      {viewOption === "tab" ? <TabList /> : <Calendar />}
     </div>
   );
 };

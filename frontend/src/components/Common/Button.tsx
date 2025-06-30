@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   scheme?: "primary" | "secondary";
-  size?: "small" | "medium" | "large";
+  size?: "xsmall" | "small" | "medium" | "large";
   isLoading?: boolean;
   className?: string;
 }
@@ -21,6 +21,7 @@ const Button = ({
     "w-full rounded-md font-semibold transition-colors duration-200 disabled:cursor-not-allowed";
 
   const sizeClass = {
+    xsmall: "py-1 px-2",
     small: "py-2 px-3 text-sm",
     medium: "py-3 px-4 text-base",
     large: "py-4 px-6 text-lg",

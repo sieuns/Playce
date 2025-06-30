@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { MenuKey } from "../types/restaurante-manage.types";
+import type { MenuKey } from "../types/restaurant-manage.types";
 
 interface MypageState {
   isMypageOpen: boolean;
