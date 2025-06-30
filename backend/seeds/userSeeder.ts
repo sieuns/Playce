@@ -24,7 +24,7 @@ const users = [
     phone: "010-3333-3333",
   },
   {
-    email: "pack@test.com",
+    email: "park@test.com",
     password: "4444",
     name: "박민수",
     nickname: "park",
