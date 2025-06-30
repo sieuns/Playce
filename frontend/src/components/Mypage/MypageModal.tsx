@@ -27,8 +27,8 @@ const MypageModal = ({ onClose }: MypageProps) => {
         {/* 오른쪽 콘텐츠 영역 */}
         <div className="flex-1 p-6 overflow-y-auto scrollbar-hide">
           {/* 콘텐츠 */}
-          {selectedTab === "favorite" && <FavoriteList />}
-          {selectedTab === "profile" && <UserInfo />}
+          {selectedTab === "favorite" && <FavoriteList onClose={onClose} />}
+          {selectedTab === "profile" && <UserInfo onClose={onClose} />}
           {selectedTab === "restaurant" && (
             <RestaurantManager onClose={onClose} />
           )}

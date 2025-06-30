@@ -1,8 +1,11 @@
+import { FaTimes } from "react-icons/fa";
+
 interface UserInfoProps {
   email?: string;
   name?: string;
   nickname?: string;
   phone?: string;
+  onClose?: () => void; // 닫기 콜백 추가
 }
 
 const UserInfo = ({
@@ -10,10 +13,23 @@ const UserInfo = ({
   name = "홍길동",
   nickname = "길동이",
   phone = "010-1234-5678",
+  onClose,
 }: UserInfoProps) => {
   return (
     <div className="space-y-4 mt-6">
-      <h2 className="px-2 text-lg font-semibold text-gray-800">내 정보</h2>
+      {/* 헤더: 닫기 버튼 포함 */}
+      <div className="flex items-center justify-between text-lg font-semibold my-5 px-2">
+        <span className="text-lg">내 정보</span>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="hover:text-primary5"
+            aria-label="닫기"
+          >
+            <FaTimes />
+          </button>
+        )}
+      </div>
       <div className="flex flex-col gap-2">
         <InfoRow label="email" value={email} />
         <InfoRow label="이름" value={name} />
