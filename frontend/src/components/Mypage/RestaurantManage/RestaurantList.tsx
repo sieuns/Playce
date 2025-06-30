@@ -76,7 +76,7 @@ const MyStoreList = () => {
         </div>
       ) : (
         <>
-          <ul className="pl-2">
+          <ul>
             {stores.map((store) => (
               <li
                 key={store.store_name}

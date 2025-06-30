@@ -8,7 +8,7 @@ const BroadcastRestaurants = () => {
   const { setRestaurantSubpage } = useMypageStore();
 
   return (
-    <section className="pl-2">
+    <section>
       {myStores.length === 0 ? (
         <div className="text-gray-400 text-center py-20 text-lg tracking-wide">
           등록된 식당이 없습니다.

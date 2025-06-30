@@ -12,7 +12,7 @@ const RestaurantManager = ({ onClose }: MypageProps) => {
   return (
     <div className="px-2">
       <div className="flex items-center justify-between text-lg font-semibold my-5">
-        <div>
+        <div className="flex items-center gap-2">
           {restaurantSubpage !== "restaurant-home" && (
             <FaArrowLeft
               className="hover:cursor-pointer hover:text-primary5"
