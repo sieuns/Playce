@@ -4,6 +4,8 @@ import TabList from "./TabLists";
 import { FaBars, FaPlus, FaRegCalendarAlt } from "react-icons/fa";
 import useBroadcastStore, { dateInfo } from "../../../../stores/broadcastStore";
 import Calendar from "./Calendar";
+import { useState } from "react";
+import BroadcastFormModal from "../modals/BroadcastFormModal";
 
 const BroadcastView = () => {
   // 날짜 설정
@@ -44,11 +46,13 @@ const BroadcastView = () => {
     setDate(1);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="flex flex-col p-3">
       <div className="flex text-[28px] items-center justify-between mb-5 gap-3">
         {/* 중앙 맞추기용 사용하지 않는 버튼 */}
-        <button className="text-[25px]">
+        <button className="text-[25px]" onClick={() => setIsModalOpen(true)}>
           <FaPlus />
         </button>
 
@@ -90,6 +94,18 @@ const BroadcastView = () => {
         </button>
       </div>
       {viewOption === "tab" ? <TabList /> : <Calendar />}
+
+      {isModalOpen && (
+        <BroadcastFormModal
+          mode="create"
+          onSubmit={(data) => {
+            // TODO: 등록 로직 (API 호출 등)
+            console.log("중계 등록됨:", data);
+            setIsModalOpen(false); // 모달 닫기
+          }}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
