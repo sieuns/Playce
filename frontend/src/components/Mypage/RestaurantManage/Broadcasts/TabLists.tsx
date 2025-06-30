@@ -47,11 +47,9 @@ const TabList = () => {
       if (targetItem) {
         const scrollContainer = tabRef.current;
         const containerWidth = scrollContainer.clientWidth;
-        const itemWidth = targetItem.clientWidth;
         const itemOffsetLeft = targetItem.offsetLeft;
 
-        const scrollToPosition =
-          itemOffsetLeft - containerWidth / 2 + itemWidth / 2;
+        const scrollToPosition = itemOffsetLeft - containerWidth / 2 - 100;
 
         scrollContainer.scrollTo({
           left: scrollToPosition,
