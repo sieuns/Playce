@@ -42,7 +42,7 @@ const stores = [
     description: "서울 시청 근처에서 유명한 해장국 맛집. 진하고 깔끔한 국물이 특징",
   },
   {
-    user: { id: 5 },
+    user: { id: 4 },
     storeName: "서울시청점 김밥천국",
     businessNumber: { id: 3 },
     address: "서울특별시 중구 세종대로 18길 6",

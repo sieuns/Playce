@@ -24,7 +24,7 @@ const storeController = {
   updateStore: async (req: AuthRequest, res: Response, next: NextFunction) => {
     try {
       console.log("\n🍴 식당 수정");
-      const userId: number = 1; //req.user!.userId;
+      const userId: number = req.user!.userId; 
       const storeId: number = parseInt(req.params.storeId);
       const updateData = req.body;
 
