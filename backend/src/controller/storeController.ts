@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import storeService from "../service/storeService";
 import { logApiError } from "../utils/errorHandler";
 import { AuthRequest } from "../middlewares/authMiddleware";
+import { success } from "../utils/response";
 
 const storeController = {
   // 1. 식당 등록
@@ -14,7 +15,7 @@ const storeController = {
       await storeService.createStore(userId, createData);
 
       console.log("✅ 식당 등록 - 성공");
-      res.status(201).json({ success: true, message: "식당 등록" });
+      return success(res, '식당이 등록되었습니다', 201);
     } catch (error) {
       logApiError('식당 등록', error);
       next(error);
@@ -31,7 +32,7 @@ const storeController = {
       await storeService.updateStore(userId, storeId, updateData);
 
       console.log("✅ 식당 수정 - 성공");
-      res.status(200).json({ success: true, message: "식당 수정" });
+      return success(res, '식당 정보가 수정되었습니다.');
     } catch (error) {
       logApiError('식당 수정', error);
       next(error);
@@ -44,16 +45,10 @@ const storeController = {
       const userId: number = req.user!.userId;
       const storeId = parseInt(req.params.storeId);
 
-      if (isNaN(storeId)) {
-        const error = new Error('유효하지 않은 식당 id입니다.');
-        (error as any).status = 400;
-        throw error;
-      }
-
       await storeService.deleteStore(userId, storeId);
 
       console.log("✅ 식당 삭제 - 성공");
-      res.status(200).json({ success: true, message: "식당 삭제" });
+      return success(res, '식당이 삭제되었습니다.');
     } catch (error) {
       logApiError('식당 삭제', error);
       next(error);
@@ -66,16 +61,10 @@ const storeController = {
       const userId: number | undefined = req.user?.userId;
       const storeId = parseInt(req.params.storeId);
 
-      if (isNaN(storeId)) {
-        const error = new Error('유효하지 않은 식당 id입니다.');
-        (error as any).status = 400;
-        throw error;
-      }
-
       const responseData = await storeService.getStoreDetail(userId, storeId);
 
       console.log("✅ 식당 상세 조회 - 성공");
-      res.status(200).json({ success: true, message: "식당 상세 조회", data: responseData });
+      return success(res, '식당 상세 조회 성공', responseData);
     } catch (error) {
       logApiError('식당 상세 조회', error);
       next(error);
@@ -90,7 +79,7 @@ const storeController = {
       const responseData = await storeService.getMyStores(userId);
 
       console.log("✅ 내 식당 목록 조회 - 성공");
-      res.status(200).json({ success: true, message: "내 식당 목록 조회", data: responseData });
+      return success(res, '내 식당 목록 조회 성공', responseData);
     } catch (error) {
       logApiError('내 식당 목록 조회', error);
       next(error);
