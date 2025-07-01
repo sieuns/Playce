@@ -11,7 +11,7 @@ const userController = {
       console.log("\n📝 [회원가입] 요청");
       await userService.join(req);
       console.log("✅ [회원가입] 성공");
-      return success(res, "회원가입이 완료되었습니다.");
+      return success(res, "회원가입이 완료되었습니다.", undefined, 201);
     } catch (error) {
       logApiError("회원가입", error);
       next(error);
@@ -23,7 +23,7 @@ const userController = {
       console.log("\n🔐 [로그인] 요청");
       const token = await userService.login(req);
       console.log("✅ [로그인] 성공");
-      return success(res, "로그인이 완료되었습니다.", { token });
+      return success(res, "로그인이 완료되었습니다.", { token }, 201);
     } catch (error) {
       logApiError("로그인", error);
       next(error);

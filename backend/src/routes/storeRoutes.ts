@@ -62,10 +62,9 @@ const router = Router();
  *                 example: 축구 경기 생중계가 있는 강남 최고의 스포츠펍
  *               img_urls:
  *                 type: string[]
- *                 nullable: true
  *                 example:
- *                  - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EC%95%88%EA%B2%BD%EA%B3%BC-%EC%96%91%EC%B4%88%EA%B0%80%EC%9E%88%EB%8A%94-%ED%85%8C%EC%9D%B4%EB%B8%94-NXzahh27tDQ'
- *                  - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EB%B0%98%EC%AF%A4-%EC%B1%84%EC%9B%8C%EC%A7%84-%EC%99%80%EC%9D%B8-%EC%9E%94-%EC%98%86%EC%97%90-%EB%B0%98%EC%AF%A4-%EB%B9%88-%ED%88%AC%EB%AA%85-%ED%8C%8C%EC%9D%B8%ED%8A%B8-%EC%9E%94-OxKFC5u0980'
+ *                   - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EC%95%88%EA%B2%BD%EA%B3%BC-%EC%96%91%EC%B4%88%EA%B0%80%EC%9E%88%EB%8A%94-%ED%85%8C%EC%9D%B4%EB%B8%94-NXzahh27tDQ'
+ *                   - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EB%B0%98%EC%AF%A4-%EC%B1%84%EC%9B%8C%EC%A7%84-%EC%99%80%EC%9D%B8-%EC%9E%94-%EC%98%86%EC%97%90-%EB%B0%98%EC%AF%A4-%EB%B9%88-%ED%88%AC%EB%AA%85-%ED%8C%8C%EC%9D%B8%ED%8A%B8-%EC%9E%94-OxKFC5u0980'
  *     responses:
  *       201:
  *         description: 식당이 등록되었습니다.
@@ -159,14 +158,17 @@ router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식�
  *               type:
  *                 type: string
  *                 example: 치킨
- *               img_id:
- *                 type: integer
+ *              img_urls:
+ *                 type: string[]
+ *                 example:
+ *                   - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EC%95%88%EA%B2%BD%EA%B3%BC-%EC%96%91%EC%B4%88%EA%B0%80%EC%9E%88%EB%8A%94-%ED%85%8C%EC%9D%B4%EB%B8%94-NXzahh27tDQ'
+ *                   - 'https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EB%B0%98%EC%AF%A4-%EC%B1%84%EC%9B%8C%EC%A7%84-%EC%99%80%EC%9D%B8-%EC%9E%94-%EC%98%86%EC%97%90-%EB%B0%98%EC%AF%A4-%EB%B9%88-%ED%88%AC%EB%AA%85-%ED%8C%8C%EC%9D%B8%ED%8A%B8-%EC%9E%94-OxKFC5u0980'
  *               description:
  *                 type: string
  *                 example: 
  *     responses:
  *       200:
- *         description: 식당 정보가 수정되었습니다.
+ *         description: 식당이 수정되었습니다.
  *       400:
  *         description: 유효하지 않은 요청
  *       403:
@@ -246,7 +248,7 @@ router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식
  *                 type:
  *                   type: string
  *                   example: 스포츠펍
- *                 img_list:
+ *                 img_urls:
  *                   type: array
  *                   items:
  *                     type: string
