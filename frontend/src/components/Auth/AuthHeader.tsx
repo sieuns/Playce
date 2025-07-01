@@ -22,8 +22,9 @@ const AuthHeader: React.FC = () => {
           <>
             <Button
               icon={<FaSignOutAlt />}
-              scheme="secondary"
+              scheme="primary"
               size="medium"
+              className="bg-lightgreen hover:bg-lightgreen border-none"
               onClick={() => {
                 // userLogout();
                 // 임시로 로그아웃되도록 설정
@@ -36,7 +37,8 @@ const AuthHeader: React.FC = () => {
             <Button
               icon={<FaUserAlt />}
               size="medium"
-              scheme="secondary"
+              scheme="primary"
+              className="bg-lightgreen hover:bg-lightgreen border-none"
               onClick={() => setIsMypageOpen(true)}
             >
               마이페이지
@@ -48,7 +50,8 @@ const AuthHeader: React.FC = () => {
             <Button
               icon={<FaSignInAlt />}
               size="medium"
-              scheme="secondary"
+              scheme="primary"
+              className="bg-lightgreen hover:bg-lightgreen border-none"
               onClick={() => {
                 setIsLoginModalOpen(true);
               }}
@@ -58,7 +61,8 @@ const AuthHeader: React.FC = () => {
             <Button
               icon={<FaUserPlus />}
               size="medium"
-              scheme="secondary"
+              scheme="primary"
+              className="bg-lightgreen hover:bg-lightgreen border-none"
               onClick={() => {
                 setIsSignupModalOpen(true);
               }}
