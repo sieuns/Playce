@@ -32,7 +32,7 @@ const searchService = {
 
     if (stores.length === 0) {
       console.log("❌ 근처 식당 없음");
-      throw createError("근처에 검색된 식당이 없습니다.", 404);
+      return [];
     }
 
     const result = stores.map((store) => {
@@ -151,7 +151,7 @@ const searchService = {
 
     if (stores.length === 0) {
       console.log("❌ 검색 결과 없음");
-      throw createError("검색 결과가 없습니다.", 404);
+      return [];
     }
 
     const result = stores.map((store) => {
