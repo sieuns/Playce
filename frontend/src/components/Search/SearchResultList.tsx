@@ -1,11 +1,17 @@
 import SearchResultItem from "./SearchResultItem";
 import { mockSearchResults } from "../../data/searchResult";
 import { useState } from "react";
+import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
+import type { RestaurantDetail } from "../../types/restaurant.types";
+import RestaurantDetailComponent from "../DetailStores/DetailStores";
 
 type SortType = "distance" | "date";
 
 const SearchResultList = () => {
   const [sortType, setSortType] = useState<SortType>("distance");
+  const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
+    null
+  );
 
   const sortedResults = [...mockSearchResults].sort((a, b) => {
     if (sortType === "distance") {
@@ -55,8 +61,25 @@ const SearchResultList = () => {
       {/* 검색 결과 리스트 */}
       <div>
         {sortedResults.map((item) => (
-          <SearchResultItem key={item.id} data={item} />
+          <SearchResultItem
+            key={item.id}
+            data={item}
+            onClick={() => {
+              const detail = dummyRestaurantDetails.find(
+                (d) => d.id === item.id
+              );
+              if (detail) setSelectedDetail(detail);
+              else alert("상세 mock 데이터를 찾을 수 없습니다.");
+            }}
+          />
         ))}
+
+        {selectedDetail && (
+          <RestaurantDetailComponent
+            detail={selectedDetail}
+            onClose={() => setSelectedDetail(null)}
+          />
+        )}
       </div>
     </div>
   );
