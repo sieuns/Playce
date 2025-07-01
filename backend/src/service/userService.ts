@@ -13,11 +13,6 @@ const userService = {
   join: async (req: Request) => {
     const { email, password, name, nickname, phone } = req.body;
 
-    if (!email || !password || !name || !nickname || !phone) {
-      throw createError("모든 필드를 입력해주세요.", 400);
-    }
-    console.log("유효성 검사 완료 - 필수 항목 존재");
-
     const existingEmail = await userRepository.findOneBy({ email });
     if (existingEmail) {
       throw createError("이미 존재하는 이메일입니다.", 409);
@@ -106,20 +101,7 @@ const userService = {
 
   // 6. 닉네임 변경
   updateNickname: async (userId: number, newNickname: string) => {
-    if (!newNickname) {
-      console.warn("⚠️ 닉네임 없음");
-      throw createError("변경할 닉네임을 입력해주세요.", 400);
-    }
-    console.log("유효성 검사 완료 - 닉네임 입력 확인");
-
-    const user = await userRepository.findOneBy({ id: userId });
-    if (!user) {
-      throw createError("사용자를 찾을 수 없습니다.", 404);
-    }
-    console.log("유효성 검사 완료 - 사용자 존재 확인");
-
-    user.nickname = newNickname;
-    await userRepository.save(user);
+    await userRepository.update({ id: userId }, { nickname: newNickname });
     console.log("[UserService] 닉네임 변경 완료 - nickname:", newNickname);
   },
 };

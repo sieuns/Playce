@@ -1,4 +1,3 @@
-import { Like } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { BigRegion } from "../entities/BigRegion";
 import { BusinessNumber } from "../entities/BusinessNumber";
@@ -7,7 +6,6 @@ import { Store } from "../entities/Store";
 import { StoreImage } from "../entities/StoreImage";
 import { getLocationDataFromAddress } from "../utils/locationUtils";
 import { createError } from "../utils/createError";
-import { connect } from "http2";
 
 const storeService = {
   // 1. 식당 등록
@@ -38,7 +36,7 @@ const storeService = {
       });
 
       if (!findBusinessNumber || !findBusinessNumber.isValid) throw createError('유효하지 않은 사업자등록번호입니다.', 400);
-      if (findBusinessNumber.store) throw createError('이미 등록된 사업자등록번호입니다. 하나의 번호는 하나의 식당만 가질 수 있습니다.', 409);
+      if (findBusinessNumber.store) throw createError('이미 등록된 사업자등록번호입니다.', 409);
       console.log(`- 사업자등록번호(id: ${findBusinessNumber.id}, number: ${findBusinessNumber.businessNumber})`);
 
       // 주소-위치-지역 변환 및 DB 조회
@@ -109,7 +107,7 @@ const storeService = {
       if (!storeToUpdate) throw createError('해당 식당을 찾을 수 없습니다.', 404);
       console.log('- 식당 유효성 검사 완료 : DB에 있는지');
 
-      if (storeToUpdate.user.id !== userId) throw createError('해당 식당을 수정할 권한이 없습니다.', 403);
+      if (storeToUpdate.user.id !== userId) throw createError('해당 식당에 대한 수정 권한이 없습니다.', 403);
       console.log('- 식당 유효성 검사 완료 : 소유권 확인');
 
       const allowedFields = [
@@ -189,7 +187,7 @@ const storeService = {
     });
 
     // 식당 유효성 검사
-    if (!storeToDelete) throw createError('식당을 찾을 수 없습니다.', 404);
+    if (!storeToDelete) throw createError('해당 식당을 찾을 수 없습니다.', 404);
     console.log('- 식당 유효성 검사 통과');
 
     if (storeToDelete.user.id !== userId) throw createError('해당 식당에 대한 삭제 권한이 없습니다.', 403);
@@ -214,7 +212,7 @@ const storeService = {
       ]
     });
 
-    if (!store) throw createError('존재하지 않는 식당입니다.', 404);
+    if (!store) throw createError('해당 식당을 찾을 수 없습니다.', 404);
     console.log('- store 유효성 검사');
 
     const imgListData = store.images.map(img => img.imgUrl);
