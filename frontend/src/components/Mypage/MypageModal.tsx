@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ModalBase from "../Common/ModalBase";
 import Sidebar from "../Mypage/Sidebar";
-import FavoriteList from "./FavortieList";
+import FavoriteList from "./FavoriteList";
 import UserInfo from "./UserInfo";
 import RestaurantManager from "./RestaurantManage/RestaurantManager";
 
