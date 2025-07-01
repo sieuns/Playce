@@ -8,15 +8,16 @@ interface SearchResultItemProps {
     matchInfo: string;
     imgUrl: string;
   };
+  onClick?: () => void;
 }
 
-const SearchResultItem: FC<SearchResultItemProps> = ({ data }) => {
+const SearchResultItem: FC<SearchResultItemProps> = ({ data, onClick }) => {
   const { storeName, address, distance, matchInfo, imgUrl } = data;
 
   return (
     <div
       className="w-full hover:bg-primary4 transition-colors cursor-pointer border-b border-gray-200"
-      onClick={() => console.log(`클릭한 식당: ${storeName}`)}
+      onClick={onClick}
     >
       <div className="flex justify-between items-center px-4 py-3">
         <div className="flex flex-col">
