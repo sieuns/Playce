@@ -36,7 +36,7 @@ const favoriteController = {
       const result = await favoriteService.removeFavorite(userId, storeId);
 
       console.log("✅ [즐겨찾기 삭제] 성공");
-      return success(res, "즐겨찾기가 삭제되었습니다.", 200);
+      return success(res, "즐겨찾기가 삭제되었습니다.");
     } catch (error: any) {
       logApiError("즐겨찾기 삭제", error);
       next(error);

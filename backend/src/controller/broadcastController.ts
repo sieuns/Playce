@@ -63,7 +63,7 @@ const getBroadcastsByStore = async (req: Request, res: Response, next: NextFunct
     logApiError("중계 일정 조회", error);
     next(error);
   }
-};
+}; 
 
 export default {
   createBroadcast,

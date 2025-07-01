@@ -15,7 +15,7 @@ const storeController = {
       await storeService.createStore(userId, createData);
 
       console.log("✅ [식당 등록] 성공");
-      return success(res, '식당이 등록되었습니다', 201);
+      return success(res, '식당이 등록되었습니다', undefined, 201);
     } catch (error) {
       logApiError('식당 등록', error);
       next(error);
@@ -50,7 +50,7 @@ const storeController = {
       console.log("✅ [식당 삭제] 성공");
       return success(res, '식당이 삭제되었습니다.');
     } catch (error) {
-      logApiError('식당 삭제', error);
+      logApiError('식당 삭제', error); 
       next(error);
     }
   },

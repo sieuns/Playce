@@ -215,7 +215,7 @@ const storeService = {
     if (!store) throw createError('해당 식당을 찾을 수 없습니다.', 404);
     console.log('- store 유효성 검사');
 
-    const imgListData = store.images.map(img => img.imgUrl);
+    const imgUrlsData = store.images.map(img => img.imgUrl);
     const broadcastData = store.broadcasts.map(bc => ({
       match_date: bc.matchDate,
       match_time: bc.matchTime,
@@ -234,7 +234,7 @@ const storeService = {
       opening_hours: store.openingHours,
       menus: store.menus,
       type: store.type,
-      img_list: imgListData,
+      img_urls: imgUrlsData,
       description: store.description,
       broadcasts: broadcastData,
       is_owner: isOwner,

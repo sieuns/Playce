@@ -62,23 +62,22 @@ const updateBroadcast = async (broadcastId: number, data: any, userId: number) =
 
   if (broadcast.store.user.id !== userId) throw createError("해당 중계 일정의 수정 권한이 없습니다.", 403);
 
-  if (data.store_id && data.store_id !== broadcast.store.id) {
-    const store = await checkStoreOwnership(data.store_id, userId);
-    broadcast.store = store;
-    console.log(`- store 변경 완료 -> storeId: ${data.store_id}`);
-
-  }
+  // if (data.store_id && data.store_id !== broadcast.store.id) {
+  //   const store = await checkStoreOwnership(data.store_id, userId);
+  //   broadcast.store = store;
+  //   console.log(`- store 변경 완료 -> storeId: ${data.store_id}`);
+  // }
 
   if (data.sport_id) {
     const sport = await sportRepo.findOneBy({ id: data.sport_id });
-    if (!sport) throw createError("존재하지 않는 스포츠입니다.", 404);
+    if (!sport) throw createError("해당 스포츠를 찾을 수 없습니다.", 404);
     broadcast.sport = sport;
     console.log(`- sport 변경 완료 -> sportId: ${data.sport_id}`);
   }
 
   if (data.league_id) {
     const league = await leagueRepo.findOneBy({ id: data.league_id });
-    if (!league) throw createError("존재하지 않는 리그입니다.", 404);
+    if (!league) throw createError("해당 리그를 찾을 수 없습니다.", 404);
     broadcast.league = league;
     console.log(`- league 변경 완료 -> leagueId: ${data.league_id}`);
   }
