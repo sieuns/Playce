@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex">
       <SearchPage />
-      <div className="w-full h-screen">
+      <div className="relative w-full h-screen">
         <Map />
         {/* 이 위치에서 재탐색 버튼 */}
         {isRefreshBtnOn && <SpotRefreshButton />}

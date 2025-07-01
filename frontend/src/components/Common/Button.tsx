@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  scheme?: "primary" | "secondary" | "close" | "tab";
+  scheme?: "primary" | "secondary" | "close" | "tab" | "custom";
   size?: "small" | "medium" | "large" | "icon";
   isLoading?: boolean;
   fullWidth?: boolean;
@@ -34,6 +34,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       close: "text-gray-400 hover:text-primary5",
       tab: "bg-transparent text-gray-400 hover:text-primary5 border-b-2 border-transparent",
+      custom: "",
     };
 
     const sizeStyle = {
