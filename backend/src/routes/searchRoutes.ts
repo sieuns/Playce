@@ -153,7 +153,7 @@ router.get("/nearby", NearbySearchValidator, searchController.getNearbyStores);
  *         schema:
  *           type: string
  *           example: 강남구
- *         description: 구/군 단위 지역명
+ *         description: 구/군 단위 지역명 
  *       - name: sort
  *         in: query
  *         required: false

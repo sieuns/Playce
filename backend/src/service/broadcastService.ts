@@ -11,16 +11,16 @@ const sportRepo = AppDataSource.getRepository(Sport);
 const leagueRepo = AppDataSource.getRepository(League);
 
 
-// 매장 소유권 확인
+// 식당 소유권 확인
 const checkStoreOwnership = async (storeId: number, userId: number) => {
-  console.log(`\n🔍 [매장 소유권 확인] storeId: ${storeId}, userId: ${userId}`);
+  console.log(`\n🔍 [식당 소유권 확인] storeId: ${storeId}, userId: ${userId}`);
   const store = await storeRepo.findOne({
     where: { id: storeId },
     relations: ["user"],
   });
-  if (!store) throw createError("존재하지 않는 매장입니다.", 404);
-  if (store.user.id !== userId) throw createError("권한이 없습니다.", 403);
-  console.log("✅ 매장 소유권 확인 완료");
+  if (!store) throw createError("존재하지 않는 식당입니다.", 404);
+  if (store.user.id !== userId) throw createError("해당 식당에 대한 권한이 없습니다.", 403);
+  console.log("✅ 식당 소유권 확인 완료");
   return store;
 };
 
@@ -60,7 +60,7 @@ const updateBroadcast = async (broadcastId: number, data: any, userId: number) =
   });
   if (!broadcast) throw createError("해당 중계 일정을 찾을 수 없습니다.", 404);
 
-  if (broadcast.store.user.id !== userId) throw createError("권한이 없습니다.", 403);
+  if (broadcast.store.user.id !== userId) throw createError("해당 중계 일정의 수정 권한이 없습니다.", 403);
 
   if (data.store_id && data.store_id !== broadcast.store.id) {
     const store = await checkStoreOwnership(data.store_id, userId);
@@ -103,7 +103,7 @@ const deleteBroadcast = async (broadcastId: number, userId: number) => {
   });
   if (!broadcast) throw createError("삭제할 중계 일정이 없습니다.", 404);
 
-  if (broadcast.store.user.id !== userId) throw createError("권한이 없습니다.", 403);
+  if (broadcast.store.user.id !== userId) throw createError("해당 중계 일정의 삭제 권한이 없습니다.", 403);
 
   await broadcastRepo.delete(broadcastId);
   console.log("✅ 중계 일정 삭제 완료");

@@ -31,8 +31,8 @@ const searchService = {
     console.log(`- 검색 결과: ${stores.length}개`);
 
     if (stores.length === 0) {
-      console.log("❌ 근처 매장 없음");
-      throw createError("근처에 검색된 매장이 없습니다.", 404);
+      console.log("❌ 근처 식당 없음");
+      throw createError("근처에 검색된 식당이 없습니다.", 404);
     }
 
     const result = stores.map((store) => {

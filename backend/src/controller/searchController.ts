@@ -7,7 +7,7 @@ const searchController = {
   // 1. 현재 위치 기반 검색
   getNearbyStores: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log("\n📍 [현재 위치 기반 검색] 요청 시작");
+      console.log("\n📍 [현재 위치 기반 검색] 요청");
 
       const { lat, lng, radius } = req.query;
 
@@ -19,7 +19,7 @@ const searchController = {
 
       console.log("✅ [현재 위치 기반 검색] 성공");
 
-      return success(res, "검색 성공", result);
+      return success(res, "현재 위치 기반 검색 성공", result);
     } catch (error) {
       logApiError("현재 위치 기반 검색", error);
       next(error);
@@ -29,7 +29,7 @@ const searchController = {
   // 2. 통합 검색
   searchStores: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log("\n🔍 [통합 검색] 요청 시작");
+      console.log("\n🔍 [통합 검색] 요청");
 
       const {
         search,
@@ -53,7 +53,7 @@ const searchController = {
 
       console.log("✅ [통합 검색] 성공");
 
-      return success(res, "검색 성공", result);
+      return success(res, "통합 검색 성공", result);
     } catch (error) {
       logApiError("통합 검색", error);
       next(error);

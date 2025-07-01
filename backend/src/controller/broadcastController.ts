@@ -6,7 +6,7 @@ import { logApiError } from "../utils/errorHandler";
 
 const createBroadcast = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    console.log("\n🚀 [중계 일정 등록] 요청 시작");
+    console.log("\n🚀 [중계 일정 등록] 요청");
     const userId = req.user!.userId;
     const newBroadcast = await broadcastService.createBroadcast(req.body, userId);
 
@@ -20,7 +20,7 @@ const createBroadcast = async (req: AuthRequest, res: Response, next: NextFuncti
 
 const deleteBroadcast = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    console.log("\n🚀 [중계 일정 삭제] 요청 시작");
+    console.log("\n🚀 [중계 일정 삭제] 요청");
 
     const userId = req.user!.userId;
     const { broadcasts_id } = req.params;
@@ -36,7 +36,7 @@ const deleteBroadcast = async (req: AuthRequest, res: Response, next: NextFuncti
 
 const updateBroadcast = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    console.log("\n🚀 [중계 일정 수정] 요청 시작");
+    console.log("\n🚀 [중계 일정 수정] 요청");
 
     const userId = req.user!.userId;
     const { broadcasts_id } = req.params;
@@ -52,7 +52,7 @@ const updateBroadcast = async (req: AuthRequest, res: Response, next: NextFuncti
 
 const getBroadcastsByStore = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("\n🚀 [중계 일정 조회] 요청 시작");
+    console.log("\n🚀 [중계 일정 조회] 요청");
 
     const { store_id } = req.params;
     const broadcasts = await broadcastService.getBroadcastsByStore(Number(store_id));
