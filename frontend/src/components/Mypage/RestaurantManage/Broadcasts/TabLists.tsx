@@ -41,21 +41,23 @@ const TabList = () => {
 
   // 오늘 날짜를 중앙에 배치
   useEffect(() => {
-    if (tabRef.current) {
-      const targetItem = itemRefs.current.get(date);
+    const scrollContainer = tabRef.current;
+    const targetItem = itemRefs.current.get(date);
 
-      if (targetItem) {
-        const scrollContainer = tabRef.current;
-        const containerWidth = scrollContainer.clientWidth;
+    if (scrollContainer && targetItem) {
+      requestAnimationFrame(() => {
+        const scrollContainerWidth = scrollContainer.offsetWidth;
         const itemOffsetLeft = targetItem.offsetLeft;
+        const itemWidth = targetItem.offsetWidth;
 
-        const scrollToPosition = itemOffsetLeft - containerWidth / 2 - 100;
+        const itemCenter = itemOffsetLeft + itemWidth / 2;
+        const scrollTo = itemCenter - scrollContainerWidth * 1.5;
 
         scrollContainer.scrollTo({
-          left: scrollToPosition,
+          left: scrollTo,
           behavior: "smooth",
         });
-      }
+      });
     }
   }, [year, month, date]);
 
