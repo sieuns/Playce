@@ -9,7 +9,7 @@ const SpotRefreshButton = () => {
       icon={<IoReloadOutline />}
       size="medium"
       scheme="secondary"
-      className="absolute top-[80px] left-1/2 -translate-x-1/2 z-10 text-lg"
+      className="absolute top-[80px] left-1/2 -translate-x-1/2 z-10 rounded-lg"
       onClick={() => setRefreshBtn(false)}
     >
       이 위치에서 재탐색
