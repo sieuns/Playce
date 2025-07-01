@@ -1,6 +1,7 @@
 import "dotenv/config";
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
 
 // TypeORM 설정
 import { AppDataSource } from "./data-source";
@@ -21,6 +22,13 @@ import { fail } from "./utils/response";
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// ✅ CORS 허용
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*", // 배포 시 도메인 설정 가능
+  credentials: true,
+}));
+
 
 app.use(express.json());
 
