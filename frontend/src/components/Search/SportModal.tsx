@@ -16,7 +16,7 @@ const SportModal = ({ onClose, onApply }: SportModalProps) => {
   const { sport, league, teams, resetSport } = useSportStore();
 
   return (
-    <ModalBase onClose={onClose} title="경기">
+    <ModalBase onClose={onClose} title="경기" className="p-5">
       <div className="p-4 flex-1 overflow-auto">
         <SportPanel />
       </div>
