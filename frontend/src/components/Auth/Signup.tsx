@@ -33,7 +33,7 @@ const SignupModal = () => {
     <ModalBase
       onClose={handleCancel}
       title="회원가입"
-      className="p-5 w-[400px]"
+      className="p-5 w-[390px]"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3 mt-5">
