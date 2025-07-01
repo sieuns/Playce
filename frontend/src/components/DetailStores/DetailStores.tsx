@@ -19,7 +19,7 @@ type Tab = (typeof TABS)[number];
 
 interface RestaurantDetailComponentProps {
   detail: RestaurantDetail;
-  onClose: () => void;
+  onClose?: () => void; // 닫기 버튼은 항상 있는 게 아님
 }
 
 export default function RestaurantDetailComponent({
@@ -30,18 +30,11 @@ export default function RestaurantDetailComponent({
 
   return (
     <aside className="fixed left-0 top-0 h-full w-[430px] z-[100] bg-white shadow-2xl border-r border-gray-100 flex flex-col font-pretendard">
-      {/* 상단: 로고와 닫기(X) 버튼을 같은 flex row에 배치 */}
-      <div className="relative h-12 border-b border-gray-100 bg-white">
-        <span className="absolute left-8 top-1/2 -translate-y-1/2 text-2xl font-bold tracking-tight text-primary5 font-pretendard">
+      {/* 헤더: 메인 AppLogoHeader와 완전히 동일하게 */}
+      <div className="h-12 flex items-center pl-6 border-b border-gray-100">
+        <span className="text-2xl font-bold tracking-tight text-primary5 font-pretendard">
           Playce
         </span>
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full hover:text-priamry5 transition"
-          aria-label="상세보기 닫기"
-        >
-          <FiX className="text-primary5 text-2xl" />
-        </button>
       </div>
 
       {/* 이미지 */}
@@ -64,6 +57,16 @@ export default function RestaurantDetailComponent({
             <FiShare2 className="text-primary5 text-lg" />
           </button>
         </div>
+        {/* 닫기(X) 버튼: 이미지 오른쪽 위에 플로팅 (헤더에는 없음) */}
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition z-20"
+            aria-label="상세보기 닫기"
+          >
+            <FiX className="text-primary5 text-lg" />
+          </button>
+        )}
       </div>
 
       {/* 탭 메뉴 */}
