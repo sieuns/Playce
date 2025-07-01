@@ -57,11 +57,11 @@ const MyStoreList = () => {
   };
 
   return (
-    <section className="max-w-lg mx-auto mt-8">
+    <section>
       {stores.length === 0 ? (
-        <div className="text-gray-400 text-center py-20 text-lg tracking-wide">
+        <div className="text-gray-400 text-center text-lg tracking-wide">
           등록된 식당이 없습니다.
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center">
             <button
               onClick={() => {
                 setFormOpen(true);
@@ -80,7 +80,7 @@ const MyStoreList = () => {
             {stores.map((store) => (
               <li
                 key={store.store_name}
-                className="flex items-center gap-4 py-5 border-b border-gray-100 last:border-b-0"
+                className="flex items-center gap-4 p-3 border-b border-gray-100 last:border-b-0"
               >
                 <img
                   src={store.img_urls?.[0] || "/noimg.png"}
@@ -88,12 +88,17 @@ const MyStoreList = () => {
                   className="w-16 h-16 rounded-lg object-cover border border-gray-200 bg-gray-100"
                 />
                 <div className="flex-1 min-w-0">
-                  <span className="block font-bold text-lg md:text-xl text-gray-900 truncate">
-                    {store.store_name}
-                  </span>
-                  <span className="block text-gray-600 text-base md:text-lg truncate">
+                  <div className="flex items-center gap-2">
+                    <span className="block text-lg font-semibold text-gray-900 truncate">
+                      {store.store_name}
+                    </span>
+                    <span className="text-xs bg-primary4 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
+                      {store.type}
+                    </span>
+                  </div>
+                  <div className="text-gray-500 text-sm truncate mt-1">
                     {store.address}
-                  </span>
+                  </div>
                 </div>
                 {/* 상세보기 < 버튼 */}
                 <button
@@ -104,7 +109,7 @@ const MyStoreList = () => {
                       ) || null
                     )
                   }
-                  className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-emerald-50 transition ml-1"
+                  className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-primary4 transition ml-1"
                   aria-label="상세보기"
                 >
                   <FiChevronLeft className="text-emerald-500 text-xl" />

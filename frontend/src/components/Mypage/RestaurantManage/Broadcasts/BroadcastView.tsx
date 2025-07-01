@@ -49,7 +49,7 @@ const BroadcastView = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col p-3">
+    <div className="flex flex-col pl-2">
       <div className="flex text-[28px] items-center justify-between mb-5 gap-3">
         {/* 중앙 맞추기용 사용하지 않는 버튼 */}
         <button className="text-[25px]" onClick={() => setIsModalOpen(true)}>
@@ -93,6 +93,7 @@ const BroadcastView = () => {
           {viewOption === "tab" ? <FaRegCalendarAlt /> : <FaBars />}
         </button>
       </div>
+
       {viewOption === "tab" ? <TabList /> : <Calendar />}
 
       {isModalOpen && (
