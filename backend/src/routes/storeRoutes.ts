@@ -69,9 +69,13 @@ const router = Router();
  *       201:
  *         description: 식당이 등록되었습니다.
  *       400:
- *         description: 필수 입력값 누락
+ *         description: req.body 유효성 검사 실패 또는 유효하지 않은 사업자등록번호/지역
  *       401:
- *         description: 유효하지 않은 토큰
+ *         description: 잘못된 인증 형식 또는 유효하지 않은 토큰
+ *       404:
+ *         description: 사용자를 찾을 수 없음
+ *       409:
+ *         description: 이미 등록된 사업자등록번호
  */
 router.post("/", authenticate, createStoreValidator, storeController.registerStore); // 1. 식당 등록 (🔒 토큰 검사)
 
@@ -112,8 +116,12 @@ router.post("/", authenticate, createStoreValidator, storeController.registerSto
  *                         type: string
  *                         example: 서울특별시 강남구 테헤란로 123
  *                         description: 식당 주소
+ *       200:
+ *         description: 내 식당 목록 조회 성공
  *       401:
- *         description: 유효하지 않은 토큰
+ *         description: 잘못된 인증 형식 또는 유효하지 않은 토큰
+ *       403:
+ *         description: 사용자를 찾을 수 없음
  */
 router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식당 목록 조회 (🔒) <- 라우팅 순서 문제로 위치 수정
 
@@ -170,11 +178,13 @@ router.get("/mypage", authenticate, storeController.getMyStores); // 5. 내 식�
  *       200:
  *         description: 식당이 수정되었습니다.
  *       400:
- *         description: 유효하지 않은 요청
+ *         description: req.body 유효성 검사 실패 혹은 수정할 수 없는 항목 포함
+ *       401:
+ *         description: 잘못된 인증 형식 또는 유효하지 않은 토큰
  *       403:
- *         description: 권한 없음 (본인 식당 아님)
+ *         description: 식당에 대한 수정 권한 없음
  *       404:
- *         description: 식당을 찾을 수 없음
+ *         description: 식당/사용자를 찾을 수 없음
  */
 router.patch("/:storeId", authenticate, updateStoreValidator, storeController.updateStore); // 2. 식당 수정 (🔒)
 
@@ -198,11 +208,11 @@ router.patch("/:storeId", authenticate, updateStoreValidator, storeController.up
  *       200:
  *         description: 식당이 삭제되었습니다.
  *       401:
- *         description: 유효하지 않은 토큰
+ *         description: 잘못된 인증 형식 또는 유효하지 않은 토큰
  *       403:
- *         description: 권한 없음 (본인 식당 아님)
+ *         description: 식당에 대한 삭제 권한 없음
  *       404:
- *         description: 식당을 찾을 수 없음
+ *         description: 식당/사용자를 찾을 수 없음
  */
 router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식당 삭제 (🔒)
 
@@ -284,6 +294,8 @@ router.delete("/:storeId", authenticate, storeController.deleteStore); // 3. 식
  *                       etc:
  *                         type: string
  *                         example: 경기 후 이벤트 있음
+ *       200:
+ *         description: 식당 상세 조회 성공
  *       404:
  *         description: 식당을 찾을 수 없음
  */
