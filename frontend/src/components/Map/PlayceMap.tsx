@@ -3,7 +3,7 @@ import { Map } from "react-kakao-maps-sdk";
 import useMapStore from "../../stores/mapStore";
 import PlayceMapMarker from "./PlayceMapMarker";
 import PlayceModal from "./PlayceModal";
-import RestaurantDetailComponent from "../DetailStores/DetailStores";
+import RestaurantDetailComponent from "../RestaurantDetail/RestaurantDetail.tsx";
 import React from "react";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import type { RestaurantDetail } from "../../types/restaurant.types";

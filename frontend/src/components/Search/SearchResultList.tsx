@@ -3,7 +3,7 @@ import { mockSearchResults } from "../../data/searchResult";
 import { useState } from "react";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import type { RestaurantDetail } from "../../types/restaurant.types";
-import RestaurantDetailComponent from "../DetailStores/DetailStores";
+import RestaurantDetailComponent from "../RestaurantDetail/RestaurantDetail.tsx";
 
 type SortType = "distance" | "date";
 

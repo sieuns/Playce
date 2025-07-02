@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   FiStar,
-  FiShare2,
   FiMapPin,
   FiClock,
   FiPhone,
@@ -9,17 +8,18 @@ import {
   FiX,
   FiTv,
 } from "react-icons/fi";
-import { FaUtensils } from "react-icons/fa";
+import { FaUtensils, FaStar } from "react-icons/fa";
 import type { RestaurantDetail } from "../../types/restaurant.types";
 import Button from "../Common/Button";
 import classNames from "classnames";
+import useFavoriteStore from "../../stores/favoriteStore";
 
 const TABS = ["홈", "메뉴", "중계"] as const;
 type Tab = (typeof TABS)[number];
 
 interface RestaurantDetailComponentProps {
   detail: RestaurantDetail;
-  onClose?: () => void; // 닫기 버튼은 항상 있는 게 아님
+  onClose?: () => void;
 }
 
 export default function RestaurantDetailComponent({
@@ -28,9 +28,21 @@ export default function RestaurantDetailComponent({
 }: RestaurantDetailComponentProps) {
   const [currentTab, setCurrentTab] = useState<Tab>("홈");
 
+  // 즐겨찾기 글로벌 상태 사용
+  const { favoriteIds, addFavorite, removeFavorite } = useFavoriteStore();
+  const isFavorite = favoriteIds.includes(detail.id);
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(detail.id);
+    } else {
+      addFavorite(detail.id);
+    }
+  };
+
   return (
     <aside className="fixed left-0 top-0 h-full w-[430px] z-[100] bg-white shadow-2xl border-r border-gray-100 flex flex-col font-pretendard">
-      {/* 헤더: 메인 AppLogoHeader와 완전히 동일하게 */}
+      {/* 헤더 */}
       <div className="h-12 flex items-center pl-6 border-b border-gray-100">
         <span className="text-2xl font-bold tracking-tight text-primary5 font-pretendard">
           Playce
@@ -50,14 +62,19 @@ export default function RestaurantDetailComponent({
         )}
         {/* 저장/공유 버튼 */}
         <div className="absolute left-6 top-6 flex gap-3 z-10">
-          <button className="bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition">
-            <FiStar className="text-primary5 text-lg" />
-          </button>
-          <button className="bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition">
-            <FiShare2 className="text-primary5 text-lg" />
+          <button
+            onClick={handleToggleFavorite}
+            className="bg-white/90 rounded-full p-2 shadow hover:bg-orange-50 transition"
+            aria-label={isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
+          >
+            {isFavorite ? (
+              <FaStar className="text-yellow-400 text-lg" />
+            ) : (
+              <FiStar className="text-primary5 text-lg" />
+            )}
           </button>
         </div>
-        {/* 닫기(X) 버튼: 이미지 오른쪽 위에 플로팅 (헤더에는 없음) */}
+        {/* 닫기(X) 버튼 */}
         {onClose && (
           <button
             onClick={onClose}
