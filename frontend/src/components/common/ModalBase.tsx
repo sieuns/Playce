@@ -31,7 +31,7 @@ const ModalBase = ({
         onClick={(e) => e.stopPropagation()}
       >
         {!hideHeader && (
-          <div className="flex items-center justify-between border-b pb-3">
+          <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-mainTextitems-center m-0">
               {title}
             </h2>

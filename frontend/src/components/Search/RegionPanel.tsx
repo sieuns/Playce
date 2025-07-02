@@ -8,7 +8,7 @@ const RegionPanel = () => {
   const subRegionList = regionMap[mainRegion] || [];
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full border-t mt-5">
       <div className="flex flex-1 divide-x overflow-y-auto">
         {/* 좌측 상위 지역 리스트 */}
         <div className="w-1/2">

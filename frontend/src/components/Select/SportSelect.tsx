@@ -8,7 +8,7 @@ interface SportSelectProps {
 const SportSelect = ({ value, onChange }: SportSelectProps) => {
   return (
     <div>
-      <label className="text-m font-semibold mb-2 block">종목</label>
+      <label className=" font-semibold mb-2 block">종목</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
