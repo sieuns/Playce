@@ -20,6 +20,7 @@
     "react-kakao-maps-sdk": "^1.2.0",
     "react-router-dom": "^7.6.2",
     "tailwind-scrollbar-hide": "^4.0.0",
+    "tailwindcss-text-stroke": "^0.0.5",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

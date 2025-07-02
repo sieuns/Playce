@@ -7,7 +7,7 @@ interface TeamSelectProps {
 const TeamSelect = ({ teams, selected, toggle }: TeamSelectProps) => {
   return (
     <div>
-      <label className="text-sm font-semibold mb-2 block">팀</label>
+      <label className="font-semibold mt-5 mb-2 block">팀</label>
       <div className="border p-2 max-h-40 overflow-y-auto">
         <div className="grid grid-cols-2 divide-x divide-gray-300">
           {[0, 1].map((col) => (

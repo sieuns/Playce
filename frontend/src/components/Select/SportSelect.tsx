@@ -8,11 +8,11 @@ interface SportSelectProps {
 const SportSelect = ({ value, onChange }: SportSelectProps) => {
   return (
     <div>
-      <label className="text-sm font-semibold mb-2 block">종목</label>
+      <label className=" font-semibold mb-2 block">종목</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-primary1"
+        className="w-full p-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:border-primary1 focus:border-2 outline-none"
       >
         <option value="">종목 선택</option>
         {Object.keys(sportsMap).map((s) => (

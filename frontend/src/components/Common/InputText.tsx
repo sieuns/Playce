@@ -12,9 +12,10 @@ const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(
         ref={ref}
         type={type}
         className={classNames(
-          "border px-4 py-2 rounded w-full hover:border-primary1 focus:border-primary1 focus:outline-none focus:ring-1 focus:ring-primary1 transition-all",
+          "border p-2 rounded w-full hover:border-primary1 focus:border-primary1 focus:outline-none focus:ring-1 focus:ring-primary1 transition-all",
           className
         )}
+        autoComplete="off"
         {...props}
       />
     );

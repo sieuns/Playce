@@ -30,9 +30,13 @@ const SignupModal = () => {
   if (!isSignupModalOpen) return null;
 
   return (
-    <ModalBase onClose={handleCancel} title="회원가입" width="400px">
+    <ModalBase
+      onClose={handleCancel}
+      title="회원가입"
+      className="p-5 w-[400px]"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-5 p-5">
+        <div className="flex flex-col gap-3 mt-5">
           <fieldset>
             <InputText
               placeholder="이름"

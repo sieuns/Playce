@@ -12,9 +12,9 @@ const RegionModal = ({ onClose, onApply }: RegionModalProps) => {
   const { subRegions, resetRegion } = useRegionStore();
 
   return (
-    <ModalBase onClose={onClose} title="지역">
+    <ModalBase onClose={onClose} title="지역" className="p-5">
       <RegionPanel />
-      <div className="border-t p-4 flex gap-3">
+      <div className="border-t pt-5 flex gap-3">
         <Button onClick={resetRegion} scheme="secondary">
           초기화
         </Button>

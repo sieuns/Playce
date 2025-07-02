@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
-import Button from "../Common/Button";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 
@@ -9,7 +8,6 @@ interface ModalBaseProps {
   onClose: () => void;
   title?: string;
   hideHeader?: boolean;
-  width?: string;
   className?: string;
 }
 
@@ -18,7 +16,6 @@ const ModalBase = ({
   onClose,
   title,
   hideHeader = false,
-  width = "600px",
   className,
 }: ModalBaseProps) => {
   return createPortal(
@@ -28,23 +25,19 @@ const ModalBase = ({
     >
       <div
         className={classNames(
-          "bg-white rounded-xl shadow-lg max-h-[90vh] overflow-hidden flex flex-col",
+          "bg-white rounded-xl shadow-lg max-h-[90vh] overflow-hidden flex flex-col w-[600px]",
           className
         )}
-        style={{ width }}
         onClick={(e) => e.stopPropagation()}
       >
         {!hideHeader && (
-          <div className="flex items-center justify-between pl-4 pr-2 py-1 border-b">
-            <h2 className="text-lg font-bold pt-1 text-mainText">{title}</h2>
-            <Button
-              onClick={onClose}
-              scheme="close"
-              size="icon"
-              className="text-subText"
-            >
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-mainTextitems-center m-0">
+              {title}
+            </h2>
+            <button onClick={onClose} className="hover:text-primary5 text-lg">
               <FaTimes />
-            </Button>
+            </button>
           </div>
         )}
 

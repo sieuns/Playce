@@ -11,12 +11,12 @@ const LeagueSelect = ({ sport, value, onChange }: LeagueSelectProps) => {
 
   return (
     <div>
-      <label className="text-sm font-semibold mb-2 block">리그</label>
+      <label className="font-semibold mb-2 block">리그</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
         disabled={!sport}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-primary1"
+        className="w-full p-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:border-primary1 focus:border-2 outline-none"
       >
         <option value="">리그 선택</option>
         {leagues.map((l) => (
