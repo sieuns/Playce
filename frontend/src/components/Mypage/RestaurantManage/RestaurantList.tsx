@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { StoreFormRequest } from "../../../types/storeFormRequest";
 import { dummyRestaurantDetails } from "../../../data/dummyRestaurantDetail";
 import { FiChevronLeft, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
-import DetailStores from "../../DetailStores/DetailStores";
+import DetailStores from "../../RestaurantDetail/RestaurantDetail.tsx";
 import type { RestaurantDetail } from "../../../types/restaurant.types";
 import StoreFormModal from "./modals/StoreFormModal";
 import Button from "../../Common/Button";

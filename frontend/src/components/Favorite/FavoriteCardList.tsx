@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiChevronLeft, FiTrash2 } from "react-icons/fi";
-import DetailStores from "../DetailStores/DetailStores";
+import DetailStores from "../RestaurantDetail/RestaurantDetail.tsx";
 import type { RestaurantDetail } from "../../types/restaurant.types";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 
