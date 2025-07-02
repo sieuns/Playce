@@ -40,7 +40,7 @@ const router = Router();
  *                 example: 펍 카와우소
  *               business_number:
  *                 type: string
- *                 example: 333-33-12345
+ *                 example: 444-44-12345
  *               address:
  *                 type: string
  *                 example: 서울특별시 중구 세종대로 80 지하1층
