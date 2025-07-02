@@ -12,7 +12,7 @@ import { FaUtensils, FaStar } from "react-icons/fa";
 import type { RestaurantDetail } from "../../types/restaurant.types";
 import Button from "../Common/Button";
 import classNames from "classnames";
-import useFavoriteStore from "../../stores/favoriteStore"; // 추가!
+import useFavoriteStore from "../../stores/favoriteStore";
 
 const TABS = ["홈", "메뉴", "중계"] as const;
 type Tab = (typeof TABS)[number];
