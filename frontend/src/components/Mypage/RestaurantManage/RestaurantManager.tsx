@@ -6,6 +6,7 @@ import {
 } from "../../../types/restaurant-manage.types";
 import type { MypageProps } from "../MypageModal";
 import useBroadcastStore from "../../../stores/broadcastStore";
+import Button from "../../Common/Button";
 
 const RestaurantManager = ({ onClose }: MypageProps) => {
   const { restaurantSubpage, setRestaurantSubpage } = useMypageStore();
@@ -28,11 +29,18 @@ const RestaurantManager = ({ onClose }: MypageProps) => {
               }}
             />
           )}
-          {getModalTitle(restaurantSubpage)}
+          <div className="flex items-center gap-3 text-xl text-mainText">
+            {getModalTitle(restaurantSubpage)}
+          </div>
         </div>
-        <button onClick={onClose} className="hover:text-primary5">
+        <Button
+          onClick={onClose}
+          scheme="close"
+          size="icon"
+          className="text-mainText"
+        >
           <FaTimes />
-        </button>
+        </Button>
       </div>
 
       <div>{getComponents(restaurantSubpage)}</div>

@@ -42,7 +42,7 @@ const MenuInputList = ({ menus, setMenus, error }: MenuInputListProps) => {
         <button
           type="button"
           onClick={addMenu}
-          className="mt-1 text-emerald-600 text-sm"
+          className="mt-1 text-primary5 text-sm"
         >
           + 메뉴 추가
         </button>

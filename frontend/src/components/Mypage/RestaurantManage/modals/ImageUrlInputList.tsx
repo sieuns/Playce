@@ -39,7 +39,7 @@ const ImageUrlInputList = ({ imgUrls, setImgUrls }: ImageUrlInputListProps) => {
         <button
           type="button"
           onClick={addImg}
-          className="mt-1 text-emerald-600 text-sm"
+          className="mt-1 text-primary5 text-sm"
         >
           + 이미지 추가
         </button>
