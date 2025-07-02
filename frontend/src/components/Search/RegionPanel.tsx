@@ -16,7 +16,7 @@ const RegionPanel = () => {
             <div
               key={region}
               onClick={() => setMainRegion(region)}
-              className={`px-4 p-3 cursor-pointer hover:bg-gray-100 ${
+              className={`py-4 px-3 cursor-pointer hover:bg-gray-100 ${
                 region === mainRegion ? "font-bold text-primary5" : ""
               }`}
             >
@@ -36,7 +36,7 @@ const RegionPanel = () => {
             subRegionList.map((sub) => (
               <label
                 key={sub}
-                className="flex items-center justify-between px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                className="py-4 px-3 flex items-center justify-between hover:bg-gray-50 cursor-pointer"
               >
                 <span>{sub}</span>
                 <input

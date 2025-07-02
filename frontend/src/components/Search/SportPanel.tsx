@@ -12,8 +12,8 @@ const SportPanel = () => {
   const teamList = sport && league ? sportsMap[sport][league] : [];
 
   return (
-    <div className="p-4 flex flex-col gap-4">
-      <div className="flex gap-4">
+    <div>
+      <div className="flex gap-5 mt-5">
         <div className="flex-1">
           <SportSelect value={sport} onChange={setSport} />
         </div>

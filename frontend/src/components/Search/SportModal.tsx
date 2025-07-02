@@ -17,23 +17,25 @@ const SportModal = ({ onClose, onApply }: SportModalProps) => {
 
   return (
     <ModalBase onClose={onClose} title="경기" className="p-5">
-      <div className="p-4 flex-1 overflow-auto">
-        <SportPanel />
-      </div>
-      <div className="border-t p-4 flex gap-2">
-        <Button onClick={resetSport} scheme="secondary">
-          초기화
-        </Button>
-        <Button
-          onClick={() => {
-            onApply({ sport, league, teams });
-            onClose();
-          }}
-          scheme="primary"
-          className="flex-1"
-        >
-          적용
-        </Button>
+      <div className="flex flex-col gap-5">
+        <div className="flex-1 overflow-auto">
+          <SportPanel />
+        </div>
+        <div className="flex gap-2">
+          <Button onClick={resetSport} scheme="secondary">
+            초기화
+          </Button>
+          <Button
+            onClick={() => {
+              onApply({ sport, league, teams });
+              onClose();
+            }}
+            scheme="primary"
+            className="flex-1"
+          >
+            적용
+          </Button>
+        </div>
       </div>
     </ModalBase>
   );
