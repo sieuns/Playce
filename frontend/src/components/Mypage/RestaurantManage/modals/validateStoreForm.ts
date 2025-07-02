@@ -1,4 +1,4 @@
-import type { StoreFormRequest } from "../../../../types/storeFormRequest";
+import type { StoreFormRequest } from "../../../../types/restaurantFormRequest";
 
 const validateStoreForm = (data: StoreFormRequest) => {
   const newErrors: { [key: string]: string } = {};

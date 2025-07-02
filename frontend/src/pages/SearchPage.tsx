@@ -7,7 +7,7 @@ import { useSportStore } from "../stores/sportStore";
 import SearchInput from "../components/Search/SearchInput";
 import SearchButton from "../components/Search/SearchButton";
 import SearchResultList from "../components/Search/SearchResultList";
-import AppLogoHeader from "../components/LogoHeader/AppLogoHeader";
+import AppHeader from "../components/AppHeader/AppHeader";
 import FavoriteSidebar from "../components/FavoriteSidebar/FavoriteSidebar";
 import TodayBroadcastSidebar from "../components/TodayBroadcasts/TodayBroadCasts";
 
@@ -46,7 +46,7 @@ const SearchPage = () => {
         }}
       >
         {/* 앱 이름/로고 */}
-        <AppLogoHeader />
+        <AppHeader />
 
         {/* 검색 영역 */}
         <div className="bg-primary4 px-3 py-3">
