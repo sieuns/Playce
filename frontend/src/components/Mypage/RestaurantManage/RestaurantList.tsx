@@ -4,7 +4,7 @@ import { dummyRestaurantDetails } from "../../../data/dummyRestaurantDetail";
 import { FiChevronLeft, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
 import DetailStores from "../../RestaurantDetail/RestaurantDetail.tsx";
 import type { RestaurantDetail } from "../../../types/restaurant.types";
-import StoreFormModal from "./modals/ResaurantFormModal.tsx";
+import StoreFormModal from "./modals/RestaurantFormModal.tsx";
 import Button from "../../Common/Button";
 
 // 변환 함수: RestaurantDetail → StoreFormRequest
