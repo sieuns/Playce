@@ -1,4 +1,5 @@
 import { FaTimes } from "react-icons/fa";
+import Button from "../Common/Button";
 
 interface UserInfoProps {
   email?: string;
@@ -19,14 +20,15 @@ const UserInfo = ({
     <div className="px-2">
       {/* 헤더: 닫기 버튼 포함 */}
       <div className="flex items-center justify-between text-lg font-semibold my-5">
-        <div className="flex items-center gap-3">내 정보</div>
-        <button
+        <div className="flex items-center gap-3 text-xl text-mainText">내 정보</div>
+        <Button
           onClick={onClose}
-          className="hover:text-primary5"
-          aria-label="닫기"
+          scheme="close"
+          size="icon"
+          className="text-mainText"
         >
           <FaTimes />
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-col gap-2">

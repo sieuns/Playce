@@ -34,7 +34,7 @@ const BroadcastRestaurants = () => {
                   <span className="block text-lg font-semibold text-gray-900 truncate">
                     {store.store_name}
                   </span>
-                  <span className="text-xs bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
+                  <span className="text-xs bg-primary3 text-primary5 px-2 py-0.5 rounded-full font-medium">
                     {store.type}
                   </span>
                 </div>

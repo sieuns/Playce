@@ -15,9 +15,9 @@ const Tag = ({ name, onRemove }: TagProps) => {
     : name;
 
   return (
-    <span className="px-3 py-1 text-sm bg-primary1 rounded-full flex items-center gap-1">
+    <span className="px-3 py-1 text-sm bg-primary3 text-primary5 rounded-full flex items-center gap-1">
       {label}
-      <button onClick={onRemove} className="text-gray-500 hover:text-black">
+      <button onClick={onRemove} className="hover:text-primary5">
         ×
       </button>
     </span>

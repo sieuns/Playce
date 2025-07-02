@@ -5,6 +5,7 @@ import { FiChevronLeft, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
 import DetailStores from "../../DetailStores/DetailStores";
 import type { RestaurantDetail } from "../../../types/restaurant.types";
 import StoreFormModal from "./modals/StoreFormModal";
+import Button from "../../Common/Button";
 
 // 변환 함수: RestaurantDetail → StoreFormRequest
 const toStoreFormRequest = (store: RestaurantDetail): StoreFormRequest => ({
@@ -62,16 +63,15 @@ const MyStoreList = () => {
         <div className="text-gray-400 text-center text-lg tracking-wide">
           등록된 식당이 없습니다.
           <div className="flex justify-center">
-            <button
+            <Button
               onClick={() => {
                 setFormOpen(true);
                 setEditTarget(null);
               }}
-              className="flex items-center gap-1 px-4 py-2 bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-600 transition"
             >
-              <FiPlus className="text-lg" />
+              <FiPlus className="text-lg mr-1 text-bold" />
               식당 등록
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -92,7 +92,7 @@ const MyStoreList = () => {
                     <span className="block text-lg font-semibold text-gray-900 truncate">
                       {store.store_name}
                     </span>
-                    <span className="text-xs bg-primary4 text-emerald-600 px-2 py-0.5 rounded-full font-medium">
+                    <span className="text-xs bg-primary3 text-primary5 px-2 py-0.5 rounded-full font-medium">
                       {store.type}
                     </span>
                   </div>
@@ -112,7 +112,7 @@ const MyStoreList = () => {
                   className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-primary4 transition ml-1"
                   aria-label="상세보기"
                 >
-                  <FiChevronLeft className="text-emerald-500 text-xl" />
+                  <FiChevronLeft className="text-primary5 text-xl" />
                 </button>
                 {/* 수정 버튼 */}
                 <button
@@ -138,16 +138,15 @@ const MyStoreList = () => {
           </ul>
           {/* 등록 버튼 (리스트 하단) */}
           <div className="flex justify-end mt-6">
-            <button
+            <Button
               onClick={() => {
                 setFormOpen(true);
                 setEditTarget(null);
               }}
-              className="flex items-center gap-1 px-4 py-2 bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-600 transition"
             >
-              <FiPlus className="text-lg" />
+              <FiPlus className="text-lg mr-1 text-bold" />
               식당 등록
-            </button>
+            </Button>
           </div>
         </>
       )}
