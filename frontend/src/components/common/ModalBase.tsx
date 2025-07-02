@@ -9,6 +9,7 @@ interface ModalBaseProps {
   title?: string;
   hideHeader?: boolean;
   className?: string;
+  type?: "auth";
 }
 
 const ModalBase = ({
@@ -17,6 +18,7 @@ const ModalBase = ({
   title,
   hideHeader = false,
   className,
+  type,
 }: ModalBaseProps) => {
   return createPortal(
     <div
@@ -25,7 +27,9 @@ const ModalBase = ({
     >
       <div
         className={classNames(
-          "bg-white rounded-xl shadow-lg max-h-[90vh] overflow-hidden flex flex-col w-[600px]",
+          "bg-white rounded-xl shadow-lg max-h-[90vh] overflow-hidden flex flex-col",
+          { "w-[400px]": type === "auth" },
+          { "w-[600px]": type !== "auth" },
           className
         )}
         onClick={(e) => e.stopPropagation()}

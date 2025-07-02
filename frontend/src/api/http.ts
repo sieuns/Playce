@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { getToken, removeToken } from "../stores/authStore";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const DEFAULT_TIMEOUT = 30000;
 
 export const createClient = (config?: AxiosRequestConfig) => {
@@ -29,7 +29,7 @@ export const createClient = (config?: AxiosRequestConfig) => {
     (error) => {
       if (error.response?.status === 401) {
         removeToken();
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
       return Promise.reject(error);
     }

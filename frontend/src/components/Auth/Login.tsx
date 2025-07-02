@@ -33,7 +33,12 @@ const LoginModal = () => {
   if (!isLoginModalOpen) return null;
 
   return (
-    <ModalBase onClose={handleCancel} title="로그인" className="p-5 w-[400px]">
+    <ModalBase
+      onClose={handleCancel}
+      title="로그인"
+      className="p-5"
+      type="auth"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3 mt-5">
           <fieldset>

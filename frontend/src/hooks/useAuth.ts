@@ -30,7 +30,8 @@ export const useAuth = () => {
 
   const userSignup = async (data: SignupProps) => {
     try {
-      await signup(data);
+      const response = await signup(data);
+      console.log(response);
       alert("회원가입이 완료되었습니다.");
     } catch (error) {
       alert(`Error: ${error}회원가입에 실패했습니다.`);
