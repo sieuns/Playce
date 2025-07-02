@@ -39,7 +39,7 @@ const createBroadcast = async (data: any, userId: number) => {
     if (data.team_one || data.team_two) {
       data.team_one = undefined;
       data.team_two = undefined;
-      throw createError(`해당 스포츠는(${sport.name})는 팀 이름을 입력할 필요가 없습니다.`, 400);
+      throw createError(`해당 스포츠(${sport.name})는 팀 이름을 입력할 필요가 없습니다.`, 400);
     }
   }
 
