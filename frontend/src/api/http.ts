@@ -50,9 +50,14 @@ export const requestHandler = async <T = unknown>(
   let response;
 
   switch (method) {
-    case "get":
-      response = await httpClient.get(url);
+    case "get": {
+      const query = payload
+        ? `?${new URLSearchParams(payload).toString()}`
+        : "";
+      response = await httpClient.get(`${url}${query}`);
+      // response = await httpClient.get(url);
       break;
+    }
     case "post":
       response = await httpClient.post(url, payload);
       break;
