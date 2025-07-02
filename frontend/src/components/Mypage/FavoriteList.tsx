@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import useFavoriteStore from "../../stores/favoriteStore";
-import FavoriteCardList from "../Favorite/FavoriteCardList";
+import RestaurantCardList from "../RestaurantCardList/RestaurantCardList";
+import RestaurantDetailComponent from "../RestaurantDetail/RestaurantDetail.tsx";
+import type { RestaurantDetail } from "../../types/restaurant.types";
 
 interface FavoriteListProps {
   onClose: () => void;
@@ -9,6 +12,9 @@ interface FavoriteListProps {
 
 const FavoriteList = ({ onClose }: FavoriteListProps) => {
   const { favoriteIds, removeFavorite } = useFavoriteStore();
+  const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
+    null
+  );
 
   const favoriteStores = dummyRestaurantDetails
     .filter((store) => favoriteIds.includes(store.id))
@@ -19,6 +25,12 @@ const FavoriteList = ({ onClose }: FavoriteListProps) => {
       address: store.address,
       type: store.type,
     }));
+
+  // 상세보기 버튼 클릭 시
+  const handleDetail = (store_id: number) => {
+    const detail = dummyRestaurantDetails.find((d) => d.id === store_id);
+    if (detail) setSelectedDetail(detail);
+  };
 
   return (
     <section className="px-2">
@@ -32,11 +44,21 @@ const FavoriteList = ({ onClose }: FavoriteListProps) => {
           <FaTimes />
         </button>
       </div>
-      <FavoriteCardList
+      <RestaurantCardList
         stores={favoriteStores}
         onRemove={removeFavorite}
+        showDelete
+        showDetail
         compact={false}
+        onDetail={handleDetail}
       />
+      {/* 상세보기 모달/사이드바 */}
+      {selectedDetail && (
+        <RestaurantDetailComponent
+          detail={selectedDetail}
+          onClose={() => setSelectedDetail(null)}
+        />
+      )}
     </section>
   );
 };
