@@ -1,21 +1,21 @@
 import { useMap, MapMarker } from "react-kakao-maps-sdk";
-import type { spot } from "../../types/map";
 import useMapStore from "../../stores/mapStore";
+import type { RestaurantBasic } from "../../types/restaurant.types";
 
 interface PlayceMapMarkerProps {
-  spot: spot;
+  restaurant: RestaurantBasic;
 }
 
-const PlayceMapMarker = ({ spot }: PlayceMapMarkerProps) => {
+const PlayceMapMarker = ({ restaurant }: PlayceMapMarkerProps) => {
   const map = useMap();
   const { setOpenedModal } = useMapStore();
 
   return (
     <MapMarker
-      position={spot.position}
+      position={{ lat: restaurant.lat, lng: restaurant.lng }}
       onClick={(marker) => {
         map.panTo(marker.getPosition());
-        setOpenedModal(spot.id);
+        setOpenedModal(restaurant.store_id);
       }}
     />
   );

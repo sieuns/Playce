@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import AuthHeader from "../components/Auth/AuthHeader";
 import LoginModal from "../components/Auth/Login";
 import SignupModal from "../components/Auth/Signup";
@@ -8,10 +9,13 @@ import { useGeoLocation } from "../hooks/useGeoLocation";
 import useMapStore from "../stores/mapStore";
 import useMypageStore from "../stores/mypageStore";
 import SearchPage from "./SearchPage";
+import { useMap } from "../hooks/useMap";
+import { SEARCHNEARBY_RADIUS } from "../constant/map-constant";
 
 const Home: React.FC = () => {
-  const { isRefreshBtnOn } = useMapStore();
+  const { position, isRefreshBtnOn, setRestaurants } = useMapStore();
   const { isMypageOpen, setIsMypageOpen } = useMypageStore();
+  const { fetchRestaurants } = useMap();
 
   const geolocationOptions = {
     enableHighAccuracy: true,
@@ -20,6 +24,14 @@ const Home: React.FC = () => {
   };
 
   useGeoLocation(geolocationOptions);
+
+  useEffect(() => {
+    fetchRestaurants({
+      lat: position.lat,
+      lng: position.lng,
+      radius: SEARCHNEARBY_RADIUS,
+    });
+  }, [setRestaurants]);
 
   return (
     <div className="flex">
