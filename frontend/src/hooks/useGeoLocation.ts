@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useMapStore from "../stores/mapStore";
 import { useMap } from "./useMap";
+import { SEARCHNEARBY_RADIUS } from "../constant/map-constant";
 
 export const useGeoLocation = (options = {}) => {
   const { setPosition } = useMapStore();
@@ -16,7 +17,11 @@ export const useGeoLocation = (options = {}) => {
       lng: longitude,
     });
 
-    fetchRestaurants({ lat: latitude, lng: longitude, radius: 5 });
+    fetchRestaurants({
+      lat: latitude,
+      lng: longitude,
+      radius: SEARCHNEARBY_RADIUS,
+    });
   };
 
   const handleError = (err: GeolocationPositionError) => {

@@ -10,6 +10,7 @@ import useMapStore from "../stores/mapStore";
 import useMypageStore from "../stores/mypageStore";
 import SearchPage from "./SearchPage";
 import { useMap } from "../hooks/useMap";
+import { SEARCHNEARBY_RADIUS } from "../constant/map-constant";
 
 const Home: React.FC = () => {
   const { position, isRefreshBtnOn, setRestaurants } = useMapStore();
@@ -25,7 +26,11 @@ const Home: React.FC = () => {
   useGeoLocation(geolocationOptions);
 
   useEffect(() => {
-    fetchRestaurants({ lat: position.lat, lng: position.lng, radius: 5 });
+    fetchRestaurants({
+      lat: position.lat,
+      lng: position.lng,
+      radius: SEARCHNEARBY_RADIUS,
+    });
   }, [setRestaurants]);
 
   return (

@@ -2,6 +2,7 @@ import Button from "../Common/Button";
 import useMapStore from "../../stores/mapStore";
 import { IoReloadOutline } from "react-icons/io5";
 import { searchNearby } from "../../api/map.api";
+import { SEARCHNEARBY_RADIUS } from "../../constant/map-constant";
 
 const SpotRefreshButton = () => {
   const { position, setRefreshBtn, setRestaurants } = useMapStore();
@@ -15,7 +16,7 @@ const SpotRefreshButton = () => {
         const res = await searchNearby({
           lat: position.lat,
           lng: position.lng,
-          radius: 5,
+          radius: SEARCHNEARBY_RADIUS,
         });
         setRestaurants(res.data);
         setRefreshBtn(false);
