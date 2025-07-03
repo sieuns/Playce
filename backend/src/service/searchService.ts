@@ -127,8 +127,11 @@ const searchService = {
 
     if (small_region) {
       console.log(`- 필터: 소지역 '${small_region}'`);
-      query.andWhere("smallRegion.name = :smallRegion", {
-        smallRegion: small_region,
+      // query.andWhere("smallRegion.name = :smallRegion", {
+      //   smallRegion: small_region,
+      // });
+      query.andWhere("smallRegion.name LIKE :smallRegionPattern", {
+        smallRegionPattern: `%${small_region}%`,
       });
     }
 
