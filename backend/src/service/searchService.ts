@@ -107,7 +107,7 @@ const searchService = {
       query.andWhere("sport.name = :sport", { sport });
     }
 
-    if (league) {
+    if (league && league !== "전체" && league !== "all") {
       console.log(`- 필터: 리그 '${league}'`);
       query.andWhere("league.name = :league", { league });
     }
@@ -125,11 +125,10 @@ const searchService = {
       query.andWhere("bigRegion.name = :bigRegion", { bigRegion: big_region });
     }
 
-    if (small_region) {
-      console.log(`- 필터: 소지역 '${small_region}'`);
-      query.andWhere("smallRegion.name = :smallRegion", {
-        smallRegion: small_region,
-      });
+    if (small_region && small_region !== "전체" && small_region !== "all") {
+      query.andWhere("smallRegion.name = :smallRegion", { smallRegion: small_region });
+    } else {
+      console.log("- 필터: 소지역 전체 (필터 생략)");
     }
 
     // 🔃 정렬

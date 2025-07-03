@@ -16,16 +16,18 @@ import storeRoutes from "./routes/storeRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import broadcastRoutes from "./routes/broadcastRoutes";
 import favoriteRoutes from "./routes/favoriteRoutes";
+import staticdataRoutes from "./routes/staticdataRoutes";
 
 //헬퍼
 import { fail } from "./utils/response";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
+// const port = process.env.PORT || 3000;
 
 // ✅ CORS 허용
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "*", // 배포 시 도메인 설정 가능
+  origin: ['http://localhost:5173', 'http://3.35.146.155:3000'], // 배포 시 도메인 설정 가능
   credentials: true,
 }));
 
@@ -40,6 +42,7 @@ app.use("/stores", storeRoutes); // 식당
 app.use("/search", searchRoutes); // 검색
 app.use("/broadcasts", broadcastRoutes); // 중계 일정
 app.use("/favorites", favoriteRoutes); // 즐겨찾기
+app.use("/staticdata", staticdataRoutes); // 지역/경기 관련
 
 // 정의되지 않은 라우터 -> 404 에러 처리
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -56,15 +59,18 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   return fail(res, message, status);
 });
 
-// TypeORM 연결 후 서버 실행
+
+
 AppDataSource.initialize()
   .then(() => {
     console.log("📦 DB 연결 성공(TypeORM)");
-    app.listen(port, () => {
-      console.log(`🚀서버 실행 중 : http://localhost:${port}`);
-      console.log(`💡 Swagger 문서 :  http://localhost:${port}/api-docs`);
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`🚀 서버 실행 중 : http://3.35.146.155:${port}`);
+      console.log(`💡 Swagger 문서 :  http://3.35.146.155:${port}/api-docs`);
     });
   })
   .catch((error: any) => {
     console.error("❌ DB 연결 실패:", error);
   });
+
+
