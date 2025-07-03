@@ -9,7 +9,7 @@ import { dummyRestaurantDetails } from "../../data/dummyRestaurantDetail";
 import type { RestaurantDetail } from "../../types/restaurant.types";
 
 const PlayceMap: React.FC = () => {
-  const { position, spots, openedModal, closeModal, setRefreshBtn } =
+  const { position, restaurants, openedModal, closeModal, setRefreshBtn } =
     useMapStore();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
@@ -24,14 +24,16 @@ const PlayceMap: React.FC = () => {
         onClick={closeModal}
         onDragEnd={() => setRefreshBtn(true)}
       >
-        {spots.map((spot) => {
-          const detail = dummyRestaurantDetails.find((d) => d.id === spot.id);
+        {restaurants.map((restaurant) => {
+          const detail = dummyRestaurantDetails.find(
+            (d) => d.id === restaurant.store_id
+          );
           return (
-            <React.Fragment key={spot.id}>
-              <PlayceMapMarker spot={spot} />
-              {openedModal === spot.id && detail && (
+            <React.Fragment key={restaurant.store_id}>
+              <PlayceMapMarker restaurant={restaurant} />
+              {openedModal === restaurant.store_id && detail && (
                 <PlayceModal
-                  spot={spot}
+                  restaurant={restaurant}
                   detail={detail}
                   // 이벤트 버블링 문제 해결을 위해 onMouseDown에서 stopPropagation!
                   onDetailClick={(_spot, detail) => {

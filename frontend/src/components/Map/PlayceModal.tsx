@@ -1,5 +1,7 @@
-import type { spot } from "../../types/map";
-import type { RestaurantDetail } from "../../types/restaurant.types";
+import type {
+  RestaurantBasic,
+  RestaurantDetail,
+} from "../../types/restaurant.types";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { FiStar, FiMapPin, FiClock, FiPhone, FiX } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
@@ -10,14 +12,17 @@ const defaultImage =
   "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&w=400&q=80";
 
 interface PlayceModalProps {
-  spot: spot;
+  restaurant: RestaurantBasic;
   detail?: RestaurantDetail;
-  onDetailClick: (spot: spot, detail?: RestaurantDetail) => void;
+  onDetailClick: (
+    restaurant: RestaurantBasic,
+    detail?: RestaurantDetail
+  ) => void;
   onClose: () => void;
 }
 
 const PlayceModal = ({
-  spot,
+  restaurant,
   detail,
   onDetailClick,
   onClose,
@@ -37,7 +42,7 @@ const PlayceModal = ({
 
   return (
     <CustomOverlayMap
-      position={{ lat: spot.position.lat, lng: spot.position.lng }}
+      position={{ lat: restaurant.lat, lng: restaurant.lng }}
       yAnchor={1.2}
     >
       <div className="relative w-72 bg-white rounded-2xl shadow-xl p-4 font-pretendard">
@@ -97,7 +102,7 @@ const PlayceModal = ({
           scheme="primary"
           onMouseDown={(e) => e.stopPropagation()}
           onClick={() => {
-            onDetailClick(spot, detail);
+            onDetailClick(restaurant, detail);
           }}
           className="w-full"
         >

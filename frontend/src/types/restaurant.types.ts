@@ -8,6 +8,17 @@ export interface Broadcast {
   etc: string;
 }
 
+export type RestaurantBasic = {
+  store_id: number;
+  store_name: string;
+  type: string;
+  main_img: string;
+  address: string;
+  lat: number;
+  lng: number;
+  broadcasts: Broadcast[];
+};
+
 export interface RestaurantDetail {
   id: number;
   store_name: string;
