@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import useMapStore from "../stores/mapStore";
+import { useMap } from "./useMap";
 
 export const useGeoLocation = (options = {}) => {
   const { setPosition } = useMapStore();
+  const { fetchRestaurants } = useMap();
 
   const [error, setError] = useState("");
 
@@ -13,6 +15,8 @@ export const useGeoLocation = (options = {}) => {
       lat: latitude,
       lng: longitude,
     });
+
+    fetchRestaurants({ lat: latitude, lng: longitude, radius: 5 });
   };
 
   const handleError = (err: GeolocationPositionError) => {
@@ -28,7 +32,7 @@ export const useGeoLocation = (options = {}) => {
     }
 
     geolocation.getCurrentPosition(handleSuccess, handleError, options);
-  }, [options]);
+  }, []);
 
   return { location, error };
 };

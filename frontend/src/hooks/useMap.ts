@@ -4,7 +4,7 @@ import useMapStore from "../stores/mapStore";
 export const useMap = () => {
   const { setRestaurants } = useMapStore();
 
-  const useSearchNearby = async (data: SearchNearbyProps) => {
+  const fetchRestaurants = async (data: SearchNearbyProps) => {
     try {
       const res = await searchNearby(data);
       setRestaurants(res.data);
@@ -14,6 +14,6 @@ export const useMap = () => {
   };
 
   return {
-    useSearchNearby,
+    fetchRestaurants,
   };
 };
