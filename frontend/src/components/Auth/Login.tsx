@@ -1,4 +1,4 @@
-// import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import type { LoginProps } from "../../api/auth.api";
 import InputText from "../Common/InputText";
@@ -8,8 +8,8 @@ import ErrorText from "./ErrorText";
 import ModalBase from "../Common/ModalBase";
 
 const LoginModal = () => {
-  // const { userLogin } = useAuth();
-  const { storeLogin, isLoginModalOpen, setIsLoginModalOpen } = useAuthStore();
+  const { userLogin } = useAuth();
+  const { isLoginModalOpen, setIsLoginModalOpen } = useAuthStore();
 
   const {
     register,
@@ -18,11 +18,7 @@ const LoginModal = () => {
   } = useForm<LoginProps>();
 
   const onSubmit = (data: LoginProps) => {
-    // userLogin(data);
-    // 임시로 로그인 완료되도록 설정
-    alert("로그인이 완료되었습니다.");
-    console.log(data);
-    storeLogin("");
+    userLogin(data);
     setIsLoginModalOpen(false);
   };
 

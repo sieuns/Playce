@@ -11,8 +11,13 @@ const SpotRefreshButton = () => {
       size="medium"
       scheme="secondary"
       className="absolute top-[80px] left-1/2 -translate-x-1/2 z-10 rounded-lg"
-      onClick={() => {
-        searchNearby({ lat: 37.5665, lng: 126.978, radius: 5 });
+      onClick={async () => {
+        const response = await searchNearby({
+          lat: 37.5665,
+          lng: 126.978,
+          radius: 5,
+        });
+        console.log(response);
         setRefreshBtn(false);
       }}
     >

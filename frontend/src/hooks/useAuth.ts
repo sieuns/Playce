@@ -7,13 +7,15 @@ import {
 import useAuthStore from "../stores/authStore";
 
 export const useAuth = () => {
-  const { storeLogin, storeLogout } = useAuthStore();
+  const { storeLogin, storeLogout, setIsLoginModalOpen, setIsSignupModalOpen } =
+    useAuthStore();
 
   const userLogin = async (data: LoginProps) => {
     try {
       const res = await login(data);
       storeLogin(res.token);
       alert("로그인이 완료되었습니다.");
+      setIsLoginModalOpen(false);
     } catch (error) {
       alert(`Error: ${error} 로그인에 실패했습니다.`);
     }
@@ -30,11 +32,11 @@ export const useAuth = () => {
 
   const userSignup = async (data: SignupProps) => {
     try {
-      const response = await signup(data);
-      console.log(response);
+      await signup(data);
       alert("회원가입이 완료되었습니다.");
+      setIsSignupModalOpen(false);
     } catch (error) {
-      alert(`Error: ${error}회원가입에 실패했습니다.`);
+      alert(`Error: ${error}\n회원가입에 실패했습니다.`);
     }
   };
 
