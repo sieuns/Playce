@@ -159,14 +159,6 @@ router.get("/nearby", NearbySearchValidator, searchController.getNearbyStores);
  *           type: string
  *           example: 강남구
  *         description: 구/군 단위 지역명
- *       - in: query
- *         name: sort
- *         required: false
- *         schema:
- *           type: string
- *           enum: [date, name]
- *           example: date
- *         description: 정렬 기준
  *     responses:
  *       200:
  *         description: 통합 검색 성공 또는 검색 결과 없음
