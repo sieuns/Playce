@@ -1,6 +1,7 @@
 import Button from "../Common/Button";
 import useMapStore from "../../stores/mapStore";
 import { IoReloadOutline } from "react-icons/io5";
+import { searchNearby } from "../../api/map.api";
 
 const SpotRefreshButton = () => {
   const { setRefreshBtn } = useMapStore();
@@ -10,7 +11,15 @@ const SpotRefreshButton = () => {
       size="medium"
       scheme="secondary"
       className="absolute top-[80px] left-1/2 -translate-x-1/2 z-10 rounded-lg"
-      onClick={() => setRefreshBtn(false)}
+      onClick={async () => {
+        const response = await searchNearby({
+          lat: 37.5665,
+          lng: 126.978,
+          radius: 5,
+        });
+        console.log(response);
+        setRefreshBtn(false);
+      }}
     >
       이 위치에서 재탐색
     </Button>

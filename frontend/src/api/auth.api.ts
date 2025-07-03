@@ -6,10 +6,11 @@ export interface LoginProps {
 }
 
 export interface SignupProps {
-  name: string;
   email: string;
   password: string;
-  passwordConfirm: string;
+  name: string;
+  nickname: string;
+  phone: string;
 }
 
 export const login = (data: LoginProps) => {
@@ -17,5 +18,5 @@ export const login = (data: LoginProps) => {
 };
 
 export const signup = (data: SignupProps) => {
-  return requestHandler("post", "/users/signup", data);
+  return requestHandler("post", "/users/join", data);
 };
