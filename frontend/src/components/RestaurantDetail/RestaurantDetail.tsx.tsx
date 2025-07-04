@@ -51,7 +51,7 @@ export default function RestaurantDetailComponent({
 
       {/* 이미지 */}
       <div className="w-full h-56 bg-gradient-to-tr via-white to-orange-50 flex items-center justify-center relative">
-        {detail.img_list[0] ? (
+        {detail.img_list?.[0] ? (
           <img
             src={detail.img_list[0]}
             alt={detail.store_name}
@@ -134,23 +134,35 @@ export default function RestaurantDetailComponent({
         {/* 메뉴 탭 */}
         {currentTab === "메뉴" && (
           <ul className="grid grid-cols-1 gap-3">
-            {detail.menus && detail.menus.length > 0 ? (
-              detail.menus.map((menu, idx) => (
-                <li
-                  key={idx}
-                  className={`flex items-center gap-3 px-5 py-3 ${
-                    idx !== detail.menus.length - 1
-                      ? "border-b border-gray-200"
-                      : ""
-                  }`}
-                >
-                  <FaUtensils className="text-primary1 text-lg" />
-                  <span className="font-medium text-gray-700">{menu}</span>
+            {(() => {
+              let menus: string[] = [];
+              if (typeof detail.menus === "string") {
+                menus = detail.menus
+                  .split(",")
+                  .map((m) => m.trim())
+                  .filter(Boolean);
+              } else if (Array.isArray(detail.menus)) {
+                menus = detail.menus;
+              }
+
+              return menus.length > 0 ? (
+                menus.map((menu, idx) => (
+                  <li
+                    key={idx}
+                    className={`flex items-center gap-3 px-5 py-3 ${
+                      idx !== menus.length - 1 ? "border-b border-gray-200" : ""
+                    }`}
+                  >
+                    <FaUtensils className="text-primary1 text-lg" />
+                    <span className="font-medium text-gray-700">{menu}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="py-3 text-gray-400 text-center">
+                  메뉴 정보 없음
                 </li>
-              ))
-            ) : (
-              <li className="py-3 text-gray-400 text-center">메뉴 정보 없음</li>
-            )}
+              );
+            })()}
           </ul>
         )}
 
