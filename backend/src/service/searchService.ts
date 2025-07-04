@@ -172,7 +172,7 @@ const searchService = {
             team_two: latestBroadcast.teamTwo,
             etc: latestBroadcast.etc,
           }
-          : null,
+          : null, // 중계 일정이 없을 경우 null
       };
     });
 
