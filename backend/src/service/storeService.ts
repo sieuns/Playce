@@ -154,19 +154,19 @@ const storeService = {
       console.log("- 식당 유효성 검사 완료 : 수정할 수 없는 필드 포함 여부");
 
       // DB 업데이트
-      if (updateData.store_name !== undefined)
+      if (updateData.store_name)
         storeToUpdate.storeName = updateData.store_name;
-      if (updateData.phone !== undefined)
+      if (updateData.phone)
         storeToUpdate.phone = updateData.phone;
-      if (updateData.opening_hours !== undefined)
+      if (updateData.opening_hours)
         storeToUpdate.openingHours = updateData.opening_hours;
-      if (updateData.menus !== undefined)
+      if (updateData.menus)
         storeToUpdate.menus = updateData.menus;
-      if (updateData.type !== undefined) storeToUpdate.type = updateData.type;
-      if (updateData.description !== undefined)
+      if (updateData.type) storeToUpdate.type = updateData.type;
+      if (updateData.description)
         storeToUpdate.description = updateData.description;
 
-      if (updateData.address !== undefined) {
+      if (updateData.address) {
         // 주소 -> location, bigRegion, smallRegion 같이 수정
         const bigRegionRepo = AppDataSource.getRepository(BigRegion);
         const smallRegionRepo = AppDataSource.getRepository(SmallRegion);
@@ -187,7 +187,7 @@ const storeService = {
         storeToUpdate.smallRegion = smallRegion;
       }
 
-      if (updateData.img_urls !== undefined) {
+      if (updateData.img_urls) {
         // 이미지 -> 전체 삭제 후 재등록
         const storeImageRepo = AppDataSource.getRepository(StoreImage);
 

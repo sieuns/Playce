@@ -66,17 +66,17 @@ export const createStoreValidator = [
     .withMessage("업종은 문자열이어야 합니다."),
 
   body("description")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("설명은 문자열이어야 합니다."),
 
   body("img_urls")
-    .optional()
+    .optional({ checkFalsy: true })
     .isArray()
     .withMessage("이미지 URL 리스트는 배열이어야 합니다."),
 
   body("img_urls.*")
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage("각 이미지 URL은 유효한 형식이어야 합니다."),
 
@@ -87,17 +87,17 @@ export const createStoreValidator = [
 export const updateStoreValidator = [
   // 모든 필드는 선택적으로(optional) 받습니다.
   body("store_name")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("식당 이름은 문자열이어야 합니다."),
 
   body("address")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("주소는 문자열이어야 합니다."),
 
   body("phone")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("전화번호는 문자열이어야 합니다.")
     .bail()
@@ -110,24 +110,27 @@ export const updateStoreValidator = [
     ),
 
   body("opening_hours")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("영업 시간은 문자열이어야 합니다."),
 
   body("menus")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("메뉴는 문자열이어야 합니다."),
 
-  body("type").optional().isString().withMessage("업종은 문자열이어야 합니다."),
+  body("type")
+    .optional({ checkFalsy: true })
+    .isString()
+    .withMessage("업종은 문자열이어야 합니다."),
 
   body("description")
-    .optional()
+    .optional({ checkFalsy: true })
     .isString()
     .withMessage("설명은 문자열이어야 합니다."),
 
   body("img_urls")
-    .optional()
+    .optional({ checkFalsy: true })
     .custom((value) => {
       if (typeof value === "string") return true; // 문자열 하나면 허용
       if (Array.isArray(value))
@@ -137,7 +140,7 @@ export const updateStoreValidator = [
     .withMessage("img_urls는 문자열 혹은 문자열 배열이어야 합니다."),
 
   body("img_urls.*")
-    .optional()
+    .optional({ checkFalsy: true })
     .isURL()
     .withMessage("각 이미지 URL은 유효한 형식이어야 합니다."),
 
