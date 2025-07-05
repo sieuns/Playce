@@ -17,8 +17,9 @@ const MypageModal = ({ onClose }: MypageProps) => {
   return (
     <ModalBase
       onClose={onClose}
+      type="mypage"
       hideHeader
-      className="min-h-[700px] min-w-[900px]"
+      className="min-h-[700px] min-w-[900px] p-0"
     >
       <div className="flex min-h-[700px] bg-white rounded-xl overflow-hidden">
         {/* 왼쪽 사이드바 */}
