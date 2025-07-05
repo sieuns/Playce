@@ -25,7 +25,7 @@ export interface RestaurantDetail {
   address: string;
   phone: string;
   opening_hours: string;
-  menus: string[];
+  menus: string | string[];
   type: string;
   img_list: string[];
   description: string;

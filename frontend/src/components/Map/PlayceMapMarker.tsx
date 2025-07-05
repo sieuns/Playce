@@ -13,8 +13,8 @@ const PlayceMapMarker = ({ restaurant }: PlayceMapMarkerProps) => {
   return (
     <MapMarker
       position={{ lat: restaurant.lat, lng: restaurant.lng }}
-      onClick={(marker) => {
-        map.panTo(marker.getPosition());
+      onClick={() => {
+        map.panTo(new window.kakao.maps.LatLng(restaurant.lat, restaurant.lng));
         setOpenedModal(restaurant.store_id);
       }}
     />
