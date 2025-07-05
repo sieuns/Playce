@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   scheme?: "primary" | "secondary" | "close" | "tab" | "custom";
-  size?: "small" | "medium" | "large" | "icon";
+  size?: "small" | "medium" | "large" | "icon" | "semi";
   isLoading?: boolean;
   fullWidth?: boolean;
   icon?: React.ReactNode;
@@ -41,7 +41,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       small: "px-3 py-1 text-sm",
       medium: "px-4 py-2 text-base",
       large: "px-5 py-3 text-lg",
-      icon: "p-2 text-xl",
+      semi: "px-4 py-1.5 text-sm",
+      icon: "p-2 text-lg",
     };
 
     return (

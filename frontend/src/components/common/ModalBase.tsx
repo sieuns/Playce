@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
+import Button from "./Button";
 
 interface ModalBaseProps {
   children: ReactNode;
@@ -36,17 +37,16 @@ const ModalBase = ({
       >
         {!hideHeader && (
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-mainTextitems-center m-0">
+            <h2 className="text-lg font-bold text-mainText items-center m-0">
               {title}
             </h2>
-            <button onClick={onClose} className="hover:text-primary5 text-lg">
+            <Button onClick={onClose} scheme="close" size="icon" className="text-mainText">
               <FaTimes />
-            </button>
+            </Button>
           </div>
         )}
 
-        {/* 콘텐츠 */}
-        {children}
+        <div className="overflow-y-auto px-4 py-3 flex-grow">{children}</div>
       </div>
     </div>,
     document.body
