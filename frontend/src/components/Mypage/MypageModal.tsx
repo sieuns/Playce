@@ -19,15 +19,14 @@ const MypageModal = ({ onClose }: MypageProps) => {
       onClose={onClose}
       type="mypage"
       hideHeader
-      className="min-h-[700px] min-w-[900px] p-0"
+      className="min-h-[700px] max-h-[700px] min-w-[900px] p-0"
     >
-      <div className="flex min-h-[700px] bg-white rounded-xl overflow-hidden">
-        {/* 왼쪽 사이드바 */}
+      <div className="flex h-[700px] bg-white rounded-xl overflow-hidden">
+        {/* 왼쪽 사이드바 (고정) */}
         <Sidebar selected={selectedTab} onSelect={setSelectedTab} />
 
-        {/* 오른쪽 콘텐츠 영역 */}
+        {/* 오른쪽 콘텐츠 영역 (스크롤 가능) */}
         <div className="flex-1 p-6 overflow-y-auto scrollbar-hide">
-          {/* 콘텐츠 */}
           {selectedTab === "favorite" && <FavoriteList onClose={onClose} />}
           {selectedTab === "profile" && <UserInfo onClose={onClose} />}
           {selectedTab === "restaurant" && (

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { StoreFormRequest } from "../../../types/restaurantFormRequest.ts";
 import { dummyRestaurantDetails } from "../../../data/dummyRestaurantDetail";
-import { FiChevronLeft, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiChevronLeft, FiEdit2, FiTrash2 } from "react-icons/fi";
 import DetailStores from "../../RestaurantDetail/RestaurantDetail.tsx";
 import type { RestaurantDetail } from "../../../types/restaurant.types";
-import StoreFormModal from "./modals/RestaurantFormModal.tsx";
-import Button from "../../Common/Button";
+// import StoreFormModal from "./modals/RestaurantFormModal.tsx";
+// import Button from "../../Common/Button";
 
 // 변환 함수: RestaurantDetail → StoreFormRequest
 const toStoreFormRequest = (store: RestaurantDetail): StoreFormRequest => ({
@@ -14,7 +14,7 @@ const toStoreFormRequest = (store: RestaurantDetail): StoreFormRequest => ({
   address: store.address,
   phone: store.phone ?? "",
   opening_hours: store.opening_hours ?? "",
-  menus: store.menus ?? [],
+  menus: [], // Todo
   type: store.type ?? "",
   description: store.description ?? "",
   img_urls: store.img_list ?? [],
@@ -29,8 +29,8 @@ const MyStoreList = () => {
   const [selectedDetail, setSelectedDetail] = useState<RestaurantDetail | null>(
     null
   );
-  const [formOpen, setFormOpen] = useState(false);
-  const [editTarget, setEditTarget] = useState<StoreFormRequest | null>(null);
+  // const [formOpen, setFormOpen] = useState(false);
+  // const [editTarget, setEditTarget] = useState<StoreFormRequest | null>(null);
 
   // 삭제
   const handleRemove = (store_name: string) => {
@@ -42,27 +42,27 @@ const MyStoreList = () => {
   };
 
   // 등록/수정 폼 제출
-  const handleSubmit = (data: StoreFormRequest) => {
-    if (editTarget) {
-      // 수정
-      setStores((stores) =>
-        stores.map((store) =>
-          store.store_name === data.store_name ? data : store
-        )
-      );
-    } else {
-      setStores((stores) => [...stores, data]);
-    }
-    setFormOpen(false);
-    setEditTarget(null);
-  };
+  // const handleSubmit = (data: StoreFormRequest) => {
+  //   if (editTarget) {
+  //     // 수정
+  //     setStores((stores) =>
+  //       stores.map((store) =>
+  //         store.store_name === data.store_name ? data : store
+  //       )
+  //     );
+  //   } else {
+  //     setStores((stores) => [...stores, data]);
+  //   }
+  //   setFormOpen(false);
+  //   setEditTarget(null);
+  // };
 
   return (
     <section>
       {stores.length === 0 ? (
         <div className="text-gray-400 text-center text-lg tracking-wide">
           등록된 식당이 없습니다.
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Button
               onClick={() => {
                 setFormOpen(true);
@@ -72,7 +72,7 @@ const MyStoreList = () => {
               <FiPlus className="text-lg mr-1 text-bold" />
               식당 등록
             </Button>
-          </div>
+          </div> */}
         </div>
       ) : (
         <>
@@ -117,8 +117,8 @@ const MyStoreList = () => {
                 {/* 수정 버튼 */}
                 <button
                   onClick={() => {
-                    setFormOpen(true);
-                    setEditTarget(store);
+                    // setFormOpen(true);
+                    // setEditTarget(store);
                   }}
                   className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow hover:bg-blue-50 transition ml-1"
                   aria-label="수정"
@@ -137,7 +137,7 @@ const MyStoreList = () => {
             ))}
           </ul>
           {/* 등록 버튼 (리스트 하단) */}
-          <div className="flex justify-end mt-6">
+          {/* <div className="flex justify-end mt-6">
             <Button
               onClick={() => {
                 setFormOpen(true);
@@ -147,7 +147,7 @@ const MyStoreList = () => {
               <FiPlus className="text-lg mr-1 text-bold" />
               식당 등록
             </Button>
-          </div>
+          </div> */}
         </>
       )}
       {/* 상세보기 */}
@@ -158,7 +158,7 @@ const MyStoreList = () => {
         />
       )}
       {/* 등록/수정 폼 모달 */}
-      {formOpen && (
+      {/* {formOpen && (
         <StoreFormModal
           mode={editTarget ? "edit" : "create"}
           initial={editTarget ?? undefined}
@@ -168,7 +168,7 @@ const MyStoreList = () => {
             setEditTarget(null);
           }}
         />
-      )}
+      )} */}
     </section>
   );
 };

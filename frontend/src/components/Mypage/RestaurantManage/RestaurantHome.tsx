@@ -5,7 +5,7 @@ import { menuItems } from "../../../types/restaurant-manage.types";
 const RestaurantHome = () => {
   const { setRestaurantSubpage } = useMypageStore();
   return (
-    <div className="flex flex-col divide-y divide-gray-300 pl-2">
+    <div className="flex flex-col divide-y divide-gray-300 ">
       {menuItems
         .filter(
           (item) =>
