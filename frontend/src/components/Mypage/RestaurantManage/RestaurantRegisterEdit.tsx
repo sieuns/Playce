@@ -10,6 +10,7 @@ import {
 } from "../../../api/restaurant.api";
 import useMypageStore from "../../../stores/mypageStore";
 import { getToken } from "../../../stores/authStore";
+import FindAddressButton from "../../Common/FindAddressButton";
 
 interface StoreFormModalProps {
   mode: "create" | "edit";
@@ -118,11 +119,23 @@ const RestaurantRegisterEdit = ({ mode, initial }: StoreFormModalProps) => {
           <label className="block mb-1 font-semibold text-gray-700">
             주소 <span className="text-red-500">*</span>
           </label>
-          <input
+
+          <div className="flex gap-3">
+            <input
+              className="w-full border rounded px-3 py-2"
+              value={address}
+            />
+            <FindAddressButton
+              onCompleted={(address) => {
+                setAddress(address);
+              }}
+            />
+          </div>
+          {/* <input
             className="w-full border rounded px-3 py-2"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-          />
+          /> */}
           <ErrorMessage message={errors.address} />
         </div>
         <div>
