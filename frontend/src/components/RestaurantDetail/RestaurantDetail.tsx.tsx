@@ -44,9 +44,14 @@ export default function RestaurantDetailComponent({
     <aside className="fixed left-0 top-0 h-full w-[430px] z-[100] bg-white shadow-2xl border-r border-gray-100 flex flex-col font-pretendard">
       {/* 헤더 */}
       <div className="h-12 flex items-center pl-6 border-b border-gray-100">
-        <span className="text-2xl font-bold tracking-tight text-primary5 font-pretendard">
+        <button
+          className="text-2xl font-bold tracking-tight text-primary5 font-pretendard focus:outline-none"
+          onClick={onClose}
+          aria-label="상세보기 닫기"
+          type="button"
+        >
           Playce
-        </span>
+        </button>
       </div>
 
       {/* 이미지 */}
