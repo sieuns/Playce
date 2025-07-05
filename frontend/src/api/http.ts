@@ -73,3 +73,5 @@ export const requestHandler = async <T = unknown>(
 
   return response.data;
 };
+
+export default httpClient;
